@@ -4,7 +4,7 @@
   "description": "An app for quick meetups",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/karma/bin/karma start --single-run --browsers PhantomJS"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/RTakes/streetmeet/issues"
   },
-  "homepage": "https://github.com/RTakes/streetmeet"
+  "homepage": "https://github.com/RTakes/streetmeet",
+  "devDependencies": {
+    "jasmine-core": "^2.1.3",
+    "karma": "^0.12.28",
+    "karma-chrome-launcher": "^0.1.7",
+    "karma-jasmine": "^0.3.2",
+    "karma-phantomjs-launcher": "^0.1.4"
+  }
 }
