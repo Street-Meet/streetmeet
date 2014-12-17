@@ -1,14 +1,14 @@
 [![Stories in Ready](https://badge.waffle.io/street-meet/streetmeet.png?label=ready&title=Ready)](https://waffle.io/street-meet/streetmeet)
 
-# Project Name
+# Street Meet
 
 > Pithy project description
 
 ## Team
 
-  - __Product Owner__: teamMember
-  - __Scrum Master__: teamMember
-  - __Development Team Members__: teamMember, teamMember
+  - __Product Owner__: Rene Polo
+  - __Scrum Master__: Alex Dejani
+  - __Development Team Members__: Brett Leibowitz , Rick Takes 
 
 ## Table of Contents
 
