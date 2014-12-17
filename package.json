@@ -4,7 +4,7 @@
   "description": "An app for quick meetups",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/karma/bin/karma start karma.conf.js"
+    "test": "./node_modules/.bin/karma start --single-run --browsers Chrome"
   },
   "repository": {
     "type": "git",
