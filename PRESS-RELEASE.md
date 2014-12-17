@@ -17,37 +17,28 @@ Once the project moves into development, the press release can be used as a touc
  -->
 
 ## Heading ##
-  > Name the product in a way the reader (i.e. your target customers) will understand.
 Street Meet
 
 ## Sub-Heading ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
 A mobile app for quickly finding fun activities in your area
 
 ## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
 Initiate and find events at the swipe of a finger. Join people in spontaneous fun near you!
 
 ## Problem ##
-  > Describe the problem your product solves.
 A shortage of knowing nearby people who would be interested in the same activity you immediately want to do.
 
 ## Solution ##
-  > Describe how your product elegantly solves the problem.
 Easily and instantly connects you with nearby people into the same stupid shit you are
 
 ## Quote from You ##
-  > A quote from a spokesperson in your company.
 StreetMeet is the future of social meetups, integrating real-time needs with real-good fun!
 
 ## How to Get Started ##
-  > Describe how easy it is to get started.
 It's so easy, someone with no friends can use it
 
 ## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
 I used to be so bored and depressed not having any friends and whatnot. Streetmeet changed that for me. You really can't beat this meet.
 
 ## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.
 Where are you?! It doesn't matter, go meet someone. Streetmeet.com
