@@ -1,0 +1,19 @@
+{
+  "name": "streetmeet",
+  "version": "0.5.0",
+  "description": "An app for quick meetups",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RTakes/streetmeet.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RTakes/streetmeet/issues"
+  },
+  "homepage": "https://github.com/RTakes/streetmeet"
+}

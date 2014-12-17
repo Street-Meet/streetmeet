@@ -1,0 +1,25 @@
+{
+  "name": "streetmeet",
+  "main": "index.js",
+  "version": "0.5.0",
+  "homepage": "https://github.com/RTakes/streetmeet",
+  "authors": [
+    "Rick Takes <rick@theparkmart.com>"
+  ],
+  "description": "An app for quick meetups",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-ui-router": "~0.2.13",
+    "angular": "~1.3.7",
+    "jquery": "~2.1.2"
+  }
+}
