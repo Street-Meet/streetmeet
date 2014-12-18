@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html ng-app="sm-meetApp">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,10 +9,12 @@
   <!-- SCRIPTS  -->
   <script src="lib/jquery/dist/jquery.min.js"></script>
   <script src="lib/angular/angular.js"></script>
+  <script src="https://cdn.firebase.com/libs/angularfire/0.8.0/angularfire.min.js"></script>
+  <script src="https://cdn.firebase.com/js/client/1.1.1/firebase.js"></script>
+  <script src="lib/firebase/firebase-debug.js"></script>
   <script src="lib/angular-ui-router/release/angular-ui-router.min.js"></script>
   <script src="js/app.js"></script>
-  <script src="js/scripts.js"></script>
-
+  
 
   <!-- CSS / FONTS -->
   <link rel="stylesheet" type="text/css" href="css/styles.css">
@@ -20,9 +22,14 @@
 
 
 </head>
-<body ng-app="sm-meetApp">
+<body >
  
-  TeSTING
+     <a ui-sref="index">Index</a>
+     <a ui-sref="login">Login</a>
+     <a ui-sref="createEvent">Something Else</a>
+  <div ui-view></div>
+      <!-- We'll also add some navigation: -->
 
+  <script src="js/login.js"></script>
 </body>
 </html>
