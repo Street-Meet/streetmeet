@@ -7,9 +7,7 @@ var meetApp = angular.module('sm-meetApp',
   [
     'ionic'
   ])
-
-
-
+// run in ionic
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -22,7 +20,7 @@ var meetApp = angular.module('sm-meetApp',
     }
   });
 })
-
+// set up routing
 .config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/login');
   $stateProvider
