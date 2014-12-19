@@ -2,12 +2,16 @@ angular.module('sm-meetApp.login',  ["firebase"])
 
 .controller('LoginCtrl', function($scope, $firebase, Auth) {
   angular.extend($scope, Auth);
-     $scope.currentUser = Auth;
-     Auth.updateUser();
+     
+     $scope.currentUser;
 
 
+     $scope.facebookLogin()
+     .then(function(data){
+        $scope.currentUser = data;
+      });
 })
-  .factory('Auth', function () {
+  .factory('Auth', function ($q) {
       var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
     var currentUser = { 
       data: null
@@ -28,6 +32,7 @@ angular.module('sm-meetApp.login',  ["firebase"])
        });
     };
 
+    
     var simpleLogin = function(email, password){
       ref.authWithPassword({
         email    : email,
@@ -48,30 +53,37 @@ angular.module('sm-meetApp.login',  ["firebase"])
 
 
 
+  
     var facebookLogin = function(){
+      var deferred = $q.defer();
       ref.authWithOAuthPopup("facebook", function(error, authData) {
         if (error) {
            console.log("Login Failed!", error);
+           deferred.reject(error);
         } else {
+          
+
           ref.child("users").child(authData.uid).set(authData);
+          
+
           console.log("Authenticated successfully with payload:", authData.facebook.cachedUserProfile);
-          updateUserData(authData.facebook.cachedUserProfile);
-          updateUser();
+          // updateUserData(authData.facebook.cachedUserProfile);
+          
+           deferred.resolve(authData.facebook.cachedUserProfile);
+          // return authData.facebook.cachedUserProfile;
         }
       },{
         scope: "email, user_likes, user_events, user_groups" // the permissions requested
       });
+      return deferred.promise;
     };
 
-    var updateUser = function(){
-      console.log('userdata: ', currentUser);
-      return currentUser;
-    }
+   
     
 
    
     return {
-      updateUser: updateUser,
+      currentUser: currentUser,
       simpleLogin : simpleLogin,
       simpleSignup: simpleSignup,
       facebookLogin: facebookLogin
