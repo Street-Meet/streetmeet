@@ -5,8 +5,10 @@
 // the 2nd parameter is an array of 'requires'
 var meetApp = angular.module('sm-meetApp',
   [
-    'ionic', 'google-maps'
+    'ionic'
   ])
+
+
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -19,5 +21,13 @@ var meetApp = angular.module('sm-meetApp',
       StatusBar.styleDefault();
     }
   });
-});
+})
+
+.config(function($stateProvider, $urlRouterProvider) {
+  $urlRouterProvider.otherwise('/')
+
+  $stateProvider.state('home', {
+  url: '/',
+  templateUrl: 'templates/tester.html'
+})
 });
