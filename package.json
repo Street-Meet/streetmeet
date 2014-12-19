@@ -25,6 +25,7 @@
     "karma-phantomjs-launcher": "^0.1.4"
   },
   "dependencies": {
+    "docco-husky": "^0.3.3",
     "express": "^4.10.6"
   }
 }
