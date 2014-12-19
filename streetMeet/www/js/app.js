@@ -24,10 +24,31 @@ var meetApp = angular.module('sm-meetApp',
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/')
-
-  $stateProvider.state('home', {
-  url: '/',
-  templateUrl: 'templates/tester.html'
-})
+  $urlRouterProvider.otherwise('/login');
+  $stateProvider
+    .state('login', {
+      url: '/login',
+      templateUrl: 'templates/login.html',
+      controller: ''
+    })
+    .state('createEvent', {
+      url: '/createEvent',
+      template: 'templates/createEvent.html',
+      controller: ''
+    })
+    .state('joinEvent', {
+      url: '/joinEvent',
+      template: 'templates/joinEvent.html',
+      controller: ''
+    })
+    .state('mapView', {
+      url: '/mapView',
+      template: 'templates/mapView.html',
+      controller: ''
+    })
+    .state('profileView', {
+      url: '/profileView',
+      template: 'templates/profileView.html',
+      controller: ''
+    })
 });
