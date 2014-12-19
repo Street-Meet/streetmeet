@@ -5,55 +5,68 @@ angular.module('sm-meetApp.login',  ["firebase"])
      
      $scope.currentUser;
 
+    $scope.facebookConnect = function(){
+       Auth.facebookLogin()
+       .then(function(data){
+          $scope.currentUser = data;
+        });
+    }
 
-     $scope.facebookLogin()
-     .then(function(data){
-        $scope.currentUser = data;
-      });
+    $scope.simpleLogin = function(email, password){
+     console.log('simple login clicked');
+     Auth.simpleLogin(email, password).
+     then(function(data){
+       $scope.currentUser = data.password;
+     });
+    }
 })
   .factory('Auth', function ($q) {
       var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
     var currentUser = { 
       data: null
     };
-    var updateUserData = function(data){
-      currentUser = data;
-    };
+    
     var simpleSignup = function(email, password){
+       var deferred = $q.defer();
        ref.createUser({
+         
          email    : email,
          password : password
        }, function(error) {
          if (error === null) {
            console.log("User created successfully");
+          deferred.resolve();
          } else {
            console.log("Error creating user:", error);
+           deferred.reject(error);
          }
        });
+        return deferred.promise;
     };
 
     
     var simpleLogin = function(email, password){
+      var deferred = $q.defer();
       ref.authWithPassword({
         email    : email,
         password : password
       }, function(error, authData) {
         if (error) {
           console.log("Login Failed!", error);
+          deferred.reject(error);
         } else {
           console.log("Authenticated successfully with payload:", authData);
-          ref.child("users").child(authData.uid).set(authData);
           
+          deferred.resolve(authData);
+          ref.child("users").child(authData.uid).set(authData);
         }
       },
       {
       remember: "sessionOnly"
       });
+      return deferred.promise;
     }
 
-
-
-  
     var facebookLogin = function(){
       var deferred = $q.defer();
       ref.authWithOAuthPopup("facebook", function(error, authData) {

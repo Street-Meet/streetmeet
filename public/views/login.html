@@ -1,26 +1,27 @@
 <div ng-controller="LoginCtrl">
     
-    <div id="currentUser">
+    <div id="currentUser" ng-hide="currentUser.email">
         <div class="profile">
             <h2>Welcome {{currentUser.name}}</h2>
             <h4>Your e-mail is: {{currentUser.email}}</h4>
-    </h2>
             <img src="{{currentUser.picture.data.url}}" alt="user image">
         </div>
     </div>
+    
 
-    <h3>Email</h3>
-    <input type="text" ng-model="theEmail">
-    <h3>Password</h3>
-    <input type="password" ng-model="thePass">
-
-    <br>
-    <br>
+    <div id="form" ng-hide="currentUser.email" class="ng-hide">
+        <h3>Email</h3>
+        <input type="text" ng-model="theEmail">
+        <h3>Password</h3>
+        <input type="password" ng-model="thePass">
+        <!-- Basic buttons -->
+        <div class="buttons">
+            <button ng-click="simpleSignup(theEmail, thePass)"> Sign-up</button>
+            <button ng-click="simpleLogin(theEmail, thePass)">Log-in</button>
+            <button ng-click="facebookConnect()">Facebook</button>
+        </div>
+        <!-- basic buttons end -->
+    </div>
     <!-- {{users}} -->
-    <button ng-click="simpleSignup(theEmail, thePass)"> Sign-up</button>
-    <button ng-click="simpleLogin(theEmail, thePass)">Log-in</button>
-    <button ng-click="facebookLogin()">Facebook</button>
-    <br>
-    <a href="http://www.facebook.com">Google</a>
-
+    
 </div>
