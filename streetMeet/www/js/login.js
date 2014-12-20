@@ -1,4 +1,4 @@
-angular.module('sm-meetApp.login',  ["firebase"])
+angular.module('sm-meetApp.login',  ['firebase', 'ngCookies'])
 
 .controller('LoginCtrl', function($scope, $firebase, Auth) {
   angular.extend($scope, Auth);

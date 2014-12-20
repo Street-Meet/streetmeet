@@ -5,9 +5,12 @@
 // the 2nd parameter is an array of 'requires'
 var meetApp = angular.module('sm-meetApp',
   [
-
+    // external modules
     'ionic',
     'firebase',
+    'ngCookies',
+
+    //sm-meetApp Modules
     'sm-meetApp.login',
     'sm-meetApp.createEvents',
     'sm-meetApp.joinEvent'
