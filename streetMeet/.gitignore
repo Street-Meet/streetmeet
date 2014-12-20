@@ -6,3 +6,4 @@ platforms/
 plugins/
 **/.DS_Store
 **/public/.DS_Store
+www/lib/
