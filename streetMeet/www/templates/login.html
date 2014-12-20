@@ -38,7 +38,7 @@
     </div> <!-- .login-form -->
 
     <!-- check if the currenUser is empty, if false then hide this until we have something to show -->
-    <div class="list" >
+    <div class="list" ng-show="currentUser.email" >
         <div class="user-pic">
           <div class="user-pic-container">
               <img src="{{currentUser.picture.data.url}}" class="full-image">
