@@ -1,3 +1,5 @@
+/* Empty. Add your own CSS if you like */
+
 .clearfix:after {
   visibility: hidden;
   display: block;
@@ -8,7 +10,8 @@
   }
 * html .clearfix             { zoom: 1; } /* IE6 */
 *:first-child+html .clearfix { zoom: 1; } /* IE7 */
-/************** End Clearfix **************/
+
+/*********End Clearfix**********/
 
 /********* Ionic Style Resets *********/
 .button{
@@ -229,7 +232,6 @@ ul#events-current{
 
 
 /******** Event Info Screen - Attendee **********/
-
 
 
 

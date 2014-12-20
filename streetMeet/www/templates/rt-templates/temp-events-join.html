@@ -1,0 +1,56 @@
+<ion-pane>
+  <ion-header-bar class="bar-stable">
+    <h1 class="title">Join Event</h1>
+  </ion-header-bar>
+  <ion-content class="has-header">
+  <!-- <div ng-repeat="event in events"> -->
+      <div> {{events}}</div>
+  <!-- </div> -->
+  </ion-content>
+</ion-pane>
+
+
+    <ion-pane>
+      <ion-header-bar class="bar bar-stable bar-header">
+        <h1 class="title">Curent events</h1>
+        <button class="button icon ion-android-add"></button>
+      </ion-header-bar>
+      <ion-content class="has-header">
+
+
+
+        <ul id="events-current" class="list" ng-controller="mainController">
+
+          <li ng-repeat="event in events" on-touch="onTap($event)" on-swipe-left="onSwipeLeft($event)" class="item event item-thumbnail-left">
+            
+            <img src="http://lygsbtd.files.wordpress.com/2011/08/beer_toast.jpg">
+            <div class="event-main clearfix">
+              
+              <div class="icon-control-right">
+                <a href="" class="ion-minus-circled icon wf-icon"></a> 
+                <a href="" class="ion-plus-circled icon wf-icon"></a>
+              </div> <!-- li-nav -->
+              
+              <header class="event-header">
+                <h2>{{event.title}}</h2>
+                <p>{{event.tagline}}</p>
+              </header> <!-- .event-header -->
+              <ul class="event-info">
+                <li class="v-center"><span class="event-info-lg">12</span> of 24</li>
+                <li class="v-center"><span class="ion-thumbsup icon wf-icon"></span></li>
+                <li class="v-center"><span class="event-info-lg">18</span> min <br> remaining</li>
+              </ul>
+
+            </div> <!-- .event-main -->
+            <div class="event-description">
+              <p>
+                {{event.description}}
+              </p>
+
+            </div>
+
+          </li> <!-- .item -->
+        </ul>
+
+      </ion-content>
+    </ion-pane>
