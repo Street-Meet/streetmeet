@@ -1,0 +1,50 @@
+<!DOCTYPE html><html><head><title>app.js</title><meta http-equiv="Content-Type" content="text/html" charset="UTF-8"><link rel="stylesheet" media="all" href="../../../docco.css"></head><body><div id="container"><div id="background"></div><div id="jump_to">Jump To &hellip;<div id="jump_wrapper"><div id="jump_page"><a href="../../../index.html" class="source"><span class="file_name">README</span></a><a href="../../../streetMeet/www/js/app.js.html" class="source selected"><span class="base_path">streetMeet / www / js / </span><span class="file_name">app.js</span></a></div></div></div><table cellpadding="0" cellspacing="0"><thead><tr><th class="docs"><h1>app.js</h1><div class="filepath">streetMeet/www/js/</div></th><th class="code"></th></tr></thead><tbody><tr id="section-1"><td class="docs"><div class="pilwrap"><a href="#section-1" class="pilcrow">&#182;</a></div><p>Ionic Starter App</p>
+</td><td class="code"><div class="highlight"><pre></pre></div></td></tr><tr id="section-2"><td class="docs"><div class="pilwrap"><a href="#section-2" class="pilcrow">&#182;</a></div><p>angular.module is a global place for creating, registering and retrieving Angular modules
+'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
+the 2nd parameter is an array of 'requires'</p>
+</td><td class="code"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">meetApp</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;sm-meetApp&#39;</span><span class="p">,</span>
+  <span class="p">[</span>
+    <span class="s1">&#39;ionic&#39;</span>
+  <span class="p">])</span></pre></div></td></tr><tr id="section-3"><td class="docs"><div class="pilwrap"><a href="#section-3" class="pilcrow">&#182;</a></div><p>run in ionic</p>
+</td><td class="code"><div class="highlight"><pre><span class="p">.</span><span class="nx">run</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$ionicPlatform</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">$ionicPlatform</span><span class="p">.</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span></pre></div></td></tr><tr id="section-4"><td class="docs"><div class="pilwrap"><a href="#section-4" class="pilcrow">&#182;</a></div><p>Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+for form inputs)</p>
+</td><td class="code"><div class="highlight"><pre>    <span class="k">if</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">cordova</span> <span class="o">&amp;&amp;</span> <span class="nb">window</span><span class="p">.</span><span class="nx">cordova</span><span class="p">.</span><span class="nx">plugins</span><span class="p">.</span><span class="nx">Keyboard</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">cordova</span><span class="p">.</span><span class="nx">plugins</span><span class="p">.</span><span class="nx">Keyboard</span><span class="p">.</span><span class="nx">hideKeyboardAccessoryBar</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">if</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">StatusBar</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">StatusBar</span><span class="p">.</span><span class="nx">styleDefault</span><span class="p">();</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+<span class="p">})</span></pre></div></td></tr><tr id="section-5"><td class="docs"><div class="pilwrap"><a href="#section-5" class="pilcrow">&#182;</a></div><p>set up routing</p>
+</td><td class="code"><div class="highlight"><pre><span class="p">.</span><span class="nx">config</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$stateProvider</span><span class="p">,</span> <span class="nx">$urlRouterProvider</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">$urlRouterProvider</span><span class="p">.</span><span class="nx">otherwise</span><span class="p">(</span><span class="s1">&#39;/login&#39;</span><span class="p">);</span>
+  <span class="nx">$stateProvider</span>
+    <span class="p">.</span><span class="nx">state</span><span class="p">(</span><span class="s1">&#39;login&#39;</span><span class="p">,</span> <span class="p">{</span>
+      <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;/login&#39;</span><span class="p">,</span>
+      <span class="nx">templateUrl</span><span class="o">:</span> <span class="s1">&#39;templates/login.html&#39;</span><span class="p">,</span>
+      <span class="nx">controller</span><span class="o">:</span> <span class="s1">&#39;&#39;</span>
+    <span class="p">})</span>
+    <span class="p">.</span><span class="nx">state</span><span class="p">(</span><span class="s1">&#39;createEvent&#39;</span><span class="p">,</span> <span class="p">{</span>
+      <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;/createEvent&#39;</span><span class="p">,</span>
+      <span class="nx">template</span><span class="o">:</span> <span class="s1">&#39;templates/createEvent.html&#39;</span><span class="p">,</span>
+      <span class="nx">controller</span><span class="o">:</span> <span class="s1">&#39;&#39;</span>
+    <span class="p">})</span>
+    <span class="p">.</span><span class="nx">state</span><span class="p">(</span><span class="s1">&#39;joinEvent&#39;</span><span class="p">,</span> <span class="p">{</span>
+      <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;/joinEvent&#39;</span><span class="p">,</span>
+      <span class="nx">template</span><span class="o">:</span> <span class="s1">&#39;templates/joinEvent.html&#39;</span><span class="p">,</span>
+      <span class="nx">controller</span><span class="o">:</span> <span class="s1">&#39;&#39;</span>
+    <span class="p">})</span>
+    <span class="p">.</span><span class="nx">state</span><span class="p">(</span><span class="s1">&#39;mapView&#39;</span><span class="p">,</span> <span class="p">{</span>
+      <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;/mapView&#39;</span><span class="p">,</span>
+      <span class="nx">template</span><span class="o">:</span> <span class="s1">&#39;templates/mapView.html&#39;</span><span class="p">,</span>
+      <span class="nx">controller</span><span class="o">:</span> <span class="s1">&#39;&#39;</span>
+    <span class="p">})</span>
+    <span class="p">.</span><span class="nx">state</span><span class="p">(</span><span class="s1">&#39;profileView&#39;</span><span class="p">,</span> <span class="p">{</span>
+      <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;/profileView&#39;</span><span class="p">,</span>
+      <span class="nx">template</span><span class="o">:</span> <span class="s1">&#39;templates/profileView.html&#39;</span><span class="p">,</span>
+      <span class="nx">controller</span><span class="o">:</span> <span class="s1">&#39;&#39;</span>
+    <span class="p">})</span>
+<span class="p">});</span>
+
+</pre></div></td></tr></tbody></table><div id="generated">generated Fri Dec 19 2014 15:45:57 GMT-0800 (PST)  </div><div id="projectname"><a href="../../../index.html">Street Meet</a></div></div></body></html>
