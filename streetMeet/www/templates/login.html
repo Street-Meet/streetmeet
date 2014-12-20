@@ -1,44 +1,56 @@
-<ion-pane>
-  <ion-header-bar class="bar-stable">
-    <h1 class="title">Login</h1>
-  </ion-header-bar>
-  <ion-content class="has-header">
-        
-       
-        <!-- check if the currenUser is empty, if false then hide this until we have something to show -->
-        <div class="list" >
-            <div class="item item-body">
+<ion-pane class="bg-dark-grey">
+
+  <ion-content>
+
+    <div class="user-pic" ng-hide="currentUser.email">
+      <div class="user-pic-container">
+        <div class="ion-person"></div>
+      </div> <!-- .login-pic-container -->
+
+    </div> <!-- .user-pic -->
+
+
+    <div class="login-form" ng-hide="currentUser.email">
+      <h4>Login To Your Account</h4>
+
+      <div class="list" >
+        <label class="item item-input">
+          <input type="text" placeholder="your@email.com" ng-model="theEmail">
+        </label>
+        <label class="item item-input">
+          <input type="password" placeholder="Password" ng-model="thePass">
+        </label>
+      </div>
+
+      <a href="">Forgot your password?</a>
+
+      <button class="button button-light" ng-click="simpleLogin(theEmail, thePass)">
+        Login
+      </button>
+      
+      <button class="button fbook-login" ng-click="facebookConnect()">
+        Login With Facebook
+      </button>
+    
+      <a href="" ng-click="simpleSignup(theEmail, thePass)">Create an Account</a>
+
+
+    </div> <!-- .login-form -->
+
+    <!-- check if the currenUser is empty, if false then hide this until we have something to show -->
+    <div class="list" ng-show="currentUser.email" >
+        <div class="user-pic">
+          <div class="user-pic-container">
               <img src="{{currentUser.picture.data.url}}" class="full-image">
-          </div>
-            <div class="item item-body">
-              <h1>{{currentUser.name}}</h1>
-              <h2> {{currentUser.email}}</h2>
-          </div>
+          </div> <!-- .login-pic-container -->
+        </div> <!-- .user-pic -->
 
-        </div>
-        
-        <!-- login, signup or sign in with facebook -->
-        <div class="list" ng-hide="currentUser.email">
-            <label class="item item-input item-stacked-label">
-                <span class="input-label">Email</span>
-                <input type="text" placeholder="beat@theMeat.com" ng-model="theEmail">
-            </label>
+        <div class="item item-body">
+          <h1>{{currentUser.name}}</h1>
+          <h2> {{currentUser.email}}</h2>
+      </div>
 
-            <label class="item item-input item-stacked-label">
-                <span class="input-label">Password</span>
-                <input type="password" placeholder="Password" ng-model="thePass">
-            </label>
-
-
-        </div>
-         <div class="list padding">
-
-            <!-- Basic buttons with function directed to login.js -->
-                <button ng-click="simpleSignup(theEmail, thePass)" class="button button-positive button-block"> Sign-up</button>
-                <button ng-click="simpleLogin(theEmail, thePass)" class="button button-positive button-block">Log-in</button>
-                <button ng-click="facebookConnect()" class="button button-positive button-block">Facebook</button>
-            <!-- basic buttons end -->
-        </div>
+    </div>
 
   </ion-content>
 </ion-pane>

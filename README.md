@@ -7,7 +7,7 @@
 ## Team
 
   - __Product Owner__: Rene Polo
-  - __Scrum Master__: Alex Dejani
+  - __Scrum Master__: Alex Dajani
   - __Development Team Members__: Brett Leibowitz , Rick Takes 
 
 ## Table of Contents
