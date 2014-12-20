@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/karma/bin/karma start --single-run --browsers PhantomJS",
-    "start": "node server/server.js",
-    "install": "scripts/install.sh"
+    "start": "node server/server.js"
   },
   "repository": {
     "type": "git",
