@@ -5,7 +5,12 @@
 // the 2nd parameter is an array of 'requires'
 var meetApp = angular.module('sm-meetApp',
   [
-    'ionic'
+    'ionic',
+    'firebase',
+    'sm-meetApp.login',
+    'sm-meetApp.createEvents',
+    'sm-meetApp.joinEvent'
+
   ])
 
 
@@ -29,26 +34,26 @@ var meetApp = angular.module('sm-meetApp',
     .state('login', {
       url: '/login',
       templateUrl: 'templates/login.html',
-      controller: ''
+      controller: 'LoginCtrl'
     })
     .state('createEvent', {
       url: '/createEvent',
-      template: 'templates/createEvent.html',
-      controller: ''
+      templateUrl: 'templates/createEvent.html',
+      controller: 'CreateEventsCtrl'
     })
     .state('joinEvent', {
       url: '/joinEvent',
-      template: 'templates/joinEvent.html',
-      controller: ''
+      templateUrl: 'templates/joinEvent.html',
+      controller: 'JoinEventCtrl'
     })
     .state('mapView', {
       url: '/mapView',
-      template: 'templates/mapView.html',
+      templateUrl: 'templates/mapView.html',
       controller: ''
     })
     .state('profileView', {
       url: '/profileView',
-      template: 'templates/profileView.html',
+      templateUrl: 'templates/profileView.html',
       controller: ''
     })
 });
