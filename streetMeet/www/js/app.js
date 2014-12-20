@@ -9,7 +9,8 @@ var meetApp = angular.module('sm-meetApp',
     'firebase',
     'sm-meetApp.login',
     'sm-meetApp.createEvents',
-    'sm-meetApp.joinEvent'
+    'sm-meetApp.joinEvent',
+    'ngCookies'
 
   ])
 

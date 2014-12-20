@@ -1,11 +1,12 @@
-angular.module('sm-meetApp.login',  ["firebase"])
+angular.module('sm-meetApp.login',  ['firebase', 'ngCookies'])
 
-.controller('LoginCtrl', function($scope, $firebase, Auth) {
+.controller('LoginCtrl', ['$cookieStore', function($scope, $firebase, $cookieStore, Auth) {
   angular.extend($scope, Auth);
      
      $scope.currentUser;
 
     $scope.facebookConnect = function(){
+        console.log('facebook!');
        Auth.facebookLogin()
        .then(function(data){
           $scope.currentUser = data;
@@ -19,12 +20,12 @@ angular.module('sm-meetApp.login',  ["firebase"])
        $scope.currentUser = data.password;
      });
     }
-})
+}])
   .factory('Auth', function ($q) {
-      var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
-    var currentUser = { 
-      data: null
-    };
+    var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
+    // var currentUser = { 
+    //   data: null
+    // };
     
     var simpleSignup = function(email, password){
        var deferred = $q.defer();
@@ -74,16 +75,9 @@ angular.module('sm-meetApp.login',  ["firebase"])
            console.log("Login Failed!", error);
            deferred.reject(error);
         } else {
-          
-
-          ref.child("users").child(authData.uid).set(authData);
-          
-
+          ref.child("users").child(authData.uid).set(authData);  
           console.log("Authenticated successfully with payload:", authData.facebook.cachedUserProfile);
-          // updateUserData(authData.facebook.cachedUserProfile);
-          
            deferred.resolve(authData.facebook.cachedUserProfile);
-          // return authData.facebook.cachedUserProfile;
         }
       },{
         scope: "email, user_likes, user_events, user_groups" // the permissions requested
@@ -91,18 +85,11 @@ angular.module('sm-meetApp.login',  ["firebase"])
       return deferred.promise;
     };
 
-   
-    
-
-   
     return {
       currentUser: currentUser,
       simpleLogin : simpleLogin,
       simpleSignup: simpleSignup,
       facebookLogin: facebookLogin
     }
-
-
-
   });
 
