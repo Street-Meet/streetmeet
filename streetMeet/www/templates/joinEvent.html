@@ -9,27 +9,27 @@
   <ion-content class="has-header">
 
     <ul id="events-current" class="list" >
-      
+
       <li  on-swipe="onSwipe($event)" on-tap="expandTap($event)" ng-repeat="event in list" class="slide-controls item event clearfix">
-        
+
         <div class="slide-confirm slide-button v-center">
           Join Event
         </div>
-        
+
         <div class="slide-deny slide-button v-center" on-tap="removeTap($event)">
           Remove Event
         </div>
-          
+
         <div class="event-img">
           <img src="http://lygsbtd.files.wordpress.com/2011/08/beer_toast.jpg">
-        </div>  
-        
-        <div class="event-main clearfix">          
+        </div>
+
+        <div class="event-main clearfix">
           <header class="event-header">
             <h2>{{ event.title }}</h2>
             <p>{{ event.description }} </p>
           </header> <!-- .event-header -->
-          
+
           <ul class="event-info">
             <li class="v-center"><span class="event-info-lg">12</span> of 24</li>
             <li class="v-center"><span class="ion-thumbsup icon wf-icon"></span></li>
@@ -38,7 +38,7 @@
 
         </div> <!-- .event-main -->
         <div class="event-description">
-          <p> 
+          <p>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio voluptas reiciendis facilis sed, laboriosam itaque.
           </p>
         </div>
