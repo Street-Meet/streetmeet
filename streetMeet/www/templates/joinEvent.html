@@ -1,23 +1,49 @@
 <ion-pane>
-  <ion-header-bar class="bar-stable">
-    <h1 class="title">Join Event</h1>
+
+  <ion-header-bar class="bar bar-stable bar-header">
+    <h1 class="title">Current Events</h1>
+    <button class="button icon ion-android-add" ui-sref="createEvent"></button>
   </ion-header-bar>
+
   <ion-content class="has-header">
-  <!-- <div ng-repeat="event in events"> -->
-       <div class="list">
-      <div ng-repeat="event in list">
-       
-      <a class="item item-thumbnail-left" href="#">
-             <img src="img/calendaricon.png">
-             <h2> {{ event.title }}</h2>
-             <p>{{ event.description }}  </p>
-      </a>
+
+    <ul id="events-current" class="list" ng-controller="mainController">
+
+      <!-- on-touch="onTap($event)" -->
+      <li  on-swipe="onSwipe($event)" on-tap="expandTap($event)" ng-repeat="event in list" class="slide-controls item event clearfix">
+        <div class="slide-confirm slide-button">
+          Join Event
+        </div>
+        <div class="slide-deny slide-button" on-tap="removeTap($event)">
+          Remove Event
+        </div>
+          
+        <div class="event-img">
+          <img src="http://lygsbtd.files.wordpress.com/2011/08/beer_toast.jpg">
+        </div>  
+        <div class="event-main clearfix">          
+          <header class="event-header">
+            <h2>{{ event.title }}</h2>
+            <p>{{ event.description }} </p>
+          </header> <!-- .event-header -->
+          <ul class="event-info">
+            <li class="v-center"><span class="event-info-lg">12</span> of 24</li>
+            <li class="v-center"><span class="ion-thumbsup icon wf-icon"></span></li>
+            <li class="v-center"><span class="event-info-lg">18</span> min <br> remaining</li>
+          </ul>
+
+        </div> <!-- .event-main -->
+        <div class="event-description">
+          <p> 
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio voluptas reiciendis facilis sed, laboriosam itaque.
+          </p>
+
+        </div>
 
 
-    
-    </div>
-       </div>
 
-  <!-- </div> -->
+      </li> <!-- .item -->
+
+    </ul> <!-- .list -->
   </ion-content>
 </ion-pane>

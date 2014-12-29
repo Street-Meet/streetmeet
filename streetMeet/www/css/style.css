@@ -7,7 +7,7 @@
   height: 0;
   }
 * html .clearfix             { zoom: 1; } /* IE6 */
-*:first-child+html .clearfix { zoom: 1; } /* IE7 */
+*:first-of-type+html .clearfix { zoom: 1; } /* IE7 */
 /************** End Clearfix **************/
 
 /********* Ionic Style Resets *********/
@@ -16,6 +16,8 @@
   font-size: 1em;
   line-height: 2.25em;
 }
+
+
 /********* EndIonic Style Resets *********/
 html, body{
   width: 100%;
@@ -137,8 +139,6 @@ label.item{
 input[type="text"]{
 }
 
-
-
 .wf-icon {
 
   color: #444;
@@ -157,6 +157,46 @@ input[type="text"]{
 
 
 /******** Layout **********/
+
+/*Interactive Elements*/
+.slide-button{
+  width: 30%;
+  height: 100%;
+  top: 0;
+  position: absolute;
+  text-align: center;
+  color: #fff;
+}
+
+  .slide-button .wf-icon{
+    color: #fff;
+    margin: 0 0;
+  }
+
+.slide-deny {
+  background: #5A1F00;
+  left: 100%;
+  -webkit-box-shadow: inset 10px 0px 3px -9px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow:    inset 10px 0px 3px -9px rgba(50, 50, 50, 0.75);
+  box-shadow:         inset 10px 0px 3px -9px rgba(50, 50, 50, 0.75);
+  border-left: #CAC9C9;
+  border-width: 1px;
+
+}
+
+.slide-confirm{
+  background: #477725;
+  left: -30%;
+  -webkit-box-shadow: inset 10px 180px 3px -9px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow:    inset 10px 180px 3px -9px rgba(50, 50, 50, 0.75);
+  box-shadow:         inset 10px 180px 3px -9px rgba(50, 50, 50, 0.75);
+  border-right: #CAC9C9;
+  border-width: 1px;
+}
+
+li.slide-controls, li.item.slide-controls{
+  overflow: visible;
+}
 
 
 /******** Login Screen **********/
@@ -202,16 +242,33 @@ input[type="text"]{
 
 /******** Event List **********/
 ul#events-current{
-
+  width: 100%;
 }
 
   ul#events-current li.item{
-      width: 100%;
+     width: 100%;
+     border-left: none;
+     border-right: none;
   }
+
+    .event-img{
+      max-width: 80px;
+      max-height: 80px;
+      float: left;
+    }
+
+      .event-img img{
+        width: 100%;
+      }
+
+    .event-main{
+      float: left;
+      margin-left: 2em;
+    }
+
 
     li header{
       float: left;
-
     }
 
 
@@ -219,7 +276,7 @@ ul#events-current{
     ul#events-current .event-description{
       clear: both;
       display: none;
-      width: 60%;
+      width: 100%;
       margin: 1.8em 0 0 0;
       word-wrap: normal;
 
