@@ -1,6 +1,6 @@
 angular.module('sm-meetApp.login',  ['firebase', 'ngCookies'])
 
-.controller('LoginCtrl', function($scope, $firebase, Auth) {
+.controller('LoginCtrl', function($scope, $firebase, $cookieStore, Auth) {
   angular.extend($scope, Auth);
      
      $scope.currentUser;
@@ -8,7 +8,13 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies'])
     $scope.facebookConnect = function(){
        Auth.facebookLogin()
        .then(function(data){
-          $scope.currentUser = data;
+           // Put cookie
+          $cookieStore.put('currentUser', data.uid );
+          $cookieStore.put('currentToken', data.token );
+          
+          console.log('Current User: '+$cookieStore.get('currentUser') +' current Token: '+ $cookieStore.get('currentToken'))
+
+          $scope.currentUser = data.facebook.cachedUserProfile;
         });
     }
 
@@ -79,10 +85,10 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies'])
           ref.child("users").child(authData.uid).set(authData);
           
 
-          console.log("Authenticated successfully with payload:", authData.facebook.cachedUserProfile);
+          console.log("Authenticated successfully with payload:", authData);
           // updateUserData(authData.facebook.cachedUserProfile);
           
-           deferred.resolve(authData.facebook.cachedUserProfile);
+           deferred.resolve(authData);
           // return authData.facebook.cachedUserProfile;
         }
       },{
