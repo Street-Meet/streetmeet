@@ -39,6 +39,7 @@ angular.module('sm-meetApp.userInterfaceController',  [])
    * @return {null} returns nothing
    */
   $scope.onSwipe = function($event){
+    console.log($event);
     var direction = $event.gesture.direction;
     var margins = {left: '-30%', right: '30%'};
     var cont = itemControls.getDomItem($event);

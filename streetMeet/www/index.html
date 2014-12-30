@@ -36,6 +36,8 @@
     <script src="js/joinEvent.js"></script>
     <script src="js/userInterfaceController.js"></script>
     <script src="js/map.js"></script>
+    <script src="js/currentUser.js"></script>
+
 
   </head>
   <body ng-app="sm-meetApp" >
@@ -69,7 +71,7 @@
       <li class="item" ui-sref="joinEvent" menu-toggle="left">Current Events</li>
       <li class="item" ui-sref="mapView" menu-toggle="left">mapView</li>
       <li class="item" ui-sref="profileView" menu-toggle="left">User Profile</li>
-      <li class="item" ui-sref="" menu-toggle="left">Logout</li>
+      <li class="item" ng-click="authObj.$unauth()" ui-sref="login" menu-toggle="left">Logout</li>
     </ul>
   </ion-side-menu>
 
