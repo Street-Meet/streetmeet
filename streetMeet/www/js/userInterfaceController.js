@@ -1,6 +1,8 @@
 angular.module('sm-meetApp.userInterfaceController',  [])
 
-.controller('mainController', ['$scope', 'itemControls', function($scope, itemControls){
+.controller('uiController', ['$scope', '$ionicSideMenuDelegate', 'itemControls', function($scope, $ionicSideMenuDelegate, itemControls){
+
+  $ionicSideMenuDelegate.canDragContent(false);
 
   /**
    * Expands the event list item details

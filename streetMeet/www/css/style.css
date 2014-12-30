@@ -158,6 +158,11 @@ input[type="text"]{
 
 /******** Layout **********/
 
+/*Generic wrapper until we build a desktop version*/
+.wrapper{
+  max-width: 600px;
+}
+
 /*Interactive Elements*/
 .slide-button{
   width: 30%;
@@ -176,9 +181,9 @@ input[type="text"]{
 .slide-deny {
   background: #5A1F00;
   left: 100%;
-  -webkit-box-shadow: inset 10px 0px 3px -9px rgba(50, 50, 50, 0.75);
-  -moz-box-shadow:    inset 10px 0px 3px -9px rgba(50, 50, 50, 0.75);
-  box-shadow:         inset 10px 0px 3px -9px rgba(50, 50, 50, 0.75);
+  -webkit-box-shadow: inset 2px 0px 3px -1px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow:    inset 2px 0px 3px -1px rgba(50, 50, 50, 0.75);
+  box-shadow:         inset 2px 0px 3px -1px rgba(50, 50, 50, 0.75);
   border-left: #CAC9C9;
   border-width: 1px;
 
@@ -187,9 +192,9 @@ input[type="text"]{
 .slide-confirm{
   background: #477725;
   left: -30%;
-  -webkit-box-shadow: inset 10px 180px 3px -9px rgba(50, 50, 50, 0.75);
-  -moz-box-shadow:    inset 10px 180px 3px -9px rgba(50, 50, 50, 0.75);
-  box-shadow:         inset 10px 180px 3px -9px rgba(50, 50, 50, 0.75);
+  -webkit-box-shadow: inset -2px 0px 3px -1px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow:    inset -2px 0px 3px -1px rgba(50, 50, 50, 0.75);
+  box-shadow:         inset -2px 0px 3px -1px rgba(50, 50, 50, 0.75);
   border-right: #CAC9C9;
   border-width: 1px;
 }
@@ -270,8 +275,6 @@ ul#events-current{
     li header{
       float: left;
     }
-
-
 
     ul#events-current .event-description{
       clear: both;
