@@ -1,114 +1,40 @@
 angular.module('sm-meetApp.login',  ['firebase', 'ngCookies'])
 
-.controller('LoginCtrl', function($scope, $firebase, $cookieStore, Auth) {
-  angular.extend($scope, Auth);
-     
-     $scope.currentUser;
-
-    $scope.facebookConnect = function(){
-       Auth.facebookLogin()
-       .then(function(data){
-           // Put cookie
-          $cookieStore.put('currentUser', data.uid );
-          $cookieStore.put('currentToken', data.token );
-          
-          console.log('Current User: '+$cookieStore.get('currentUser') +' current Token: '+ $cookieStore.get('currentToken'))
-
-          $scope.currentUser = data.facebook.cachedUserProfile;
-        });
-    }
-
-    $scope.simpleLogin = function(email, password){
-     console.log('simple login clicked');
-     Auth.simpleLogin(email, password).
-     then(function(data){
-       $scope.currentUser = data.password;
-     });
-    }
-})
-  .factory('Auth', function ($q) {
-      var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
-    var currentUser = { 
-      data: null
-    };
+.controller('LoginCtrl', ["$scope",  "$firebaseAuth", "$cookieStore", 
+  function($scope, $firebaseAuth, $cookieStore) {
     
-    var simpleSignup = function(email, password){
-       var deferred = $q.defer();
-       ref.createUser({
-         
-         email    : email,
-         password : password
-       }, function(error) {
-         if (error === null) {
-           console.log("User created successfully");
-          deferred.resolve();
-         } else {
-           console.log("Error creating user:", error);
-           deferred.reject(error);
-         }
-       });
-        return deferred.promise;
-    };
+    var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
+    var auth = $firebaseAuth(ref);
 
-    
-    var simpleLogin = function(email, password){
-      var deferred = $q.defer();
-      ref.authWithPassword({
-        email    : email,
-        password : password
-      }, function(error, authData) {
-        if (error) {
-          console.log("Login Failed!", error);
-          deferred.reject(error);
-        } else {
-          console.log("Authenticated successfully with payload:", authData);
-          
-          deferred.resolve(authData);
-          ref.child("users").child(authData.uid).set(authData);
-        }
-      },
-      {
-      remember: "sessionOnly"
+    $scope.simpleLogin = function(theEmail, thePass){
+      console.log('clicked Simple login');
+      auth.$authWithPassword({
+        email: theEmail,
+        password: thePass
+      }).then(function(authData) {
+
+        console.log("Logged in as:", authData.uid);
+      }).catch(function(error) {
+        console.error("Authentication failed:", error);
       });
-      return deferred.promise;
     }
 
-    var facebookLogin = function(){
-      var deferred = $q.defer();
-      ref.authWithOAuthPopup("facebook", function(error, authData) {
-        if (error) {
-           console.log("Login Failed!", error);
-           deferred.reject(error);
-        } else {
-          
-
-          ref.child("users").child(authData.uid).set(authData);
-          
-
-          console.log("Authenticated successfully with payload:", authData);
-          // updateUserData(authData.facebook.cachedUserProfile);
-          
-           deferred.resolve(authData);
-          // return authData.facebook.cachedUserProfile;
-        }
-      },{
-        scope: "email, user_likes, user_events, user_groups" // the permissions requested
+    $scope.loginWithFacebook = function(){
+    console.log('clicked Facebook login');
+    auth.$authWithOAuthPopup("facebook",
+      {scope: "email, user_events" }) // scope has the permissions requested
+    .then(function(authData) {
+      console.log('this is the authData: ', authData);
+      $cookieStore.put('currentUser', authData.uid );
+      $cookieStore.put('currentToken', authData.token );
+        console.log("Logged in as:", authData.uid);
+      }).catch(function(error) {
+        console.error("Authentication failed:", error);
       });
-      return deferred.promise;
     };
-
-   
-    
-
-   
-    return {
-      currentUser: currentUser,
-      simpleLogin : simpleLogin,
-      simpleSignup: simpleSignup,
-      facebookLogin: facebookLogin
-    }
+  
+  }
+]);
 
 
-
-  });
 

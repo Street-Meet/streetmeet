@@ -28,9 +28,15 @@
         Login
       </button>
       
-      <button class="button fbook-login" ng-click="facebookConnect()">
+      <button class="button fbook-login" ng-click="loginWithFacebook()">
         Login With Facebook
       </button>
+
+      <!-- logout  -->
+        <span ng-show="authData">
+          {{ currentUser.name }} | <a href="#" ng-click="authObj.$unauth()">Logout</a>
+        </span>
+      <!-- end:logout -->
     
       <a href="" ng-click="simpleSignup(theEmail, thePass)">Create an Account</a>
 
