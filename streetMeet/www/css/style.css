@@ -163,6 +163,17 @@ input[type="text"]{
   max-width: 600px;
 }
 
+
+/*Navigation*/
+.side-menu li{
+  cursor: pointer;
+}
+
+  .side-menu li:hover{
+    color: #fff;
+    background: grey;
+  }
+
 /*Interactive Elements*/
 .slide-button{
   width: 30%;
