@@ -32,11 +32,6 @@
         Login With Facebook
       </button>
 
-      <!-- logout  -->
-        <span ng-show="authData">
-          {{ currentUser.name }} | <a href="#" ng-click="authObj.$unauth()">Logout</a>
-        </span>
-      <!-- end:logout -->
     
       <a href="" ng-click="simpleSignup(theEmail, thePass)">Create an Account</a>
 
@@ -55,7 +50,13 @@
           <h1>{{currentUser.name}}</h1>
           <h2> {{currentUser.email}}</h2>
       </div>
-
+      <div>
+        <!-- logout  -->
+          <span ng-show="currentUser">
+            {{ currentUser.name }} | <a href="#" ng-click="authObj.$unauth()">Logout</a>
+          </span>
+        <!-- end:logout -->
+      </div>
     </div>
 
   </ion-content>

@@ -2,7 +2,7 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies'])
 
 .controller('LoginCtrl', ["$scope",  "$firebaseAuth", "$cookieStore", 
   function($scope, $firebaseAuth, $cookieStore) {
-    
+    $scope.currentUser;
     var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
     var auth = $firebaseAuth(ref);
 
@@ -28,6 +28,7 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies'])
       $cookieStore.put('currentUser', authData.uid );
       $cookieStore.put('currentToken', authData.token );
         console.log("Logged in as:", authData.uid);
+        $scope.currentUser = authData.facebook.cachedUserProfile;
       }).catch(function(error) {
         console.error("Authentication failed:", error);
       });
