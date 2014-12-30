@@ -1,6 +1,6 @@
 angular.module('sm-meetApp.login',  ['firebase', 'ngCookies'])
 
-.controller('LoginCtrl', ["$scope",  "$firebaseAuth", "$cookieStore", 
+.controller('LoginCtrl', ["$scope",  "$firebaseAuth", "$cookieStore",
   function($scope, $firebaseAuth, $cookieStore) {
     $scope.currentUser;
     var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
@@ -33,7 +33,6 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies'])
         console.error("Authentication failed:", error);
       });
     };
-  
   }
 ]);
 
