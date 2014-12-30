@@ -15,7 +15,7 @@ var meetApp = angular.module('sm-meetApp',
     'sm-meetApp.createEvents',
     'sm-meetApp.joinEvent',
     'sm-meetApp.userInterfaceController'
-
+    'sm-meetApp.map'
   ])
 // run in ionic
 .run(function($ionicPlatform) {
@@ -52,7 +52,7 @@ var meetApp = angular.module('sm-meetApp',
     .state('mapView', {
       url: '/mapView',
       templateUrl: 'templates/mapView.html',
-      controller: ''
+      controller: 'MapCtrl'
     })
     .state('profileView', {
       url: '/profileView',
