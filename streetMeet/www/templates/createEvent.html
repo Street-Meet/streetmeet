@@ -18,8 +18,6 @@
                     <input type="text" placeholder="Number of attendees. i.e. 2 - 20" ng-model="eventCapacity">
             </label>
 
-
-
             <label class="item item-input">
                     <input type="text" placeholder="Event Category" ng-model="eventCategory">
             </label>
@@ -28,7 +26,9 @@
                     <input type="text" placeholder="Minimun Capacity" ng-model="eventMinCapacity">
             </label>
 
-            <button ng-click="createEvent(eventTitle, eventDescription, eventCapacity, eventCategory, eventMinCapacity)" class="button button-positive button-block">Create Event</button>
+            <button ng-click="createEvent(eventTitle, eventDescription, eventCapacity, eventCategory, eventMinCapacity)" class="button button-positive button-block">Create Event</button> 
+
+            <button class="button button-light">Cancel</button>
         </div>
 
     </div>
