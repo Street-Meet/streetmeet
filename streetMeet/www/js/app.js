@@ -14,7 +14,8 @@ var meetApp = angular.module('sm-meetApp',
     'sm-meetApp.login',
     'sm-meetApp.createEvents',
     'sm-meetApp.joinEvent',
-    'sm-meetApp.userInterfaceController'
+    'sm-meetApp.userInterfaceController',
+    'sm-meetApp.currentUser'
 
   ])
 // run in ionic
