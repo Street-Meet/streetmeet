@@ -30,22 +30,46 @@
     <script src="js/login.js"></script>
     <script src="js/createEvent.js"></script>
     <script src="js/joinEvent.js"></script>
+    <script src="js/userInterfaceController.js"></script>
 
 
   </head>
-  <body ng-app="sm-meetApp">
+  <body ng-app="sm-meetApp" >
+    <div class="wrapper" ng-controller="uiController">
 
+<!-- <ion-nav-bar>
+  <ion-nav-buttons side="left">
+   <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+</ion-nav-bar> -->
+
+
+<ion-side-menus enable-menu-with-back-views="true" canDrag="false">    
+  <ion-side-menu-content edge-drag-threshold="true" drag-content="false">
+    <ion-header-bar class="bar bar-stable bar-header">
+      <button class="button icon ion-navicon" menu-toggle="left"></button>
+      <h1 class="title">Current Events</h1>
+      <button class="button icon ion-android-add" ui-sref="createEvent"></button>
+    </ion-header-bar>
     <ion-nav-view></ion-nav-view>
-    <div class="tabs">
-      <a class="tab-item" ui-sref="login">
-        Login
-      </a>
-      <a class="tab-item" ui-sref="createEvent">
-        Create Events
-      </a>
-      <a class="tab-item" ui-sref="joinEvent">
-        Show Events
-      </a>
-    </div>
+  </ion-side-menu-content>
+
+  <!-- Left menu -->
+  <ion-side-menu side="left">
+    <ul class="list side-menu">
+      <li class="item" ui-sref="login" menu-toggle="left">Login</li>
+      <li class="item" ui-sref="createEvent" menu-toggle="left">Create an Event</li>
+      <li class="item" ui-sref="joinEvent" menu-toggle="left">Current Events</li>
+      <li class="item" ui-sref="mapView" menu-toggle="left">mapView</li>
+      <li class="item" ui-sref="profileView" menu-toggle="left">User Profile</li>
+      <li class="item" ui-sref="" menu-toggle="left">Logout</li>
+    </ul>
+  </ion-side-menu>
+
+</ion-side-menus>
+
+
+  </div> <!-- .wrapper -->
+
   </body>
 </html>
