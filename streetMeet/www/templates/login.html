@@ -53,7 +53,7 @@
       <div>
         <!-- logout  -->
           <span ng-show="currentUser">
-            {{ currentUser.name }} | <a href="#" ng-click="authObj.$unauth()">Logout</a>
+            {{ currentUser.name }} | <a href="#" ng-click="authObj.$unauth()" ui-sref="login">Logout</a>
           </span>
         <!-- end:logout -->
       </div>

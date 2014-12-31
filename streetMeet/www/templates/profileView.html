@@ -1,24 +1,57 @@
-<ion-pane class="bg-dark-grey">
+<ion-pane class="bg-dark-grey" ng-controller="currentUser">
   <ion-content>
-    <ion-header-bar class="bar bar-stable bar-header">
-      <h1 class="title">User Name</h1>
-    </ion-header-bar>
-
-      <div class="user-pic header-offset">
+      <div class="user-pic has-header">
         <div class="user-pic-container">
-          <div class="ion-person"></div>
+          <img src="{{currentUser.profilePic}}" alt="">
         </div> <!-- .login-pic-container -->
 
       </div> <!-- .user-pic -->
 
     <header class="bar bar-stable">
-      <h1 class="title">About</h1>
+      <h1 class="title">{{currentUser.name}}</h1>
     </header>
 
-    <section class="full-width-text header-offset">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus, molestiae illum cupiditate voluptates nobis! Aliquam, eum nostrum rem ad minima.</p>
+    <section class="full-width-text">
 
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus, molestiae illum cupiditate voluptates nobis! Aliquam, eum nostrum rem ad minima.</p>
+      <header class="bar bar-stable">
+        <h1 class="title">Hosted Events</h1>
+      </header>
+
+
+      <ul id="events-current" class="list has-header" >
+        
+        <li on-tap="expandTap($event)" ng-repeat="event in list" class="slide-controls item event clearfix">
+           
+
+          <div class="event-date">
+            10/27/2014
+          </div>            
+          <div class="event-img">
+            <img src="http://lygsbtd.files.wordpress.com/2011/08/beer_toast.jpg">
+          </div>  
+          
+          <div class="event-main clearfix">          
+            <header class="event-header">
+              <h2>{{ event.title }}</h2>
+              <p>{{ event.description }} </p>
+            </header> <!-- .event-header -->
+            
+            <ul class="event-info">
+              <li class="v-center"><span class="event-info-lg">12</span> of 24</li>
+              <li class="v-center"><span class="ion-thumbsup icon wf-icon"></span></li>
+            </ul>
+
+          </div> <!-- .event-main -->
+          <div class="event-description">
+            <p> 
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio voluptas reiciendis facilis sed, laboriosam itaque.
+            </p>
+          </div>
+        </li> <!-- .item -->
+
+      </ul> <!-- .list -->
+
+
 
     </section>
   </ion-content>
