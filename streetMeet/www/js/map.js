@@ -6,88 +6,31 @@ angular.module('sm-meetApp.map',  ['firebase'])
   var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
   var geoFire = new GeoFire(ref);
 
-
-
   // Get the current user's location
   Map.getLocation();
 
-
-  var center = new google.maps.LatLng(37.785326, -122.405696);
-  var mapOptions = {
-    zoom: 15,
-    center: center,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  };
-  $scope.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-  // $scope.map = new google.maps.Map(document.getElementById('map_canvas'),
-              // mapOptions);
-
-
-  // Create a draggable circle centered on the map
-  // var circle = new google.maps.Circle({
-  //   strokeColor: "#6D3099",
-  //   strokeOpacity: 0.7,
-  //   strokeWeight: 1,
-  //   fillColor: "#B650FF",
-  //   fillOpacity: 0.35,
-  //   map: $scope.map,
-  //   center: center,
-  //   radius: 1000,
-  //   draggable: true
-  // });
-
-  google.maps.event.addListener($scope.map, 'drag', function() {
-      // console.log($scope.map.center);
-    });
-
-  $scope.createEvent = function() {
-
-    $('<div/>').addClass('centerMarker').appendTo($scope.map.getDiv())
-    //do something onclick
-    .click(function(){
-      console.log($scope.map.center)
-      // var that=$(this);
-      // if(!that.data('win')){
-      //   that.data('win',new google.maps.InfoWindow({content:'this is the center'}));
-      //   that.data('win').bindTo('position',$scope.map,'center');
-      // }
-      // that.data('win').open($scope.map);
-    });
-    // $scope.marker = new google.maps.Marker({
-    //   position: center,
-    //   draggable: true,
-    //   map: $scope.map,
-    //   title: 'Hello World!'
-    // });
-
-    // $scope.markLoc = function() {
-    //   console.log($scope.marker.getPosition());
-    // }
-
-    // var infowindow = new google.maps.InfoWindow({
-    //   // content: '<div style="min-width:80px">set location</div>',
-    //   content: "<button onclick='console.log(this)'>set location</button>"
-    // });
-
-    // infowindow.open($scope.map,$scope.marker);
-
-    // google.maps.event.addListener($scope.marker, 'drag', function() {
-    //   // $scope.map.setZoom(15);
-    //   $scope.map.setCenter($scope.marker.getPosition());
-    //   console.log($scope.marker.getPosition());
-    // });
-
-    // google.maps.event.addListener($scope.map, 'drag', function() {
-    //   $scope.marker.center = $scope.map.getPosition());
-    //   console.log(marker.getPosition());
-    // });
-  };
 
 })
 
 .factory('Map', function ($q) {
   var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
   var geoFire = new GeoFire(ref);
+
+  var center = new google.maps.LatLng(47.785326, -122.405696);
+  var mapOptions = {
+    zoom: 15,
+    center: center,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+  var createEvent = function() {
+    $('<div/>').addClass('centerMarker').appendTo(map.getDiv())
+    .click(function(){
+      console.log(map.getCenter())
+    });
+  };
+
 
   var getLocation = function() {
     if (typeof navigator !== "undefined" && typeof navigator.geolocation !== "undefined") {
@@ -102,6 +45,8 @@ angular.module('sm-meetApp.map',  ['firebase'])
   var geolocationCallback = function(location) {
     var latitude = location.coords.latitude;
     var longitude = location.coords.longitude;
+    var center = new google.maps.LatLng(latitude, longitude);
+    map.setCenter(center);
     console.log("Retrieved user's location: [" + latitude + ", " + longitude + "]");
 
     var username = "wesley";
@@ -132,31 +77,6 @@ angular.module('sm-meetApp.map',  ['firebase'])
     }
   };
 
-  var initializeMap = function() {
-    // Get the location as a Google Maps latitude-longitude object
-    var center = [37.785326, -122.405696];
-    var loc = new google.maps.LatLng(center[0], center[1]);
-
-    // Create the Google Map
-    map = new google.maps.Map(document.getElementById("map-canvas"), {
-      center: loc,
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    });
-
-    // Create a draggable circle centered on the map
-    var circle = new google.maps.Circle({
-      strokeColor: "#6D3099",
-      strokeOpacity: 0.7,
-      strokeWeight: 1,
-      fillColor: "#B650FF",
-      fillOpacity: 0.35,
-      map: map,
-      center: loc,
-      radius: ((radiusInKm) * 1000),
-      draggable: true
-    });
-
     //Update the query's criteria every time the circle is dragged
     // var updateCriteria = _.debounce(function() {
     //   var latLng = circle.getCenter();
@@ -166,12 +86,13 @@ angular.module('sm-meetApp.map',  ['firebase'])
     //   });
     // }, 10);
     // google.maps.event.addListener(circle, "drag", updateCriteria);
-  }
+
 
   return {
     getLocation: getLocation,
     geolocationCallback : geolocationCallback,
-    errorHandler: errorHandler
+    errorHandler: errorHandler,
+    createEvent: createEvent
   }
 
 });
