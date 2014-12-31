@@ -71,6 +71,5 @@ angular.module('sm-meetApp.userInterfaceController',  [])
         return $($event.target).closest('.item');
       }
 
-
     }
 }]);

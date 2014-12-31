@@ -15,15 +15,26 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'spec/*.js',
-      'spec/*.js'
+        'http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js',
+        'streetMeet/www/lib/ionic/js/ionic.bundle.js',
+        'https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.7/angular-cookies.js',
+        'https://cdn.firebase.com/js/client/2.0.4/firebase.js',
+        'https://cdn.firebase.com/libs/angularfire/0.9.0/angularfire.min.js',
+        'node_modules/angular-mocks/angular-mocks.js',
+        'www/lib/ngCordova/dist/ng-cordova.js',
+        'streetMeet/www/js/app.js',
+        'streetMeet/www/js/createEvent.js',
+        'streetMeet/www/js/currentUser.js',
+        'streetMeet/www/js/joinEvent.js',
+        'streetMeet/www/js/login.js',
+        'streetMeet/www/js/userInterfaceController.js',
+        'spec/*.js'
     ],
-
 
     // list of files to exclude
     exclude: [
+        'karma.conf.js'
     ],
-
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
@@ -61,6 +72,6 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false
+    singleRun: true
   });
 };
