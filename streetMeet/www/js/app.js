@@ -15,10 +15,7 @@ var meetApp = angular.module('sm-meetApp',
     'sm-meetApp.createEvents',
     'sm-meetApp.joinEvent',
     'sm-meetApp.userInterfaceController',
-<<<<<<< HEAD
     'sm-meetApp.map',
-=======
->>>>>>> 4f4f93c3d825b86fa006711e3174f64895ca54dc
     'sm-meetApp.currentUser'
 
   ])
