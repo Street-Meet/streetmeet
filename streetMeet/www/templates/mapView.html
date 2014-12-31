@@ -1,8 +1,9 @@
 <ion-pane>
-  <ion-header-bar class="bar-stable">
-    <h1 class="title">Map View</h1>
-  </ion-header-bar>
   <ion-content scroll="false">
+    <header class="bar bar-stable bar-header has-header">
+      <h1 class="title">Map View</h1>
+      <button class="button icon ion-android-add" ng-click="createEvent()"></button>
+    </header>
     <div id="map-canvas"></div>
   </ion-content>
 </ion-pane>
