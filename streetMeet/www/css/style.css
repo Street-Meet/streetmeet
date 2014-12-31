@@ -333,8 +333,8 @@ ul#events-current{
   top:50%;left:50%;
   z-index:1;
   /*fix offset when needed*/
-  margin-left:-10px;
-  margin-top:-34px;
+ /* margin-left:-10px;
+  margin-top:-34px;*/
   /*size of the image*/
   height:34px;
   width:20px;
