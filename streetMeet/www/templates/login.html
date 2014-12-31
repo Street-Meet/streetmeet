@@ -49,14 +49,73 @@
         <div class="item item-body">
           <h1>{{currentUser.name}}</h1>
           <h2> {{currentUser.email}}</h2>
+          
+
+
+          <div ng-click="getMyEvents(currentUserId.uid)" class="button button-light"> Get My Events</div>
+
+
+          
+
+         
+
       </div>
       <div>
         <!-- logout  -->
           <span ng-show="currentUser">
-            {{ currentUser.name }} | <a href="#" ng-click="authObj.$unauth()" ui-sref="login">Logout</a>
+            {{ currentUser.name }} | <a href="#" ng-click="logout()" ui-sref="login">Logout</a>
           </span>
         <!-- end:logout -->
+
+
       </div>
+
+      <section >
+
+        <header class="bar bar-stable">
+          <h1 class="title">Hosted Events</h1>
+        </header>
+
+
+        <ul id="events-current" class="list has-header" >
+          
+          <li on-tap="expandTap($event)" ng-repeat="event in theEvents" class="slide-controls item event clearfix">
+             
+
+            <div class="event-date">
+              10/27/2014
+            </div>            
+            <div class="event-img">
+              <img src="http://lygsbtd.files.wordpress.com/2011/08/beer_toast.jpg">
+            </div>  
+            
+            <div class="event-main clearfix">          
+              <header class="event-header">
+                <h2>{{ event.title }}</h2>
+                <p>{{ event.description }} </p>
+              </header> <!-- .event-header -->
+              
+              <ul class="event-info">
+                <li class="v-center"><span class="event-info-lg">12</span> of 24</li>
+                <li class="v-center"><span class="ion-thumbsup icon wf-icon"></span></li>
+              </ul>
+
+            </div> <!-- .event-main -->
+            <div class="event-description">
+              <p> 
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio voluptas reiciendis facilis sed, laboriosam itaque.
+              </p>
+            </div>
+          </li> <!-- .item -->
+
+        </ul> <!-- .list -->
+
+
+
+      </section>
+
+
+
     </div>
 
   </ion-content>
