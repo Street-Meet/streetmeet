@@ -1,8 +1,10 @@
 angular.module('sm-meetApp.login',  ['firebase', 'ngCookies'])
 
-.controller('LoginCtrl', ["$scope",  "$firebaseAuth", "$cookieStore",
+.controller('LoginCtrl', ["$scope",  "$firebaseAuth", "$cookieStore", 
   function($scope, $firebaseAuth, $cookieStore) {
     $scope.currentUser;
+    $scope.currentUserId;
+    $scope.theEvents;
     var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
     var auth = $firebaseAuth(ref);
 
@@ -27,6 +29,7 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies'])
         $cookieStore.put('currentToken', authData.token );
         console.log("Logged in as:", authData.uid);
         $scope.currentUser = authData.facebook.cachedUserProfile;
+        $scope.currentUserId = authData;
       }).catch(function(error) {
         console.error("Authentication failed:", error);
       });
@@ -50,19 +53,22 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies'])
 
     $scope.getMyEvents = function(user_id){
         //events for any given user
+        console.log('the user id passed is :'+ user_id);
       var eventsRef = new Firebase("https://boiling-torch-2747.firebaseio.com/events");
-      var userRef =  new Firebase("https://boiling-torch-2747.firebaseio.com/users");
+      var userRef =   new Firebase("https://boiling-torch-2747.firebaseio.com/users");
       var userEventsRef = userRef.child(user_id).child("events");
       userEventsRef.on("child_added", function(snap) {
-        eventsRef.child(snap.key()).once("value", function() {
-          // Render the event on the user page.
+        console.log('this is the snap:', snap.val());
+        eventsRef.child(snap.key()).once("value", function(data) {
+          console.log('YourEvents ',  data.val());
+          $scope.theEvents = data.val();
         })
       });
      
   };
-}
+}]);
+  //TODO: CurrentUser as a service for every other view who wants to use it.
 
-]);
 
 
 
