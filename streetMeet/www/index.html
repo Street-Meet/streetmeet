@@ -36,6 +36,8 @@
     <script src="js/joinEvent.js"></script>
     <script src="js/userInterfaceController.js"></script>
     <script src="js/map.js"></script>
+    <script src="js/currentUser.js"></script>
+
 
   </head>
   <body ng-app="sm-meetApp" >
@@ -50,12 +52,15 @@
 
 <ion-side-menus enable-menu-with-back-views="true" canDrag="false">
   <ion-side-menu-content edge-drag-threshold="true" drag-content="false">
+    
     <ion-header-bar class="bar bar-stable bar-header">
       <button class="button icon ion-navicon" menu-toggle="left"></button>
       <h1 class="title">Current Events</h1>
       <button class="button icon ion-android-add" ui-sref="createEvent"></button>
     </ion-header-bar>
+   
     <ion-nav-view></ion-nav-view>
+  
   </ion-side-menu-content>
 
   <!-- Left menu -->
@@ -66,7 +71,7 @@
       <li class="item" ui-sref="joinEvent" menu-toggle="left">Current Events</li>
       <li class="item" ui-sref="mapView" menu-toggle="left">mapView</li>
       <li class="item" ui-sref="profileView" menu-toggle="left">User Profile</li>
-      <li class="item" ui-sref="" menu-toggle="left">Logout</li>
+      <li class="item" ng-click="authObj.$unauth()" ui-sref="login" menu-toggle="left">Logout</li>
     </ul>
   </ion-side-menu>
 
