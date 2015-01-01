@@ -69,8 +69,11 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies', 'ngCordova','ionic
     };
 
 
+<<<<<<< HEAD
     
 
+=======
+>>>>>>> meetup integration
     $scope.getSpecificEvent = function(event_id){
      //location for any given event
 
@@ -107,8 +110,6 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies', 'ngCordova','ionic
       $cookieStore.remove('currentData')
       $cookieStore.remove('currentUser')
       $cookieStore.remove('currentToken');
-
-
 
   }
 }]);

@@ -4,6 +4,7 @@ var url = require('url');
 // var bodyParser = require('body-parser');
 var request = require('request');
 var cors = require('cors');
+
 var app = express();
 var path = require('path');
 var  _ = require('underscore');
@@ -62,6 +63,7 @@ console.log('inside get server');
       if(!err){
       // console.log("got data thru GET: " , JSON.parse(data));
       res.json(JSON.parse(data));
+
 
     }else{
         console.log('got err: ', err);
