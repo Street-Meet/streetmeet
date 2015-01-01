@@ -36,7 +36,8 @@ var meetApp = angular.module('sm-meetApp',
   });
 })
 // set up routing
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+  $httpProvider.defaults.useXDomain = true;
   $urlRouterProvider.otherwise('/login');
   $stateProvider
     .state('login', {
