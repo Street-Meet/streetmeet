@@ -1,7 +1,7 @@
 angular.module('sm-meetApp.login',  ['firebase', 'ngCookies'])
 
-.controller('LoginCtrl', ["$scope",  "$firebaseAuth", "$cookieStore", 
-  function($scope, $firebaseAuth, $cookieStore) {
+.controller('LoginCtrl', ["$scope",  "$firebaseAuth", "$cookieStore", 'Auth', 
+  function($scope, $firebaseAuth, $cookieStore, Auth) {
     $scope.currentUser =  $cookieStore.get('currentData') || null;
     $scope.currentUserId =  $cookieStore.get('currentUser') || null; 
     $scope.theEvents;
@@ -33,6 +33,16 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies'])
         $scope.currentUser = authData.facebook.cachedUserProfile;
         $scope.currentUserId = authData;
       }).catch(function(error) {
+        console.error("Authentication failed:", error);
+      });
+    };
+
+    $scope.loginWithMeetup = function(){
+       Auth.connectMeetup()
+       .then(function(data){
+        console.log('MeetupData:', data);
+        $cookieStore.put('meetupCode', data)
+       }).catch(function(error) {
         console.error("Authentication failed:", error);
       });
     };
@@ -77,7 +87,22 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies'])
       $cookieStore.remove('currentUser')
       $cookieStore.remove('currentToken');
   }
-}]);
+}])
+.factory('Auth', ['$http', '$q', function($http, $q) {
+     // call to get all nerds
+  return {
+    connectMeetup : function() {
+        return $http.get('/api/meetup/')
+        .success(function(data) {
+            console.log(data);
+        })
+        .error(function(data) {
+            console.log('Error: ' , data);
+        });
+    }
+  }
+
+  }]);
   //TODO: CurrentUser as a service for every other view who wants to use it.
 
 
