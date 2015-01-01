@@ -3,6 +3,7 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies', 'ngCordova','ionic
 
 .controller('LoginCtrl', ["$scope",  "$firebaseAuth", "$cookieStore", "$state", "$q",
   function($scope, $firebaseAuth, $cookieStore, $state, $q) {
+
     $scope.currentUser =  $cookieStore.get('currentData') || null;
     $scope.currentUserId =  $cookieStore.get('currentUser') || null;
     $scope.theEvents;
@@ -66,6 +67,7 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies', 'ngCordova','ionic
       });
     };
 
+
     $scope.getSpecificEvent = function(event_id){
      //location for any given event
 
@@ -102,25 +104,6 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies', 'ngCordova','ionic
       $cookieStore.remove('currentData')
       $cookieStore.remove('currentUser')
       $cookieStore.remove('currentToken');
-  };
 
-    $scope.facebookLogin = function() {
-      console.log('click en facebooklogin');
-      if(!$localstorage.accessToken){
-        $cordovaOauth.facebook("737407316337748", ["email"])
-        .then(function(result) {
-            console.log( JSON.stringify(result))  ;
-            $localstorage.accessToken = result.access_token;
-        }, function(error) {
-            alert("There was a problem signing in!  See the console for logs");
-            console.log(error); 
-        });
-
-      }else{
-        console.log('accessToken exists!');
-      }
-    };
-
-
-
+  }
 }]);

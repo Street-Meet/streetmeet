@@ -41,6 +41,7 @@ var meetApp = angular.module('sm-meetApp',
   // $httpProvider.defaults.useXDomain = true;
   // $httpProvider.defaults.useXDomain = true;
   // delete $httpProvider.defaults.headers.common['X-Requested-With'];
+
   $urlRouterProvider.otherwise('/login');
 
   // I'll do it without html5 for now
