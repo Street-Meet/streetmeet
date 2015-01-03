@@ -8,6 +8,7 @@ angular.module('sm-meetApp.map',  ['firebase'])
 
   // Get the current user's location
   Map.getLocation();
+  Map.geolocationUpdate();
 
   // var initialize = function() {
   //   var center = new google.maps.LatLng(47.785326, -122.405696);
@@ -75,7 +76,9 @@ angular.module('sm-meetApp.map',  ['firebase'])
     var onKeyEnteredRegistration = geoQuery.on("key_entered", function(key, location) {
       console.log(key + " entered the query. Hi " + key + " at " + location);
     });
+
     console.log("Retrieved user's location: [" + latitude + ", " + longitude + "]");
+
   }
 
   /* Handles any errors from trying to get the user's current location */
@@ -90,6 +93,33 @@ angular.module('sm-meetApp.map',  ['firebase'])
       console.log("Unexpected error code")
     }
   };
+
+  function showLocation(position) {
+  var latitude = position.coords.latitude;
+  var longitude = position.coords.longitude;
+  console.log("Latitude : " + latitude + " Longitude: " + longitude);
+}
+
+function errorHandler(err) {
+  if(err.code == 1) {
+    console.log("Error: Access is denied!");
+  }else if( err.code == 2) {
+    console.log("Error: Position is unavailable!");
+  }
+}
+
+  var geolocationUpdate = function() {
+
+    if(navigator.geolocation) {
+      var updateTimeout = {timeout: 1000};
+      var geoLoc = navigator.geolocation;
+      var watchID = geoLoc.watchPosition(showLocation, errorHandler)
+
+    } else {
+      throw new Error("geolocation not supported!");
+    }
+
+  }
 
     //Update the query's criteria every time the circle is dragged
     // var updateCriteria = _.debounce(function() {
@@ -107,7 +137,8 @@ angular.module('sm-meetApp.map',  ['firebase'])
     geolocationCallback : geolocationCallback,
     errorHandler: errorHandler,
     createEvent: createEvent,
-    map: map
+    map: map,
+    geolocationUpdate: geolocationUpdate
   }
 
 });
