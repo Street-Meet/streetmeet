@@ -20,6 +20,19 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies'])
       });
     };
 
+    // $scope.facebookLogin = function() {
+    //     $cordovaOauth.facebook("CLIENT_ID_HERE", ["email"]).then(function(result) {
+    //       // results
+    //       console.log('this is the authData: ', authData);
+    //       $cookieStore.put('currentUser', authData.uid );
+    //       $cookieStore.put('currentToken', authData.token );
+    //       console.log("Logged in as:", authData.uid);
+    //     }, function(error) {
+    //         // error
+    //         console.error("Authentication failed:", error);
+    //     });
+    // }
+
     $scope.loginWithFacebook = function(){
     auth.$authWithOAuthPopup("facebook",
       {scope: "email, user_events" }) // scope has the permissions requested

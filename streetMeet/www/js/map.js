@@ -9,25 +9,46 @@ angular.module('sm-meetApp.map',  ['firebase'])
   // Get the current user's location
   Map.getLocation();
 
+  // var initialize = function() {
+  //   var center = new google.maps.LatLng(47.785326, -122.405696);
+  //   var mapOptions = {
+  //     zoom: 15,
+  //     center: center,
+  //     mapTypeId: google.maps.MapTypeId.ROADMAP
+  //   };
+  //   Map.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  // }
+
 
 })
 
-.factory('Map', function ($q) {
-  var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
+.factory('Map', function ($q, $location, $window, $rootScope, $cookieStore) {
+  var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/locations");
   var geoFire = new GeoFire(ref);
 
+
+  // var initialize = function() {
   var center = new google.maps.LatLng(47.785326, -122.405696);
   var mapOptions = {
     zoom: 15,
     center: center,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
+
   var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  // }
+
+  // google.maps.event.addDomListener(window, 'load', initialize);
 
   var createEvent = function() {
     $('<div/>').addClass('centerMarker').appendTo(map.getDiv())
     .click(function(){
-      console.log(map.getCenter())
+      $cookieStore.put('eventLoc', map.getCenter());
+      console.log($cookieStore.get('eventLoc'), 'stored!')
+      $rootScope.$apply(function() {
+        $location.path("/createEvent");
+        console.log($location.path());
+      });
     });
   };
 
@@ -46,22 +67,15 @@ angular.module('sm-meetApp.map',  ['firebase'])
     var latitude = location.coords.latitude;
     var longitude = location.coords.longitude;
     var center = new google.maps.LatLng(latitude, longitude);
-    map.setCenter(center);
-    console.log("Retrieved user's location: [" + latitude + ", " + longitude + "]");
-
-    var username = "wesley";
-    geoFire.set(username, [latitude, longitude]).then(function() {
-      console.log("Current user " + username + "'s location has been added to GeoFire");
-
-      // When the user disconnects from Firebase (e.g. closes the app, exits the browser),
-      // remove their GeoFire entry
-      firebaseRef.child(username).onDisconnect().remove();
-
-      console.log("Added handler to remove user " + username + " from GeoFire when you leave this page.");
-      console.log("You can use the link above to verify that " + username + " was removed from GeoFire after you close this page.");
-    }).catch(function(error) {
-      console.log("Error adding user " + username + "'s location to GeoFire");
+    var geoQuery = geoFire.query({
+      center: [latitude, longitude],
+      radius: 10
     });
+    map.setCenter(center);
+    var onKeyEnteredRegistration = geoQuery.on("key_entered", function(key, location) {
+      console.log(key + " entered the query. Hi " + key + " at " + location);
+    });
+    console.log("Retrieved user's location: [" + latitude + ", " + longitude + "]");
   }
 
   /* Handles any errors from trying to get the user's current location */
@@ -92,7 +106,8 @@ angular.module('sm-meetApp.map',  ['firebase'])
     getLocation: getLocation,
     geolocationCallback : geolocationCallback,
     errorHandler: errorHandler,
-    createEvent: createEvent
+    createEvent: createEvent,
+    map: map
   }
 
 });
