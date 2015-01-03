@@ -57,14 +57,14 @@ angular.module('sm-meetApp.map',  ['firebase'])
   var getLocation = function() {
     if (typeof navigator !== "undefined" && typeof navigator.geolocation !== "undefined") {
       console.log("Asking user to get their location");
-      navigator.geolocation.getCurrentPosition(geolocationCallback, errorHandler);
+      navigator.geolocation.getCurrentPosition(geolocationCallbackQuery, errorHandler);
     } else {
       console.log("Your browser does not support the HTML5 Geolocation API")
     }
   };
 
   /* Callback method from the geolocation API which receives the current user's location */
-  var geolocationCallback = function(location) {
+  var geolocationCallbackQuery = function(location) {
     var latitude = location.coords.latitude;
     var longitude = location.coords.longitude;
     var center = new google.maps.LatLng(latitude, longitude);
@@ -94,31 +94,43 @@ angular.module('sm-meetApp.map',  ['firebase'])
     }
   };
 
-  function showLocation(position) {
-  var latitude = position.coords.latitude;
-  var longitude = position.coords.longitude;
-  console.log("Latitude : " + latitude + " Longitude: " + longitude);
-}
+  
 
-function errorHandler(err) {
-  if(err.code == 1) {
-    console.log("Error: Access is denied!");
-  }else if( err.code == 2) {
-    console.log("Error: Position is unavailable!");
+  var showLocation = function(position) {
+    var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+    var myLatlng = new google.maps.LatLng(latitude, longitude);
+    var marker = new google.maps.Marker({
+    position: myLatlng,
+    icon: {
+      path: google.maps.SymbolPath.CIRCLE,
+      scale: 10
+    },
+    draggable: false,
+    map: map
+  });
+
+    $('<div/>').addClass('marker').appendTo(map.getDiv());
+    console.log("Latitude : " + latitude + " Longitude: " + longitude);
   }
-}
 
+  var errorHandler = function(err) {
+    if(err.code == 1) {
+      console.log("Error: Access is denied!");
+    }else if( err.code == 2) {
+      console.log("Error: Position is unavailable!");
+    }
+  }
+
+  //Updates user location on movement
   var geolocationUpdate = function() {
-
     if(navigator.geolocation) {
       var updateTimeout = {timeout: 1000};
       var geoLoc = navigator.geolocation;
       var watchID = geoLoc.watchPosition(showLocation, errorHandler)
-
     } else {
       throw new Error("geolocation not supported!");
     }
-
   }
 
     //Update the query's criteria every time the circle is dragged
@@ -134,7 +146,7 @@ function errorHandler(err) {
 
   return {
     getLocation: getLocation,
-    geolocationCallback : geolocationCallback,
+    geolocationCallbackQuery : geolocationCallbackQuery,
     errorHandler: errorHandler,
     createEvent: createEvent,
     map: map,
