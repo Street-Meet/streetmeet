@@ -6,6 +6,7 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies', 'ngCordova','ionic
 
     $scope.currentUser =  $cookieStore.get('currentData') || null;
     $scope.currentUserId =  $cookieStore.get('currentUser') || null;
+
     $scope.theEvents;
 
 
@@ -66,6 +67,7 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies', 'ngCordova','ionic
         console.error("Authentication failed:", error);
       });
     };
+
 
 
     $scope.getSpecificEvent = function(event_id){
