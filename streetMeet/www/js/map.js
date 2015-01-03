@@ -101,14 +101,19 @@ angular.module('sm-meetApp.map',  ['firebase'])
     var longitude = position.coords.longitude;
     var myLatlng = new google.maps.LatLng(latitude, longitude);
     var marker = new google.maps.Marker({
-    position: myLatlng,
-    icon: {
-      path: google.maps.SymbolPath.CIRCLE,
-      scale: 10
-    },
-    draggable: false,
-    map: map
-  });
+      position: myLatlng,
+      // icon: {
+      //   path: google.maps.SymbolPath.CIRCLE,
+      //   scale: 10
+      // },
+      icon: 'http://tf2wiki.net/ww/images/6/62/Item_icon_Buffalo_Steak_Sandvich.png',
+      draggable: false,
+      map: map
+    });
+
+    if($('<div/>').hasClass('marker')) {
+      $('<div/>').removeClass('marker');
+    }
 
     $('<div/>').addClass('marker').appendTo(map.getDiv());
     console.log("Latitude : " + latitude + " Longitude: " + longitude);
