@@ -9,7 +9,7 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
 
 
 })
-.factory('Events', function ($q, $cookieStore) {
+.factory('EventCreator', function ($q, $cookieStore) {
   var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
   var locRef = new Firebase("https://boiling-torch-2747.firebaseio.com/locations");
   var geoFire = new GeoFire(locRef);
