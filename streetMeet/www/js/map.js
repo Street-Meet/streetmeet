@@ -11,11 +11,13 @@ angular.module('sm-meetApp.map',  ['firebase'])
   Map.geolocationUpdate();
 })
 
-.factory('Map', function ($q, $location, $window, $rootScope, $cookieStore) {
-  var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/locations");
+.factory('Map', function ($q, $location, $window, $rootScope, $cookieStore, $state) {
   var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/user_locations");
   var userGeoFire = new GeoFire(userRef);
-  var geoFire = new GeoFire(ref);
+  var refLoc = new Firebase("https://boiling-torch-2747.firebaseio.com/locations");
+  var geoFire = new GeoFire(refLoc);
+
+  // var initialize = function() {
   var center = new google.maps.LatLng(47.785326, -122.405696);
   var globalLatLng;
   var marker = null;
@@ -34,10 +36,7 @@ angular.module('sm-meetApp.map',  ['firebase'])
     .click(function(){
       $cookieStore.put('eventLoc', map.getCenter());
       console.log($cookieStore.get('eventLoc'), 'stored!')
-      $rootScope.$apply(function() {
-        $location.path("/createEvent");
-        console.log($location.path());
-      });
+      $state.go('createEvent');
     });
   };
 
@@ -62,6 +61,20 @@ angular.module('sm-meetApp.map',  ['firebase'])
     });
     map.setCenter(center);
     var onKeyEnteredRegistration = geoQuery.on("key_entered", function(key, location) {
+      console.log(key);
+
+      var pos = new google.maps.LatLng(location[0], location[1]);
+      var marker = new google.maps.Marker({
+          position: pos,
+          map: map,
+          title: key
+      });
+      google.maps.event.addListener(marker, 'click', function() {
+        var refEvent = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+key);
+        refEvent.on('value', function(snap) {
+          $state.go('eventView', {id: key});
+        })
+      });
       console.log(key + " entered the query. Hi " + key + " at " + location);
     });
 
@@ -82,7 +95,7 @@ angular.module('sm-meetApp.map',  ['firebase'])
     }
   };
 
-  
+
 
   var showLocation = function(position) {
     var latitude = position.coords.latitude;
@@ -97,7 +110,7 @@ angular.module('sm-meetApp.map',  ['firebase'])
     }, function(error) {
       console.log("Error: " + error);
     });
-    
+
     //updates marker position by removing the old one and adding the new one
     if (marker == null) {
         marker = new google.maps.Marker({
