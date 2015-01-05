@@ -9,33 +9,19 @@ angular.module('sm-meetApp.map',  ['firebase'])
   // Get the current user's location
   Map.getLocation();
   Map.geolocationUpdate();
-
-  // var initialize = function() {
-  //   var center = new google.maps.LatLng(47.785326, -122.405696);
-  //   var mapOptions = {
-  //     zoom: 15,
-  //     center: center,
-  //     mapTypeId: google.maps.MapTypeId.ROADMAP
-  //   };
-  //   Map.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-  // }
-
-
 })
 
 .factory('Map', function ($q, $location, $window, $rootScope, $cookieStore) {
   var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/locations");
   var geoFire = new GeoFire(ref);
-  var marker = null;
-  
-  // var initialize = function() {
   var center = new google.maps.LatLng(47.785326, -122.405696);
+  var globalLatLng;
+  var marker = null;
   var mapOptions = {
     zoom: 15,
     center: center,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
-
   var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
   // }
 
@@ -100,18 +86,14 @@ angular.module('sm-meetApp.map',  ['firebase'])
     var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
     var myLatlng = new google.maps.LatLng(latitude, longitude);
-    // var markersArray = [];
-
+    globalLatLng = myLatlng;
+    
+    //updates marker position by removing the old one and adding the new one
     if (marker == null) {
         marker = new google.maps.Marker({
         position: myLatlng,
-        // icon: {
-        //   path: google.maps.SymbolPath.CIRCLE,
-        //   scale: 10
-        // },
         icon: '/img/blue_beer.png',
         draggable: false
-        // map: map
       });
     } else {
       marker.setPosition(myLatlng);
@@ -121,7 +103,6 @@ angular.module('sm-meetApp.map',  ['firebase'])
       marker.setMap(null);
     }
     marker.setMap(map);
-    console.log(map.getDiv());
     console.log("Latitude : " + latitude + " Longitude: " + longitude);
   }
 
@@ -144,6 +125,11 @@ angular.module('sm-meetApp.map',  ['firebase'])
     }
   }
 
+  var centerMapLocation = function(position) {
+    map.setCenter(globalLatLng);
+    console.log(mapOptions.center);
+  }
+
     //Update the query's criteria every time the circle is dragged
     // var updateCriteria = _.debounce(function() {
     //   var latLng = circle.getCenter();
@@ -161,7 +147,8 @@ angular.module('sm-meetApp.map',  ['firebase'])
     errorHandler: errorHandler,
     createEvent: createEvent,
     map: map,
-    geolocationUpdate: geolocationUpdate
+    geolocationUpdate: geolocationUpdate,
+    centerMapLocation: centerMapLocation
   }
 
 });
