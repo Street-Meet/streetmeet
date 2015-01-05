@@ -308,13 +308,13 @@ ul#events-current{
     clear: left;
   }
 
-    ul.event-info li {
-      vertical-align: middle;
-      float: left;
-      font-size: .625em;
-      line-height: 1em;
-      height: 30px;
-    }
+  ul.event-info li {
+    vertical-align: middle;
+    float: left;
+    font-size: .625em;
+    line-height: 1em;
+    height: 30px;
+  }
 
 #map-canvas {
   width: 100%;
