@@ -29,6 +29,7 @@ module.exports = function(config) {
         'streetMeet/www/js/login.js',
         'streetMeet/www/js/userInterfaceController.js',
         'streetMeet/www/js/map.js',
+        'streetMeet/www/js/*.js',
         'spec/*.js'
     ],
 
