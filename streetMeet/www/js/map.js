@@ -13,6 +13,8 @@ angular.module('sm-meetApp.map',  ['firebase'])
 
 .factory('Map', function ($q, $location, $window, $rootScope, $cookieStore) {
   var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/locations");
+  var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/user_locations");
+  var userGeoFire = new GeoFire(userRef);
   var geoFire = new GeoFire(ref);
   var center = new google.maps.LatLng(47.785326, -122.405696);
   var globalLatLng;
@@ -87,6 +89,14 @@ angular.module('sm-meetApp.map',  ['firebase'])
     var longitude = position.coords.longitude;
     var myLatlng = new google.maps.LatLng(latitude, longitude);
     globalLatLng = myLatlng;
+
+    //adds user location data to firebase
+    userGeoFire.set({
+      "user_name": [latitude, longitude] }).then(function() {
+      console.log("Provided keys have been added to GeoFire");
+    }, function(error) {
+      console.log("Error: " + error);
+    });
     
     //updates marker position by removing the old one and adding the new one
     if (marker == null) {
@@ -125,9 +135,9 @@ angular.module('sm-meetApp.map',  ['firebase'])
     }
   }
 
-  var centerMapLocation = function(position) {
+  var centerMapLocation = function() {
     map.setCenter(globalLatLng);
-    console.log(mapOptions.center);
+    console.log("centering map: ", mapOptions.center);
   }
 
     //Update the query's criteria every time the circle is dragged
