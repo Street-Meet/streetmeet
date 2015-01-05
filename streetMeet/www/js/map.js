@@ -8,33 +8,22 @@ angular.module('sm-meetApp.map',  ['firebase'])
 
   // Get the current user's location
   Map.getLocation();
-
-  // var initialize = function() {
-  //   var center = new google.maps.LatLng(47.785326, -122.405696);
-  //   var mapOptions = {
-  //     zoom: 15,
-  //     center: center,
-  //     mapTypeId: google.maps.MapTypeId.ROADMAP
-  //   };
-  //   Map.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-  // }
-
-
+  Map.geolocationUpdate();
 })
 
 .factory('Map', function ($q, $location, $window, $rootScope, $cookieStore) {
   var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/locations");
+  var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/user_locations");
+  var userGeoFire = new GeoFire(userRef);
   var geoFire = new GeoFire(ref);
-
-
-  // var initialize = function() {
   var center = new google.maps.LatLng(47.785326, -122.405696);
+  var globalLatLng;
+  var marker = null;
   var mapOptions = {
     zoom: 15,
     center: center,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
-
   var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
   // }
 
@@ -56,14 +45,14 @@ angular.module('sm-meetApp.map',  ['firebase'])
   var getLocation = function() {
     if (typeof navigator !== "undefined" && typeof navigator.geolocation !== "undefined") {
       console.log("Asking user to get their location");
-      navigator.geolocation.getCurrentPosition(geolocationCallback, errorHandler);
+      navigator.geolocation.getCurrentPosition(geolocationCallbackQuery, errorHandler);
     } else {
       console.log("Your browser does not support the HTML5 Geolocation API")
     }
   };
 
   /* Callback method from the geolocation API which receives the current user's location */
-  var geolocationCallback = function(location) {
+  var geolocationCallbackQuery = function(location) {
     var latitude = location.coords.latitude;
     var longitude = location.coords.longitude;
     var center = new google.maps.LatLng(latitude, longitude);
@@ -75,7 +64,9 @@ angular.module('sm-meetApp.map',  ['firebase'])
     var onKeyEnteredRegistration = geoQuery.on("key_entered", function(key, location) {
       console.log(key + " entered the query. Hi " + key + " at " + location);
     });
+
     console.log("Retrieved user's location: [" + latitude + ", " + longitude + "]");
+
   }
 
   /* Handles any errors from trying to get the user's current location */
@@ -91,6 +82,64 @@ angular.module('sm-meetApp.map',  ['firebase'])
     }
   };
 
+  
+
+  var showLocation = function(position) {
+    var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+    var myLatlng = new google.maps.LatLng(latitude, longitude);
+    globalLatLng = myLatlng;
+
+    //adds user location data to firebase
+    userGeoFire.set({
+      "user_name": [latitude, longitude] }).then(function() {
+      console.log("Provided keys have been added to GeoFire");
+    }, function(error) {
+      console.log("Error: " + error);
+    });
+    
+    //updates marker position by removing the old one and adding the new one
+    if (marker == null) {
+        marker = new google.maps.Marker({
+        position: myLatlng,
+        icon: '/img/blue_beer.png',
+        draggable: false
+      });
+    } else {
+      marker.setPosition(myLatlng);
+    }
+
+    if (marker && marker.setMap) {
+      marker.setMap(null);
+    }
+    marker.setMap(map);
+    console.log("Latitude : " + latitude + " Longitude: " + longitude);
+  }
+
+  var errorHandler = function(err) {
+    if(err.code == 1) {
+      console.log("Error: Access is denied!");
+    }else if( err.code == 2) {
+      console.log("Error: Position is unavailable!");
+    }
+  }
+
+  //Updates user location on movement
+  var geolocationUpdate = function() {
+    if(navigator.geolocation) {
+      //var updateTimeout = {timeout: 1000};
+      var geoLoc = navigator.geolocation;
+      var watchID = geoLoc.watchPosition(showLocation, errorHandler)
+    } else {
+      throw new Error("geolocation not supported!");
+    }
+  }
+
+  var centerMapLocation = function() {
+    map.setCenter(globalLatLng);
+    console.log("centering map: ", mapOptions.center);
+  }
+
     //Update the query's criteria every time the circle is dragged
     // var updateCriteria = _.debounce(function() {
     //   var latLng = circle.getCenter();
@@ -104,10 +153,12 @@ angular.module('sm-meetApp.map',  ['firebase'])
 
   return {
     getLocation: getLocation,
-    geolocationCallback : geolocationCallback,
+    geolocationCallbackQuery : geolocationCallbackQuery,
     errorHandler: errorHandler,
     createEvent: createEvent,
-    map: map
+    map: map,
+    geolocationUpdate: geolocationUpdate,
+    centerMapLocation: centerMapLocation
   }
 
 });
