@@ -26,8 +26,8 @@ angular.module('sm-meetApp.map',  ['firebase'])
 .factory('Map', function ($q, $location, $window, $rootScope, $cookieStore) {
   var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/locations");
   var geoFire = new GeoFire(ref);
-
-
+  var marker = null;
+  
   // var initialize = function() {
   var center = new google.maps.LatLng(47.785326, -122.405696);
   var mapOptions = {
@@ -100,22 +100,28 @@ angular.module('sm-meetApp.map',  ['firebase'])
     var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
     var myLatlng = new google.maps.LatLng(latitude, longitude);
-    var marker = new google.maps.Marker({
-      position: myLatlng,
-      // icon: {
-      //   path: google.maps.SymbolPath.CIRCLE,
-      //   scale: 10
-      // },
-      icon: 'http://tf2wiki.net/ww/images/6/62/Item_icon_Buffalo_Steak_Sandvich.png',
-      draggable: false,
-      map: map
-    });
+    // var markersArray = [];
 
-    if($('<div/>').hasClass('marker')) {
-      $('<div/>').removeClass('marker');
+    if (marker == null) {
+        marker = new google.maps.Marker({
+        position: myLatlng,
+        // icon: {
+        //   path: google.maps.SymbolPath.CIRCLE,
+        //   scale: 10
+        // },
+        icon: '/img/blue_beer.png',
+        draggable: false
+        // map: map
+      });
+    } else {
+      marker.setPosition(myLatlng);
     }
 
-    $('<div/>').addClass('marker').appendTo(map.getDiv());
+    if (marker && marker.setMap) {
+      marker.setMap(null);
+    }
+    marker.setMap(map);
+    console.log(map.getDiv());
     console.log("Latitude : " + latitude + " Longitude: " + longitude);
   }
 
@@ -130,7 +136,7 @@ angular.module('sm-meetApp.map',  ['firebase'])
   //Updates user location on movement
   var geolocationUpdate = function() {
     if(navigator.geolocation) {
-      var updateTimeout = {timeout: 1000};
+      //var updateTimeout = {timeout: 1000};
       var geoLoc = navigator.geolocation;
       var watchID = geoLoc.watchPosition(showLocation, errorHandler)
     } else {
