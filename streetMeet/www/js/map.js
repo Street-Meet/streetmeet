@@ -72,7 +72,6 @@ angular.module('sm-meetApp.map',  ['firebase'])
       google.maps.event.addListener(marker, 'click', function() {
         var refEvent = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+key);
         refEvent.on('value', function(snap) {
-          $cookieStore.put('eventData', snap.val());
           $state.go('eventView', {id: key});
         })
       });
