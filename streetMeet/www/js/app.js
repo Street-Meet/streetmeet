@@ -39,22 +39,37 @@ var meetApp = angular.module('sm-meetApp',
   $stateProvider
     .state('login', {
       url: '/login',
-      templateUrl: 'templates/login.html',
+      templateUrl: 'views/login.html',
+      controller: 'LoginCtrl'
+    })
+    .state('emailSignin', {
+      url: '/emailSignin',
+      templateUrl: 'views/login.emailSignin.html',
+      controller: 'LoginCtrl',
+    })
+    .state('createAccount', {
+      url: '/createAccount',
+      templateUrl: 'views/login.createAccount.html',
       controller: 'LoginCtrl'
     })
     .state('createEvent', {
       url: '/createEvent',
-      templateUrl: 'templates/createEvent.html',
+      templateUrl: 'views/createEventForm.html',
       controller: 'CreateEventsCtrl'
     })
-    .state('joinEvent', {
-      url: '/joinEvent',
-      templateUrl: 'templates/joinEvent.html',
+    .state('listCurrentEvents', {
+      url: '/listEvents',
+      templateUrl: 'views/listCurrentEvents.html',
       controller: 'JoinEventCtrl'
     })
-    .state('mapView', {
-      url: '/mapView',
-      templateUrl: 'templates/mapView.html',
+    .state('viewSingleEvent', {
+      url: '/viewEvent',
+      templateUrl: 'views/singleEvent.html',
+      controller: 'JoinEventCtrl'
+    })
+    .state('mapCurrentEvents', {
+      url: '/mapCurrentEvents',
+      templateUrl: 'views/mapCurrentEvents.html',
       controller: 'MapCtrl'
     })
     .state('profileView', {
