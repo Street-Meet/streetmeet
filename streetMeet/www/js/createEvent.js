@@ -13,7 +13,6 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
   var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
   var locRef = new Firebase("https://boiling-torch-2747.firebaseio.com/locations");
   var geoFire = new GeoFire(locRef);
-  // var timestamp = new Date()
   var createEvent = function(owner ,eventTitle, eventDescription, eventCapacity, eventCategory, eventMinCapacity) {
     var eventData ={
       user_id: owner,
