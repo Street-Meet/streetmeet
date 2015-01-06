@@ -76,6 +76,12 @@ h1{
   text-shadow: 1px 1px 1px rgba(150, 150, 150, 1);
 }
 
+.time-remaining{
+  font-family: 'Josefin Slab', serif;
+  color: #e74c3c;
+  font-weight: 600;
+}
+
 .brand-red{
   color: #e74c3c;
 }
@@ -121,6 +127,22 @@ button{
     button.btn-light .btn-icon{
       border-right: 2px solid #2c3e50;
     }
+
+  button.inline-btn{
+    width: auto;
+    padding: 0 .5em;
+    margin: .6em 0;
+    font-size: .85em;
+    height: 30px;
+  }
+
+    button.inline-btn .btn-icon{
+      padding: 0em;
+      
+    }
+
+
+
 /* Slide controls */
 .slide-button{
   width: 30%;
@@ -361,9 +383,7 @@ ul#events-current{
     }
 
     .event-time-remaining{
-      color: #e74c3c;
       font-size: 1.2em;
-      font-weight: 600;
     }
 
   .event-more-info{
@@ -398,13 +418,32 @@ ul#events-current{
     margin: 0 1em 1em 0;
   }
 
-
   .detail-info{
     float: left;
   }
 
+    .detail-info .time-remaining{
+      font-size: 1.2em;
+
+    }
+
+    .detail-title{
+      font-size: 1.2em;
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    .event-location-title, .event-location-address{
+      display: block;
+      font-size: .875em;
+      line-height: 1em;
+      color: #666666;
+    }
+
   .detail-description{
     clear: both;
+    font-size: .875em;
+    line-height: 1.2em;
   }
   
 
