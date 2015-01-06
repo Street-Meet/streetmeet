@@ -63,9 +63,9 @@ var meetApp = angular.module('sm-meetApp',
       controller: 'JoinEventCtrl'
     })
     .state('viewSingleEvent', {
-      url: '/viewEvent',
+      url: '/viewEvent/:id',
       templateUrl: 'views/singleEvent.html',
-      controller: 'JoinEventCtrl'
+      controller: 'EventCtrl'
     })
     .state('mapCurrentEvents', {
       url: '/mapCurrentEvents',

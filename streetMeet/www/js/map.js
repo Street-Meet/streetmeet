@@ -7,7 +7,6 @@ angular.module('sm-meetApp.map',  ['firebase'])
   var geoFire = new GeoFire(ref);
 
   // Get the current user's location
-
   Map.getLocation();
   Map.geolocationUpdate();
 })
@@ -74,7 +73,7 @@ angular.module('sm-meetApp.map',  ['firebase'])
             title: key
           });
           google.maps.event.addListener(marker, 'click', function() {
-            $state.go('eventView', {id: key});
+            $state.go('viewSingleEvent', {id: key});
           })
         }
       });
