@@ -11,7 +11,7 @@ angular.module('sm-meetApp.userInterfaceController',  [])
    */
   $scope.expandTap = function($event){
     var eventBlock = itemControls.getDomItem($event);
-    var description = $(eventBlock).children('.event-description');
+    var description = $(eventBlock).find('.event-description');
 
     //Reset left and right margins if it had been swiped
     itemControls.resetMarg(eventBlock);
