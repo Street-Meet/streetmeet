@@ -7,7 +7,7 @@ angular.module('sm-meetApp.joinEvent',  ["firebase"])
 
 }])
 .factory("Events", ["$FirebaseArray", "$firebase", function($FirebaseArray, $firebase) {
-  
+
     // create a new factory based on $FirebaseArray
   var TotalEvents = $FirebaseArray.$extendFactory({
     getEvents: function() {
@@ -24,4 +24,9 @@ angular.module('sm-meetApp.joinEvent',  ["firebase"])
   return {
     throwTheEvents : throwTheEvents
   };
-}]);
+}])
+.filter('reverse', function() {
+  return function(items) {
+    return items.slice().reverse();
+  };
+});
