@@ -90,7 +90,6 @@ h1{
   color: #2980b9;
 }
 
-
 /********* UI Elements *********/
 
 button{
@@ -140,8 +139,6 @@ button{
       padding: 0em;
       
     }
-
-
 
 /* Slide controls */
 .slide-button{
@@ -341,7 +338,7 @@ ul#events-current{
       font-size: 1em;
       margin: 0;
     }
-      
+
       li.item .item-subtitle{
         font-size: .75em;
       }
@@ -352,6 +349,7 @@ ul#events-current{
     }
 
   .event-icon, .item-img{
+
     float: left;
     text-align: center;
     height: 100%;
@@ -383,7 +381,9 @@ ul#events-current{
     }
 
     .event-time-remaining{
+      color: #e74c3c;
       font-size: 1.2em;
+      font-weight: 600;
     }
 
   .event-more-info{
@@ -446,14 +446,3 @@ ul#events-current{
     line-height: 1.2em;
   }
   
-
-
-
-
-
-
-
-
-
-
-
