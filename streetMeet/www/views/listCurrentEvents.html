@@ -7,7 +7,7 @@
 
       <ul id="events-current" class="list" >
 
-        <li  on-swipe="onSwipe($event)" on-tap="expandTap($event)" ng-repeat="event in list" class="slide-controls item event clearfix">
+        <li  on-swipe="onSwipe($event)" on-tap="expandTap($event)" ng-repeat="event in list | reverse" class="slide-controls item event clearfix">
 
           <div class="slide-deny slide-button v-center" on-tap="removeTap($event)">
             Decline
