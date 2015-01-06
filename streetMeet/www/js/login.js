@@ -1,7 +1,7 @@
 angular.module('sm-meetApp.login',  ['firebase', 'ngCookies'])
 
-.controller('LoginCtrl', ["$scope",  "$firebaseAuth", "$cookieStore",
-  function($scope, $firebaseAuth, $cookieStore) {
+.controller('LoginCtrl', ["$scope",  "$firebaseAuth", "$cookieStore", "$state",
+  function($scope, $firebaseAuth, $cookieStore, $state) {
     $scope.currentUser =  $cookieStore.get('currentData') || null;
     $scope.currentUserId =  $cookieStore.get('currentUser') || null;
     $scope.theEvents;
@@ -15,6 +15,7 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies'])
       }).then(function(authData) {
         $cookieStore.put('currentUser', authData.uid );
         console.log("Logged in as:", authData.uid);
+        $state.go('mapCurrentEvents');
       }).catch(function(error) {
         console.error("Authentication failed:", error);
       });
@@ -45,6 +46,7 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies'])
         console.log("Logged in as:", authData.uid);
         $scope.currentUser = authData.facebook.cachedUserProfile;
         $scope.currentUserId = authData;
+        $state.go('mapCurrentEvents');
       }).catch(function(error) {
         console.error("Authentication failed:", error);
       });
