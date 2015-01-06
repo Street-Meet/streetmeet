@@ -52,7 +52,7 @@ a{
     font-size: 1.2em;
   }
 
-h1, h2{
+h1, h2, h3{
   font-family: 'Josefin Slab', serif;
 }
 
@@ -74,6 +74,14 @@ h1{
   margin: 0 15%;
   padding: 20% 0 0;
   text-shadow: 1px 1px 1px rgba(150, 150, 150, 1);
+}
+
+.brand-red{
+  color: #e74c3c;
+}
+
+.brand-drk-blue{
+  color: #2980b9;
 }
 
 
@@ -209,6 +217,26 @@ input[type="text"], input[type="email"], input[type="password"], input[type="num
   bottom: 55px;
 }
 
+.mid-header{
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 0;
+  background: #2c3e50;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  color: #fff;
+}
+
+  .mid-header h3{
+    font-size: 1.2em;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    font-weight: 600;
+    padding: .4em;
+  }
+
 
 /********** Layout **********/
 
@@ -256,7 +284,7 @@ ul#events-current{
 
 }
 
-  li.event{
+  li.item{
     width: 100%;
     height: auto;
     border: none;
@@ -272,7 +300,15 @@ ul#events-current{
       width: 90%;
     }
 
-    li.event .event-header{
+      li.item:first-child .item-content{
+        border-top: none;
+      }
+
+      li.item:last-child .item-content{
+        border-bottom: none;
+      }
+
+    li.item .item-header{
       padding: .85em 0 0;
       width: 53%;
       text-overflow: ellipsis;
@@ -284,7 +320,7 @@ ul#events-current{
       margin: 0;
     }
       
-      li.event .event-subtitle{
+      li.item .item-subtitle{
         font-size: .75em;
       }
 
@@ -293,7 +329,7 @@ ul#events-current{
       font-size: .875em;
     }
 
-  .event-icon{
+  .event-icon, .item-img{
     float: left;
     text-align: center;
     height: 100%;
@@ -306,6 +342,11 @@ ul#events-current{
       border-radius: 44px;
       padding: .32em .35em;
       font-size: 2em;
+    }
+
+    .item-img img{
+      border-radius: 44px;
+      width: 65px;
     }
 
   .event-meta{
@@ -340,6 +381,38 @@ ul#events-current{
     width: 100%;
     word-wrap: normal;
   }
+
+
+/******* Detail View Pane ********/
+.detail-view{
+
+}
+
+  .detail-section{
+    padding: 5%;
+  }
+
+  .detail-img img{
+    width: 100px;
+    float: left;
+    margin: 0 1em 1em 0;
+  }
+
+
+  .detail-info{
+    float: left;
+  }
+
+  .detail-description{
+    clear: both;
+  }
+  
+
+
+
+
+
+
 
 
 
