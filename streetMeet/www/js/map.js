@@ -102,10 +102,10 @@ angular.module('sm-meetApp.map',  ['firebase'])
     var longitude = position.coords.longitude;
     var myLatlng = new google.maps.LatLng(latitude, longitude);
     globalLatLng = myLatlng;
-
+    var userData = $cookieStore.get('currentUser');
+    console.log("User Data", userData);
     //adds user location data to firebase
-    userGeoFire.set({
-      "user_name": [latitude, longitude] }).then(function() {
+    userGeoFire.set(userData, [latitude, longitude]).then(function() {
       console.log("Provided keys have been added to GeoFire");
     }, function(error) {
       console.log("Error: " + error);
