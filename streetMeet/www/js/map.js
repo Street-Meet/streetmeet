@@ -32,6 +32,7 @@ angular.module('sm-meetApp.map',  ['firebase'])
 
   // google.maps.event.addDomListener(window, 'load', initialize);
 
+  // puts a marker on the center of the map to capture the location of a new event
   var createEvent = function() {
     $('<div/>').addClass('centerMarker').appendTo(map.getDiv())
     .click(function(){
@@ -41,7 +42,7 @@ angular.module('sm-meetApp.map',  ['firebase'])
     });
   };
 
-
+  // retrieves the user's current location
   var getLocation = function() {
     if (typeof navigator !== "undefined" && typeof navigator.geolocation !== "undefined") {
       console.log("Asking user to get their location");
@@ -68,14 +69,12 @@ angular.module('sm-meetApp.map',  ['firebase'])
         if (snap.val().createdAt > Date.now() - 1320000) {
           var pos = new google.maps.LatLng(location[0], location[1]);
           var marker = new google.maps.Marker({
-              position: pos,
-              map: map,
-              title: key
+            position: pos,
+            map: map,
+            title: key
           });
           google.maps.event.addListener(marker, 'click', function() {
-            // refEvent.on('value', function(snap) {
-              $state.go('eventView', {id: key});
-            // })
+            $state.go('eventView', {id: key});
           })
         }
       });
@@ -98,8 +97,6 @@ angular.module('sm-meetApp.map',  ['firebase'])
       console.log("Unexpected error code")
     }
   };
-
-
 
   var showLocation = function(position) {
     var latitude = position.coords.latitude;
@@ -131,14 +128,6 @@ angular.module('sm-meetApp.map',  ['firebase'])
     }
     marker.setMap(map);
     console.log("Latitude : " + latitude + " Longitude: " + longitude);
-  }
-
-  var errorHandler = function(err) {
-    if(err.code == 1) {
-      console.log("Error: Access is denied!");
-    }else if( err.code == 2) {
-      console.log("Error: Position is unavailable!");
-    }
   }
 
   //Updates user location on movement
