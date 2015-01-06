@@ -7,4 +7,4 @@ plugins/
 **/.DS_Store
 **/public/.DS_Store
 www/lib/
-npm-debug.log
+streetMeet/npm-debug.log
