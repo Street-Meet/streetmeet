@@ -13,6 +13,7 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
   var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
   var locRef = new Firebase("https://boiling-torch-2747.firebaseio.com/locations");
   var geoFire = new GeoFire(locRef);
+  // var timestamp = new Date()
   var createEvent = function(owner ,eventTitle, eventDescription, eventCapacity, eventCategory, eventMinCapacity) {
     var eventData ={
       user_id: owner,
@@ -21,7 +22,7 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
       capacity: eventCapacity,
       category: eventCategory,
       min_capacity: eventMinCapacity,
-      createdAt: Firebase.ServerValue.TIMESTAMP
+      createdAt: Date.now()
     };
     var id = ref.child("/events").push();
     id.set(eventData, function(error) {

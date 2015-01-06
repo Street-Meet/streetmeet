@@ -7,6 +7,7 @@ angular.module('sm-meetApp.map',  ['firebase'])
   var geoFire = new GeoFire(ref);
 
   // Get the current user's location
+
   Map.getLocation();
   Map.geolocationUpdate();
 })
@@ -16,8 +17,6 @@ angular.module('sm-meetApp.map',  ['firebase'])
   var userGeoFire = new GeoFire(userRef);
   var refLoc = new Firebase("https://boiling-torch-2747.firebaseio.com/locations");
   var geoFire = new GeoFire(refLoc);
-
-  // var initialize = function() {
   var center = new google.maps.LatLng(47.785326, -122.405696);
   var globalLatLng;
   var marker = null;
@@ -27,6 +26,8 @@ angular.module('sm-meetApp.map',  ['firebase'])
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
   var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  // var initialize = function() {
+  //   map = map;
   // }
 
   // google.maps.event.addDomListener(window, 'load', initialize);
@@ -62,18 +63,21 @@ angular.module('sm-meetApp.map',  ['firebase'])
     map.setCenter(center);
     var onKeyEnteredRegistration = geoQuery.on("key_entered", function(key, location) {
       console.log(key);
-
-      var pos = new google.maps.LatLng(location[0], location[1]);
-      var marker = new google.maps.Marker({
-          position: pos,
-          map: map,
-          title: key
-      });
-      google.maps.event.addListener(marker, 'click', function() {
-        var refEvent = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+key);
-        refEvent.on('value', function(snap) {
-          $state.go('eventView', {id: key});
-        })
+      var refEvent = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+key);
+      refEvent.on('value', function(snap) {
+        if (snap.val().createdAt > Date.now() - 1320000) {
+          var pos = new google.maps.LatLng(location[0], location[1]);
+          var marker = new google.maps.Marker({
+              position: pos,
+              map: map,
+              title: key
+          });
+          google.maps.event.addListener(marker, 'click', function() {
+            // refEvent.on('value', function(snap) {
+              $state.go('eventView', {id: key});
+            // })
+          })
+        }
       });
       console.log(key + " entered the query. Hi " + key + " at " + location);
     });
