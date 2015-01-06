@@ -29,4 +29,15 @@ angular.module('sm-meetApp.joinEvent',  ["firebase"])
   return function(items) {
     return items.slice().reverse();
   };
+})
+.filter('timer', function() {
+  return function(items) {
+    var result = [];
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].createdAt && items[i].createdAt > Date.now() - 1320000) {
+        result.push(items[i]);
+      }
+    }
+    return result;
+  }
 });
