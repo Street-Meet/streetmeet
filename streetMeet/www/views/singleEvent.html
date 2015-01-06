@@ -12,19 +12,19 @@
 
     <div class="detail-info">
       <span class="time-remaining">18:03</span>
-    
-      <h2 class="detail-title">Beer Time</h2>
+
+      <h2 class="detail-title">{{eventData.title}}</h2>
       <span class="event-location-title">Sad Bar</span>
       <span class="event-location-address">1234 Sad Ave</span>
 
-      <button class="inline-btn icon-btn">
+      <button class="inline-btn icon-btn" ui-sref="mapCurrentEvents">
         <span class="btn-icon v-center"><i class="fa fa-map-marker"></i></span>
         <span class="v-center">Map</span>
       </button>
     </div>
 
     <div class="detail-description">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus consectetur nisi, accusantium doloremque error impedit asperiores a necessitatibus numquam, sequi corporis beatae cumque architecto perferendis quas adipisci qui suscipit quam!</p>
+      <p>{{eventData.description}}</p>
     </div>
 
   </div>
@@ -36,7 +36,7 @@
     <ul>
       <li class="item">
         <div class="clearfix item-content">
-          
+
           <div class="event-more-info" ui-sref="viewSingleEvent">
             <i class="fa fa-angle-right v-center"></i>
           </div>
@@ -56,7 +56,7 @@
       </li>
       <li class="item">
         <div class="clearfix item-content">
-          
+
           <div class="event-more-info" ui-sref="viewSingleEvent">
             <i class="fa fa-angle-right v-center"></i>
           </div>
@@ -75,7 +75,7 @@
       </li>
       <li class="item">
         <div class="clearfix item-content">
-          
+
           <div class="event-more-info" ui-sref="viewSingleEvent">
             <i class="fa fa-angle-right v-center"></i>
           </div>
@@ -94,7 +94,7 @@
       </li>
       <li class="item">
         <div class="clearfix item-content">
-          
+
           <div class="event-more-info" ui-sref="viewSingleEvent">
             <i class="fa fa-angle-right v-center"></i>
           </div>
@@ -112,6 +112,6 @@
         </div>
       </li>
     </ul>
-  </div> <!-- .attendee-list -->     
+  </div> <!-- .attendee-list -->
     </ion-content>
-</ion-pane> 
+</ion-pane>
