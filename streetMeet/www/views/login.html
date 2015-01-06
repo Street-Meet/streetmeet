@@ -1,0 +1,23 @@
+<ion-pane id="loginPane" class="login-pane">
+  <ion-content scroll="false">
+    <div id="main-logo">
+      <img class="v-center" src="../../img/logo_verge22.png" alt="">
+    </div>
+
+  <div class="login-options sticky-bottom">
+    <button class="btn icon-btn" ng-click="loginWithFacebook()"> 
+      <span class="btn-icon v-center"><i class="fa fa-facebook"></i></span>
+      Login with Facebook
+    </button>
+
+    <button ui-sref="createAccount" class="btn icon-btn btn-light">
+      <span class="btn-icon v-center"><i class="fa fa-envelope"></i></span>
+      Signup with email
+    </button>
+
+    <span class="sub-btn-link">
+      Already have an account? <a href="/emailSignin" ui-sref="emailSignin">Sign in</a>
+    </span>
+  </div>
+  </ion-content>
+</ion-pane> 

@@ -25,8 +25,8 @@ html, body{
 }
 
 
-html .pane{
-  background: url(../img/bg_starry_sky.jpg) no-repeat center center fixed;
+html .login-pane {
+  background: url(../img/bg_city_grad.png) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -176,21 +176,21 @@ input[type="text"]{
   }
 
 /*Interactive Elements*/
-.slide-button{
+/*.slide-button{
   width: 30%;
   height: 100%;
   top: 0;
   position: absolute;
   text-align: center;
   color: #fff;
-}
+}*/
 
   .slide-button .wf-icon{
     color: #fff;
     margin: 0 0;
   }
 
-.slide-deny {
+/*.slide-deny {
   background: #5A1F00;
   left: 100%;
   -webkit-box-shadow: inset 2px 0px 3px -1px rgba(50, 50, 50, 0.75);
@@ -199,7 +199,7 @@ input[type="text"]{
   border-left: #CAC9C9;
   border-width: 1px;
 
-}
+}*/
 
 .slide-confirm{
   background: #477725;
@@ -288,14 +288,14 @@ ul#events-current{
       float: left;
     }
 
-    ul#events-current .event-description{
+/*    ul#events-current .event-description{
       clear: both;
       display: none;
       width: 100%;
       margin: 1.8em 0 0 0;
       word-wrap: normal;
 
-    }
+    }*/
 
        ul#events-current .event-description p{
         white-space: normal;

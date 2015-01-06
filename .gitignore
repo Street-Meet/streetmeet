@@ -8,3 +8,4 @@ plugins/
 **/public/.DS_Store
 streetMeet/www/lib/
 streetMeet/platforms/
+streetMeet/npm-debug.log
