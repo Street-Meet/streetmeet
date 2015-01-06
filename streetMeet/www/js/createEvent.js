@@ -21,7 +21,7 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
       capacity: eventCapacity,
       category: eventCategory,
       min_capacity: eventMinCapacity,
-      createdAt: Firebase.ServerValue.TIMESTAMP
+      createdAt: Date.now()
     };
     var id = ref.child("/events").push();
     id.set(eventData, function(error) {
