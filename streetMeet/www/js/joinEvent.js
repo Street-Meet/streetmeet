@@ -2,7 +2,7 @@ angular.module('sm-meetApp.joinEvent',  ["firebase"])
 
 .controller('JoinEventCtrl', ["$scope", "$firebase", 'Events', function($scope, $firebase, Events) {
     // angular.extend($scope, Events);
-    var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/events");
+    var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events");
    $scope.list =  Events.throwTheEvents(ref);
 
 }])

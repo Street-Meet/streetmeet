@@ -21,6 +21,22 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies'])
       });
     };
 
+    //AngularFire OAuth
+
+    $scope.registerAccount = function(theEmail, thePass) {
+      ref.createUser({
+        email: theEmail,
+        password: thePass
+      }, function(error) {
+        if(error === null) {
+          console.log("Error!");
+        } else {
+          console.log(error);
+        }
+      });
+
+    }
+
     // $scope.facebookLogin = function() {
     //     $cordovaOauth.facebook("CLIENT_ID_HERE", ["email"]).then(function(result) {
     //       // results
