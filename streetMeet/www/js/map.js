@@ -65,7 +65,7 @@ angular.module('sm-meetApp.map',  ['firebase'])
       var refEvent = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events/"+key);
       refEvent.on('value', function(snap) {
         // if (false) {
-        if (snap.val().createdAt > Date.now() - 1320000) {
+        if (snap.val() && snap.val().createdAt > Date.now() - 1320000) {
           console.log(snap.val());
           var pos = new google.maps.LatLng(location[0], location[1]);
           var marker = new google.maps.Marker({
