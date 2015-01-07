@@ -9,10 +9,13 @@ angular.module('sm-meetApp.map',  ['firebase'])
 })
 
 .factory('Map', function ($q, $location, $window, $rootScope, $cookieStore, $state) {
+  // user location geofire
   var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/user_locations");
   var userGeoFire = new GeoFire(userRef);
+  // event location geofire
   var refLoc = new Firebase("https://boiling-torch-2747.firebaseio.com/current/locations");
   var geoFire = new GeoFire(refLoc);
+  //archived location geofire
   var refArchivedLoc = new Firebase("https://boiling-torch-2747.firebaseio.com/archived/locations");
   var geoFireArchived = new GeoFire(refArchivedLoc);
   var center = new google.maps.LatLng(47.785326, -122.405696);
@@ -74,7 +77,7 @@ angular.module('sm-meetApp.map',  ['firebase'])
             title: key
           });
           google.maps.event.addListener(marker, 'click', function() {
-            $state.go('viewSingleEvent', {id: key});
+            $state.go('attendEvent', {id: key});
           })
         } else {
           if(snap.val()) {
