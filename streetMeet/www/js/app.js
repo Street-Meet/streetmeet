@@ -9,6 +9,7 @@ var meetApp = angular.module('sm-meetApp',
     'ionic',
     'firebase',
     'ngCookies',
+    'ngCordova',
 
     //sm-meetApp Modules
     'sm-meetApp.login',
@@ -49,7 +50,7 @@ var meetApp = angular.module('sm-meetApp',
     })
     .state('createAccount', {
       url: '/createAccount',
-      templateUrl: 'views/login.html',
+      templateUrl: 'views/login.createAccount.html',
       controller: 'LoginCtrl'
     })
     .state('createEvent', {
