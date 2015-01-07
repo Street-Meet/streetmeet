@@ -80,19 +80,50 @@ angular.module('sm-meetApp.map',  ['firebase'])
             $state.go('attendEvent', {id: key});
           })
         } else {
+          // archives expired events
           if(snap.val()) {
             var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
             var id = ref.child("/archived/events/"+key);
             console.log(key, snap.val(), 'key, snapval');
             var locId = refLoc.child(key);
+            // sets archived event data
             id.set(snap.val(), function(error) {
               if (error) {
                 alert("Data could not be saved." + error);
               } else {
                 console.log(snap.val(), 'create archived event');
+                // removes event from current evvents
                 ref.child("/current/events/" + key).remove();
+                // archives geoLocation
                 geoFireArchived.set(key, geoFire.get(key)._result)
                   .then(geoFire.remove(key));
+
+                // var attendees = id.child("/attendees");
+                // console.log('attendees', attendees);
+                // console.log('attendees.val', attendees).val();
+                id.child("/attendees").once('value', function(attendees) {
+                  // console.log('attendees', attendees.val());
+                  attendees.forEach(function(childSnap) {
+                    // user = childSnap.key();
+                  // })
+                  // for (user in attendees.val()) {
+
+                    // console.log('attendees loop', childSnap.key());
+                    // console.log('preuser', user);
+                    var userCurrEvent = ref.child("/users/"+childSnap.key()+"/currentEvent");
+                    // console.log('path before', userCurrEvent.toString());
+                    userCurrEvent.once('value', function(currEvent) {
+                      // console.log('user', user);
+                      // console.log('key', key);
+                      // console.log('path', userCurrEvent.toString());
+                      // console.log('currEvent', currEvent.val());
+                      if (currEvent.val() === key) {
+                        userCurrEvent.remove();
+                        // console.log('removed current event');
+                      }
+                    });
+                  });
+                });
               }
             });
           }

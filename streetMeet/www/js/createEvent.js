@@ -49,7 +49,14 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
       }, function(error) {
         console.log("Error: " + error);
       });
-    userRef.child("/currentEvent/" + id.key()).set(true, function(error) {
+    userRef.child("/currentEvent/").set(id.key(), function(error) {
+      if (error) {
+        alert("Data could not be saved." + error);
+      } else {
+        console.log("Current event added to user!");
+      }
+    });
+    userRef.child("/pastEvents/" + id.key()).set(true, function(error) {
       if (error) {
         alert("Data could not be saved." + error);
       } else {
