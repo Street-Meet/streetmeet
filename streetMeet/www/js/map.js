@@ -3,9 +3,6 @@ angular.module('sm-meetApp.map',  ['firebase'])
 .controller('MapCtrl', function($scope, $firebase, Map) {
   angular.extend($scope, Map);
 
-  var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
-  var geoFire = new GeoFire(ref);
-
   // Get the current user's location
   Map.getLocation();
   Map.geolocationUpdate();
@@ -14,8 +11,10 @@ angular.module('sm-meetApp.map',  ['firebase'])
 .factory('Map', function ($q, $location, $window, $rootScope, $cookieStore, $state) {
   var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/user_locations");
   var userGeoFire = new GeoFire(userRef);
-  var refLoc = new Firebase("https://boiling-torch-2747.firebaseio.com/locations");
+  var refLoc = new Firebase("https://boiling-torch-2747.firebaseio.com/current/locations");
   var geoFire = new GeoFire(refLoc);
+  var refArchivedLoc = new Firebase("https://boiling-torch-2747.firebaseio.com/archived/locations");
+  var geoFireArchived = new GeoFire(refArchivedLoc);
   var center = new google.maps.LatLng(47.785326, -122.405696);
   var globalLatLng;
   var marker = null;
@@ -63,9 +62,11 @@ angular.module('sm-meetApp.map',  ['firebase'])
     map.setCenter(center);
     var onKeyEnteredRegistration = geoQuery.on("key_entered", function(key, location) {
       console.log(key);
-      var refEvent = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+key);
+      var refEvent = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events/"+key);
       refEvent.on('value', function(snap) {
-        if (snap.val().createdAt > Date.now() - 1320000) {
+        // if (false) {
+        if (snap.val() && snap.val().createdAt > Date.now() - 1320000) {
+          console.log(snap.val());
           var pos = new google.maps.LatLng(location[0], location[1]);
           var marker = new google.maps.Marker({
             position: pos,
@@ -75,6 +76,23 @@ angular.module('sm-meetApp.map',  ['firebase'])
           google.maps.event.addListener(marker, 'click', function() {
             $state.go('viewSingleEvent', {id: key});
           })
+        } else {
+          if(snap.val()) {
+            var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
+            var id = ref.child("/archived/events/"+key);
+            console.log(key, snap.val(), 'key, snapval');
+            var locId = refLoc.child(key);
+            id.set(snap.val(), function(error) {
+              if (error) {
+                alert("Data could not be saved." + error);
+              } else {
+                console.log(snap.val(), 'create archived event');
+                ref.child("/current/events/" + key).remove();
+                geoFireArchived.set(key, geoFire.get(key)._result)
+                  .then(geoFire.remove(key));
+              }
+            });
+          }
         }
       });
       console.log(key + " entered the query. Hi " + key + " at " + location);
@@ -102,10 +120,10 @@ angular.module('sm-meetApp.map',  ['firebase'])
     var longitude = position.coords.longitude;
     var myLatlng = new google.maps.LatLng(latitude, longitude);
     globalLatLng = myLatlng;
-
+    var userData = $cookieStore.get('currentUser');
+    console.log("User Data", userData);
     //adds user location data to firebase
-    userGeoFire.set({
-      "user_name": [latitude, longitude] }).then(function() {
+    userGeoFire.set(userData, [latitude, longitude]).then(function() {
       console.log("Provided keys have been added to GeoFire");
     }, function(error) {
       console.log("Error: " + error);

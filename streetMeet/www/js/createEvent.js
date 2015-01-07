@@ -9,26 +9,28 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
 
 
 })
-.factory('EventCreator', function ($q, $cookieStore) {
-  var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
-  var locRef = new Firebase("https://boiling-torch-2747.firebaseio.com/locations");
+.factory('EventCreator', function ($q, $cookieStore, $state) {
+  var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/current");
+  var locRef = ref.child("/locations");
   var geoFire = new GeoFire(locRef);
   var createEvent = function(owner, eventTitle, eventDescription, eventCapacity) {
     var eventData ={
-      user_id: owner,
       title: eventTitle,
       description: eventDescription,
       capacity: eventCapacity,
       createdAt: Date.now()
     };
     var id = ref.child("/events").push();
+
     id.set(eventData, function(error) {
       if (error) {
         alert("Data could not be saved." + error);
       } else {
-        var name = id.key();
-        ref.child("/users/" + eventData.user + "/events/" + name).set(true);
-        alert("Data saved successfully.");
+        id.child("owner/"+owner).set(true, function(error) {
+            console.log(id.key());
+            $state.go('viewSingleEvent', {id: id.key()})
+            console.log("Data saved successfully.");
+        });
       }
     });
     geoFire.set(id.key(), [$cookieStore.get('eventLoc').k, $cookieStore.get('eventLoc').D]).then(function() {
@@ -36,6 +38,7 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
       }, function(error) {
         console.log("Error: " + error);
       });
+
   }
   return{
     createEvent: createEvent
