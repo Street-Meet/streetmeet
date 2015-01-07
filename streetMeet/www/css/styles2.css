@@ -233,7 +233,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="num
 
 .sticky-bottom{
   position: absolute;
-  bottom: 55px;
+  bottom: 40px;
 }
 
 .mid-header{
@@ -268,6 +268,10 @@ input[type="text"], input[type="email"], input[type="password"], input[type="num
   background-size: cover;
 }
 
+.login-area{
+  width: 100%;
+}
+
 #main-logo{
   width: 100%;
   max-width: 500px;
@@ -284,6 +288,20 @@ input[type="text"], input[type="email"], input[type="password"], input[type="num
     width: 70%;
     margin: 15% auto 0;
   }
+
+
+.loginSection.ng-hide-add,
+.loginSection.ng-hide-remove {
+  -webkit-transition:0.5s linear all;
+  transition:0.25s linear all;
+
+  /* remember to add this */
+  display:block!important;
+  opacity:1;
+}
+.loginSection.ng-hide {
+  opacity:0;
+}
 
 
 /******* Create Event Pane ********/
