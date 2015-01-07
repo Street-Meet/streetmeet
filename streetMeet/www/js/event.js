@@ -8,6 +8,17 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
     $scope.eventData = snap.val();
     console.log($scope.eventData);
   })
+
+  $scope.joinEvent = function() {
+    var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events/"+$state.params.id+"/attendees/"+$cookieStore.get('currentUser'));
+    ref.set(true, function(error) {
+        if (error) {
+          alert("Data could not be saved." + error);
+        } else {
+          console.log("Attendee data saved successfully.");
+        }
+      });
+  }
 });
 
 // .factory('Event', function ($q, $cookieStore, $state) {
