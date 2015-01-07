@@ -25,12 +25,6 @@ angular.module('sm-meetApp.userInterfaceController',  [])
     $scope.loginState = section;
   };
 
-
-  $scope.disableVerticalScrolling = function() {
-      var scrollPos = $ionicScrollDelegate.getScrollPosition().top;
-      $ionicScrollDelegate.scrollTo(0, scrollPos, false);
-  }
-
   $ionicSideMenuDelegate.canDragContent(false);
 
   /**

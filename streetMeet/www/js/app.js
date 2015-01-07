@@ -9,7 +9,7 @@ var meetApp = angular.module('sm-meetApp',
     'ionic',
     'firebase',
     'ngCookies',
-    'ngCordova',
+    // 'ngCordova',
 
     //sm-meetApp Modules
     'sm-meetApp.login',
@@ -73,6 +73,12 @@ var meetApp = angular.module('sm-meetApp',
       templateUrl: 'views/mapCurrentEvents.html',
       controller: 'MapCtrl'
     })
+    .state('settings', {
+      url: '/settings',
+      templateUrl: 'views/userSettings.html',
+      // controller: 'SettingsCtrl'
+    })
+
     .state('profileView', {
       url: '/profileView',
       templateUrl: 'templates/profileView.html',

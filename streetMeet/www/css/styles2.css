@@ -140,6 +140,27 @@ button{
       
     }
 
+    .settings-btn{
+      position: absolute;
+      font-size: 3em;
+      bottom: 10px;
+      right: 10px;
+      cursor: pointer;
+    }
+      .settings-btn a{
+         color: rgba(44, 62, 80, .5); 
+      }
+
+  .header-back-btn
+  {
+    font-size: 2em;
+    text-align: center;
+    padding: .2em 0 0 .2em;
+  }
+    .header-back-btn a{
+      color: #fff;
+    }
+
 /* Slide controls */
 .slide-button{
   width: 30%;
@@ -258,6 +279,28 @@ input[type="text"], input[type="email"], input[type="password"], input[type="num
 
 
 /********** Layout **********/
+
+.main-header{
+  width: 100%;
+  background: #2c3e50;
+  box-sizing: border-box;
+  border-radius: 0;
+  background: #2c3e50;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+  
+  .main-header h1{
+    text-align: center;
+  }
+
+    .bar .title{
+      font-size: 1.75em;
+      font-weight: 600;
+    }
+
+
 
 /******* Login Panes *******/
 .login-pane {
