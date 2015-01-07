@@ -29,7 +29,20 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies'])
         password: thePass
       }, function(error) {
         if(error === null) {
-          console.log("Error!");
+          auth.$authWithPassword({
+            email: theEmail,
+            password: thePass
+          }).then(function(authData) {
+            $cookieStore.put('currentUser', authData.uid );
+            $cookieStore.put('currentToken', authData.token );
+            $cookieStore.put('currentData', authData);
+
+            console.log("Logged in as:", authData.uid);
+            $scope.currentUserId = authData;
+            $state.go('mapCurrentEvents');
+            }).catch(function(error) {
+              console.error("Authentication failed:", error);
+            });
         } else {
           console.log(error);
         }
