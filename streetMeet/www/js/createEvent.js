@@ -27,13 +27,9 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
         alert("Data could not be saved." + error);
       } else {
         id.child("owner/"+owner).set(true, function(error) {
-          // if (error) {
-          //   alert("Data could not be saved." + error);
-          // } else {
             console.log(id.key());
             $state.go('viewSingleEvent', {id: id.key()})
             console.log("Data saved successfully.");
-          // }
         });
       }
     });
