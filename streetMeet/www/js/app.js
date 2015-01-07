@@ -50,7 +50,7 @@ var meetApp = angular.module('sm-meetApp',
     })
     .state('createAccount', {
       url: '/createAccount',
-      templateUrl: 'views/login.createAccount.html',
+      templateUrl: 'views/login.html',
       controller: 'LoginCtrl'
     })
     .state('createEvent', {
