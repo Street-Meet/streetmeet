@@ -1,6 +1,29 @@
 angular.module('sm-meetApp.userInterfaceController',  [])
 
-.controller('uiController', ['$scope', '$ionicSideMenuDelegate', 'itemControls', function($scope, $ionicSideMenuDelegate, itemControls){
+.run(function ($state,$rootScope) {
+    $rootScope.$state = $state;
+})
+
+.controller('uiController', ['$rootScope', '$state','$scope', '$ionicSideMenuDelegate', 'itemControls', function($rootScope, $state, $scope, $ionicSideMenuDelegate, itemControls){
+
+
+  /**
+   * https://github.com/angular-ui/ui-router/wiki#state-change-events
+   */
+  // $rootScope.$on('$stateChangeStart', 
+  // function(event, toState, toParams, fromState, fromParams){ 
+  //     //event.preventDefault();
+  //     $scope.state = toState.name;
+  //     // console.log(event, toState, toParams, fromState, fromParams);
+  //     console.log(toState.name);
+  // });
+  
+
+  $scope.loginState = 'login';
+
+  $scope.loginSectionChange = function(section){
+    $scope.loginState = section;
+  };
 
   $ionicSideMenuDelegate.canDragContent(false);
 
@@ -54,7 +77,6 @@ angular.module('sm-meetApp.userInterfaceController',  [])
       });
     }
   };
-
 }])
 
 .factory('itemControls', [function(){

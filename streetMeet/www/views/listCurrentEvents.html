@@ -7,7 +7,7 @@
 
       <ul id="events-current" class="list" >
 
-        <li  on-swipe="onSwipe($event)" on-tap="expandTap($event)" ng-repeat="event in list | reverse | timer" class="slide-controls item event clearfix">
+        <li on-swipe="onSwipe($event)" on-tap="expandTap($event)" ng-repeat="event in list | reverse | timer" class="slide-controls item event clearfix">
 
           <div class="slide-deny slide-button v-center" on-tap="removeTap($event)">
             Decline
@@ -45,5 +45,12 @@
         </li> <!-- .item -->
 
       </ul> <!-- .list -->
+
+      <div class="settings-btn">
+        <a ui-sref="settings">
+          <i class="fa fa-cog"></i>
+        </a>
+      </div>
+
     </ion-content>
 </ion-pane>
