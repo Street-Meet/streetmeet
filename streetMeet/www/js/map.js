@@ -98,28 +98,13 @@ angular.module('sm-meetApp.map',  ['firebase'])
                 geoFireArchived.set(key, geoFire.get(key)._result)
                   .then(geoFire.remove(key));
 
-                // var attendees = id.child("/attendees");
-                // console.log('attendees', attendees);
-                // console.log('attendees.val', attendees).val();
+                // remove event from user's current
                 id.child("/attendees").once('value', function(attendees) {
-                  // console.log('attendees', attendees.val());
                   attendees.forEach(function(childSnap) {
-                    // user = childSnap.key();
-                  // })
-                  // for (user in attendees.val()) {
-
-                    // console.log('attendees loop', childSnap.key());
-                    // console.log('preuser', user);
                     var userCurrEvent = ref.child("/users/"+childSnap.key()+"/currentEvent");
-                    // console.log('path before', userCurrEvent.toString());
                     userCurrEvent.once('value', function(currEvent) {
-                      // console.log('user', user);
-                      // console.log('key', key);
-                      // console.log('path', userCurrEvent.toString());
-                      // console.log('currEvent', currEvent.val());
                       if (currEvent.val() === key) {
                         userCurrEvent.remove();
-                        // console.log('removed current event');
                       }
                     });
                   });
