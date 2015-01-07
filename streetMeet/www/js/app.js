@@ -39,17 +39,17 @@ var meetApp = angular.module('sm-meetApp',
   $stateProvider
     .state('login', {
       url: '/login',
-      templateUrl: 'views/login.html',
+      templateUrl : 'views/login.html',
       controller: 'LoginCtrl'
     })
     .state('emailSignin', {
       url: '/emailSignin',
       templateUrl: 'views/login.emailSignin.html',
-      controller: 'LoginCtrl',
+      controller: 'LoginCtrl'
     })
     .state('createAccount', {
       url: '/createAccount',
-      templateUrl: 'views/login.createAccount.html',
+      templateUrl: 'views/login.html',
       controller: 'LoginCtrl'
     })
     .state('createEvent', {
