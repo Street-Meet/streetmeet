@@ -3,9 +3,6 @@ angular.module('sm-meetApp.map',  ['firebase'])
 .controller('MapCtrl', function($scope, $firebase, Map) {
   angular.extend($scope, Map);
 
-  // var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
-  // var geoFire = new GeoFire(ref);
-
   // Get the current user's location
   Map.getLocation();
   Map.geolocationUpdate();
@@ -67,8 +64,8 @@ angular.module('sm-meetApp.map',  ['firebase'])
       console.log(key);
       var refEvent = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events/"+key);
       refEvent.on('value', function(snap) {
-        if (false) {
-        // if (snap.val().createdAt > Date.now() - 1320000) {
+        // if (false) {
+        if (snap.val().createdAt > Date.now() - 1320000) {
           console.log(snap.val());
           var pos = new google.maps.LatLng(location[0], location[1]);
           var marker = new google.maps.Marker({

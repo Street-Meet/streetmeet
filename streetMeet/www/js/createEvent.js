@@ -15,7 +15,6 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
   var geoFire = new GeoFire(locRef);
   var createEvent = function(owner, eventTitle, eventDescription, eventCapacity) {
     var eventData ={
-      // user_id: {owner : true},
       title: eventTitle,
       description: eventDescription,
       capacity: eventCapacity,
@@ -26,9 +25,7 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
       if (error) {
         alert("Data could not be saved." + error);
       } else {
-        // var name = id.key();
         id.child("owner/"+owner).set(true);
-        // ref.child("/users/" + eventData.user + "/events/" + name).set(true);
         alert("Data saved successfully.");
       }
     });
