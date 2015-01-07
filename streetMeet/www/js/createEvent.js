@@ -26,13 +26,20 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
       if (error) {
         alert("Data could not be saved." + error);
       } else {
+        id.child("attendees/"+owner).set(true, function(error) {
+          if (error) {
+            alert("Data could not be saved." + error);
+          } else {
+            console.log("Attendee data saved successfully.");
+          }
+        });
         id.child("owner/"+owner).set(true, function(error) {
           if (error) {
             alert("Data could not be saved." + error);
           } else {
             console.log(id.key());
             $state.go('viewSingleEvent', {id: id.key()})
-            console.log("Data saved successfully.");
+            console.log("Owner data saved successfully.");
           }
         });
       }
