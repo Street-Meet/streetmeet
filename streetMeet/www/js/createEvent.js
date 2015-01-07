@@ -10,12 +10,11 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
 
 })
 .factory('EventCreator', function ($q, $cookieStore) {
-  var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
-  var locRef = new Firebase("https://boiling-torch-2747.firebaseio.com/locations");
+  var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/current");
+  var locRef = ref.child("/locations");
   var geoFire = new GeoFire(locRef);
   var createEvent = function(owner, eventTitle, eventDescription, eventCapacity) {
     var eventData ={
-      user_id: owner,
       title: eventTitle,
       description: eventDescription,
       capacity: eventCapacity,
@@ -26,8 +25,7 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
       if (error) {
         alert("Data could not be saved." + error);
       } else {
-        var name = id.key();
-        ref.child("/users/" + eventData.user + "/events/" + name).set(true);
+        id.child("owner/"+owner).set(true);
         alert("Data saved successfully.");
       }
     });
