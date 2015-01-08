@@ -3,7 +3,6 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
 .controller('CreateEventsCtrl', function($scope, $firebase, $cookieStore, EventCreator) {
    angular.extend($scope, EventCreator);
    $scope.createEvent = function(eventTitle, eventDescription, eventCapacity){
-
      EventCreator.createEvent($cookieStore.get('currentUser'), eventTitle, eventDescription, eventCapacity);
    };
 
@@ -14,6 +13,7 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
   var locRef = ref.child("/locations");
   var geoFire = new GeoFire(locRef);
   var createEvent = function(owner, eventTitle, eventDescription, eventCapacity) {
+    var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+owner);
     var eventData ={
       title: eventTitle,
       description: eventDescription,
@@ -26,10 +26,21 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
       if (error) {
         alert("Data could not be saved." + error);
       } else {
+        id.child("attendees/"+owner).set(true, function(error) {
+          if (error) {
+            alert("Data could not be saved." + error);
+          } else {
+            console.log("Attendee data saved successfully.");
+          }
+        });
         id.child("owner/"+owner).set(true, function(error) {
+          if (error) {
+            alert("Data could not be saved." + error);
+          } else {
             console.log(id.key());
             $state.go('viewSingleEvent', {id: id.key()})
-            console.log("Data saved successfully.");
+            console.log("Owner data saved successfully.");
+          }
         });
       }
     });
@@ -38,6 +49,21 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
       }, function(error) {
         console.log("Error: " + error);
       });
+    userRef.child("/currentEvent/").set(id.key(), function(error) {
+      if (error) {
+        alert("Data could not be saved." + error);
+      } else {
+        console.log("Current event added to user!");
+      }
+    });
+    userRef.child("/pastEvents/" + id.key()).set(true, function(error) {
+      if (error) {
+        alert("Data could not be saved." + error);
+      } else {
+        console.log("Current event added to user!");
+      }
+    });
+
 
   }
   return{

@@ -9,10 +9,13 @@ angular.module('sm-meetApp.map',  ['firebase'])
 })
 
 .factory('Map', function ($q, $location, $window, $rootScope, $cookieStore, $state) {
+  // user location geofire
   var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/user_locations");
   var userGeoFire = new GeoFire(userRef);
+  // event location geofire
   var refLoc = new Firebase("https://boiling-torch-2747.firebaseio.com/current/locations");
   var geoFire = new GeoFire(refLoc);
+  //archived location geofire
   var refArchivedLoc = new Firebase("https://boiling-torch-2747.firebaseio.com/archived/locations");
   var geoFireArchived = new GeoFire(refArchivedLoc);
   var center = new google.maps.LatLng(47.785326, -122.405696);
@@ -74,22 +77,38 @@ angular.module('sm-meetApp.map',  ['firebase'])
             title: key
           });
           google.maps.event.addListener(marker, 'click', function() {
-            $state.go('viewSingleEvent', {id: key});
+            $state.go('attendEvent', {id: key});
           })
         } else {
+          // archives expired events
           if(snap.val()) {
             var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
             var id = ref.child("/archived/events/"+key);
             console.log(key, snap.val(), 'key, snapval');
             var locId = refLoc.child(key);
+            // sets archived event data
             id.set(snap.val(), function(error) {
               if (error) {
                 alert("Data could not be saved." + error);
               } else {
                 console.log(snap.val(), 'create archived event');
+                // removes event from current evvents
                 ref.child("/current/events/" + key).remove();
+                // archives geoLocation
                 geoFireArchived.set(key, geoFire.get(key)._result)
                   .then(geoFire.remove(key));
+
+                // remove event from user's current
+                id.child("/attendees").once('value', function(attendees) {
+                  attendees.forEach(function(childSnap) {
+                    var userCurrEvent = ref.child("/users/"+childSnap.key()+"/currentEvent");
+                    userCurrEvent.once('value', function(currEvent) {
+                      if (currEvent.val() === key) {
+                        userCurrEvent.remove();
+                      }
+                    });
+                  });
+                });
               }
             });
           }

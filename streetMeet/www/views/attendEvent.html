@@ -1,0 +1,117 @@
+<ion-pane id="singleEvent" class="detail-view event-pane">
+  <ion-header-bar class="hTabs">
+    <button class="header-tab" ui-sref="mapCurrentEvents">Back to Map</button>
+    <button class="header-tab" ng-click="joinEvent()">Join Event</button>
+  </ion-header-bar>
+  <ion-content class="has-header">
+
+  <div class="detail-section">
+    <div class="detail-img">
+      <img src="http://lygsbtd.files.wordpress.com/2011/08/beer_toast.jpg" alt="">
+    </div>
+
+    <div class="detail-info">
+      <span class="time-remaining">18:03</span>
+
+      <h2 class="detail-title">{{eventData.title}}</h2>
+      <span class="event-location-title">Sad Bar</span>
+      <span class="event-location-address">1234 Sad Ave</span>
+
+      <button class="inline-btn icon-btn" ui-sref="mapCurrentEvents">
+        <span class="btn-icon v-center"><i class="fa fa-map-marker"></i></span>
+        <span class="v-center">Map</span>
+      </button>
+    </div>
+
+    <div class="detail-description">
+      <p>{{eventData.description}}</p>
+    </div>
+
+  </div>
+
+  <div class="attendee-list">
+    <header class="mid-header">
+      <h3>Attendees</h3>
+    </header>
+    <ul>
+      <li class="item">
+        <div class="clearfix item-content">
+
+          <div class="event-more-info" ui-sref="viewSingleEvent">
+            <i class="fa fa-angle-right v-center"></i>
+          </div>
+
+          <div class="item-img">
+            <img src="https://scontent-2.2914.fna.fbcdn.net/hprofile-xap1/v/t1.0-1/p160x160/972233_10200304680672854_124393775_n.jpg?oh=7e038d4ca8d8785e11efbf938e31cce0&oe=5520FBB3" alt="">
+          </div>
+
+
+          <header class="event-header item-header">
+            <h2>Rick Takes</h2>
+            <span class="item-subtitle">"Something Witty"</span>
+          </header> <!-- .event-header -->
+
+        </div>
+
+      </li>
+      <li class="item">
+        <div class="clearfix item-content">
+
+          <div class="event-more-info" ui-sref="viewSingleEvent">
+            <i class="fa fa-angle-right v-center"></i>
+          </div>
+
+          <div class="item-img">
+            <img src="https://scontent-2.2914.fna.fbcdn.net/hprofile-xap1/v/t1.0-1/p160x160/972233_10200304680672854_124393775_n.jpg?oh=7e038d4ca8d8785e11efbf938e31cce0&oe=5520FBB3" alt="">
+          </div>
+
+
+          <header class="event-header item-header">
+            <h2>Rick Takes</h2>
+            <span class="item-subtitle">"Something Witty"</span>
+          </header> <!-- .event-header -->
+
+        </div>
+      </li>
+      <li class="item">
+        <div class="clearfix item-content">
+
+          <div class="event-more-info" ui-sref="viewSingleEvent">
+            <i class="fa fa-angle-right v-center"></i>
+          </div>
+
+          <div class="item-img">
+            <img src="https://scontent-2.2914.fna.fbcdn.net/hprofile-xap1/v/t1.0-1/p160x160/972233_10200304680672854_124393775_n.jpg?oh=7e038d4ca8d8785e11efbf938e31cce0&oe=5520FBB3" alt="">
+          </div>
+
+
+          <header class="event-header item-header">
+            <h2>Rick Takes</h2>
+            <span class="item-subtitle">"Something Witty"</span>
+          </header> <!-- .event-header -->
+
+        </div>
+      </li>
+      <li class="item">
+        <div class="clearfix item-content">
+
+          <div class="event-more-info" ui-sref="viewSingleEvent">
+            <i class="fa fa-angle-right v-center"></i>
+          </div>
+
+          <div class="item-img">
+            <img src="https://scontent-2.2914.fna.fbcdn.net/hprofile-xap1/v/t1.0-1/p160x160/972233_10200304680672854_124393775_n.jpg?oh=7e038d4ca8d8785e11efbf938e31cce0&oe=5520FBB3" alt="">
+          </div>
+
+
+          <header class="event-header item-header">
+            <h2>Rick Takes</h2>
+            <span class="item-subtitle">"Something Witty"</span>
+          </header> <!-- .event-header -->
+
+        </div>
+      </li>
+    </ul>
+  </div> <!-- .attendee-list -->
+    </ion-content>
+</ion-pane>
