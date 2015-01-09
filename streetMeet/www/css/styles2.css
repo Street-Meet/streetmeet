@@ -17,6 +17,10 @@
   line-height: 2.25em;
 }
 
+.platform-ios.platform-cordova:not(.fullscreen) .bar-header:not(.bar-subheader) > * {
+margin-top: 0px;
+}
+
 
 /********* End Ionic Style Resets *********/
 
@@ -282,6 +286,14 @@ input[type="text"], input[type="email"], input[type="password"], input[type="num
     padding: .4em;
   }
 
+.inset-divider{
+  display: block;
+  height: 1px;
+  width: 90%;
+  margin: 2.5em 5%;
+  border-bottom: 2px solid #cccccc;
+  border-top: 1px solid #fff;
+}
 
 /********** Layout **********/
 
@@ -293,16 +305,18 @@ input[type="text"], input[type="email"], input[type="password"], input[type="num
   background: #2c3e50;
   text-align: center;
   margin: 0;
-  padding: 0;
+  padding: 10px 0 0 0;
 }
   
   .main-header h1{
     text-align: center;
+    margin: 0;
   }
 
-    .bar .title{
+    .bar > .title{
       font-size: 1.75em;
       font-weight: 600;
+      top: 10px;
     }
 
 
@@ -511,4 +525,30 @@ ul#events-current{
     font-size: .875em;
     line-height: 1.2em;
   }
+
+
+/******* User Profile Pane ********/
+  .profile-pic{
+    border-radius: 44px;
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
