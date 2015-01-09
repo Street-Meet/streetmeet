@@ -43,16 +43,6 @@ var meetApp = angular.module('sm-meetApp',
       templateUrl : 'views/login.html',
       controller: 'LoginCtrl'
     })
-    .state('emailSignin', {
-      url: '/emailSignin',
-      templateUrl: 'views/login.emailSignin.html',
-      controller: 'LoginCtrl'
-    })
-    .state('createAccount', {
-      url: '/createAccount',
-      templateUrl: 'views/login.html',
-      controller: 'LoginCtrl'
-    })
     .state('createEvent', {
       url: '/createEvent',
       templateUrl: 'views/createEventForm.html',
@@ -83,7 +73,11 @@ var meetApp = angular.module('sm-meetApp',
       templateUrl: 'views/userSettings.html',
       // controller: 'SettingsCtrl'
     })
-
+    .state('userProfile', {
+      url: '/userProfile',
+      templateUrl: 'views/userProfile.html',
+      // controller: 'SettingsCtrl'
+    })
     .state('profileView', {
       url: '/profileView',
       templateUrl: 'templates/profileView.html',
