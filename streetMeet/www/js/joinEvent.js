@@ -6,56 +6,56 @@ angular.module('sm-meetApp.joinEvent',  ["firebase"])
 
     $scope.list =  Events.throwTheEvents(ref);
 
-    $scope.list = [
-      {
-        'title': 'title',
-        'description' : 'Lorem ipsum dolor sit amet.'
-      },
-      {
-        'title': 'title',
-        'description' : 'Lorem ipsum dolor sit amet.'
-      },
-      {
-        'title': 'title',
-        'description' : 'Lorem ipsum dolor sit amet.'
-      },
-      {
-        'title': 'title',
-        'description' : 'Lorem ipsum dolor sit amet.'
-      },
-      {
-        'title': 'title',
-        'description' : 'Lorem ipsum dolor sit amet.'
-      },
-      {
-        'title': 'title',
-        'description' : 'Lorem ipsum dolor sit amet.'
-      },
-      {
-        'title': 'title',
-        'description' : 'Lorem ipsum dolor sit amet.'
-      },
-      {
-        'title': 'title',
-        'description' : 'Lorem ipsum dolor sit amet.'
-      },
-      {
-        'title': 'title',
-        'description' : 'Lorem ipsum dolor sit amet.'
-      },
-      {
-        'title': 'title',
-        'description' : 'Lorem ipsum dolor sit amet.'
-      },
-      {
-        'title': 'title',
-        'description' : 'Lorem ipsum dolor sit amet.'
-      },
-      {
-        'title': 'title',
-        'description' : 'Lorem ipsum dolor sit amet.'
-      }
-    ];
+    // $scope.list = [
+    //   {
+    //     'title': 'title',
+    //     'description' : 'Lorem ipsum dolor sit amet.'
+    //   },
+    //   {
+    //     'title': 'title',
+    //     'description' : 'Lorem ipsum dolor sit amet.'
+    //   },
+    //   {
+    //     'title': 'title',
+    //     'description' : 'Lorem ipsum dolor sit amet.'
+    //   },
+    //   {
+    //     'title': 'title',
+    //     'description' : 'Lorem ipsum dolor sit amet.'
+    //   },
+    //   {
+    //     'title': 'title',
+    //     'description' : 'Lorem ipsum dolor sit amet.'
+    //   },
+    //   {
+    //     'title': 'title',
+    //     'description' : 'Lorem ipsum dolor sit amet.'
+    //   },
+    //   {
+    //     'title': 'title',
+    //     'description' : 'Lorem ipsum dolor sit amet.'
+    //   },
+    //   {
+    //     'title': 'title',
+    //     'description' : 'Lorem ipsum dolor sit amet.'
+    //   },
+    //   {
+    //     'title': 'title',
+    //     'description' : 'Lorem ipsum dolor sit amet.'
+    //   },
+    //   {
+    //     'title': 'title',
+    //     'description' : 'Lorem ipsum dolor sit amet.'
+    //   },
+    //   {
+    //     'title': 'title',
+    //     'description' : 'Lorem ipsum dolor sit amet.'
+    //   },
+    //   {
+    //     'title': 'title',
+    //     'description' : 'Lorem ipsum dolor sit amet.'
+    //   }
+    // ];
 
 
 }])
