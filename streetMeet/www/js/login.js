@@ -22,6 +22,7 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies'])
 
     //AngularFire OAuth
     $scope.registerAccount = function(theEmail, thePass) {
+      console.log('Registering account');
       ref.createUser({
           email: theEmail,
           password: thePass
