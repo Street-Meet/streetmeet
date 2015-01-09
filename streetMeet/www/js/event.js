@@ -39,6 +39,27 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
         }
       });
     });
+    // logic for determining if the user is an owner, not attending or attending an event
+    var ownerRef = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events/owner");
+    var ownerSync = $firebase(ownerRef);
+    $scope.initial = true;
+    $scope.owner = false;
+    $scope.leaver = false;
+    $scope.joiner = false;
+    ownerObj = ownerSync.$asObject();
+    ownerObj.$loaded().then(function() {
+      $scope.owner = ownerObj.$value;
+      console.log(ownerObj.$value);
+      var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+$cookieStore.get('currentUser')+"/currentEvent");
+      var userSync = $firebase(userRef);
+      var userObj = userSync.$asObject();
+      userObj.$loaded().then(function() {
+        console.log(userObj.$value);
+        $scope.leaver = userObj.$value && !$scope.owner;
+        $scope.joiner = !$scope.owner && !$scope.leaver;
+        $scope.initial = false;
+      });
+    });
   }
   $scope.update();
 
@@ -85,24 +106,7 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
     userRef.child("/currentEvent/").remove();
   }
 
-  // logic for determining if the user is an owner, not attending or attending an event
-  var ownerRef = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events/owner");
-  var ownerSync = $firebase(ownerRef);
-  $scope.initial = true;
-  ownerObj = ownerSync.$asObject();
-  ownerObj.$loaded().then(function() {
-    $scope.owner = ownerObj.$value;
-    console.log(ownerObj.$value);
-    var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+$cookieStore.get('currentUser')+"/currentEvent");
-    var userSync = $firebase(userRef);
-    var userObj = userSync.$asObject();
-    userObj.$loaded().then(function() {
-      console.log(userObj.$value);
-      $scope.leaver = userObj.$value && !$scope.owner;
-      $scope.joiner = !$scope.owner && !$scope.leaver;
-      $scope.initial = false;
-    });
-  });
+
 
 })
 
