@@ -38,13 +38,21 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies'])
     $scope.loginWithFacebook = function(){
     auth.$authWithOAuthPopup("facebook",
       {scope: "email, user_events" }) // scope has the permissions requested
-    .then(function(authData) {
-      console.log('this is the authData: ', authData);
+      .then(function(authData) {
+        var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+authData.uid+"/userInfo");
+        ref.set(authData.facebook.cachedUserProfile, function(error) {
+          if (error) {
+            console.log('error setting data!');
+          }
+        })
+        console.log('this is the authData: ', authData);
+
         $cookieStore.put('currentUser', authData.uid );
         $cookieStore.put('currentToken', authData.token );
         $cookieStore.put('currentData', authData.facebook.cachedUserProfile );
 
         console.log("Logged in as:", authData.uid);
+        console.log('all of it', authData);
         $scope.currentUser = authData.facebook.cachedUserProfile;
         $scope.currentUserId = authData;
         $state.go('mapCurrentEvents');
