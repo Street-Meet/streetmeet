@@ -5,6 +5,13 @@ angular.module('sm-meetApp.joinEvent',  ["firebase"])
     var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events");
 
     $scope.list =  Events.throwTheEvents(ref);
+    console.log($scope.list)
+    console.log($scope.list.forEach);
+
+    angular.forEach($scope.list, function(value, key) {
+      console.log('ervrev');
+      console.log(value, key);
+    })
 
     // $scope.list = [
     //   {
@@ -74,8 +81,13 @@ angular.module('sm-meetApp.joinEvent',  ["firebase"])
     return sync.$asArray(); // this will be an instance of TotalEvents
   };
 
+  // var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events");
+
+  // var list = throwTheEvents(ref);
+
   return {
-    throwTheEvents : throwTheEvents
+    throwTheEvents : throwTheEvents,
+    // list : list
   };
 }])
 .filter('reverse', function() {

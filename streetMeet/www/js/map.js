@@ -99,6 +99,19 @@ angular.module('sm-meetApp.map',  ['firebase'])
                   .then(geoFire.remove(key));
 
                 // remove event from user's current
+                // id.child("/attendees").once('value', function(attendees) {
+                //   attendees.forEach(function(childSnap) {
+                //     var userCurrEvent = ref.child("/users/"+childSnap.key()+"/currentEvent");
+                //     userCurrEvent.once('value', function(currEvent) {
+                //       if (currEvent.val() === key) {
+                //         userCurrEvent.remove();
+                //       }
+                //     });
+                //   });
+                // });
+
+                // var sync = $firebase(id.child("/attendees"));
+                // var obj = sync.$asObject();
                 id.child("/attendees").once('value', function(attendees) {
                   attendees.forEach(function(childSnap) {
                     var userCurrEvent = ref.child("/users/"+childSnap.key()+"/currentEvent");
