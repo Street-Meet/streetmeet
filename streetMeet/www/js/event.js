@@ -24,8 +24,6 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
   var id = ref.child("/users/");
 
   // list of attendees
-  // $scope.attendees = Event.attendList();
-
   $scope.update = function() {
     var attendeeObj = $firebase(refAttendees).$asObject();
     attendeeObj.$loaded().then(function() {
