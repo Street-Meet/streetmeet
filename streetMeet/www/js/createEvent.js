@@ -2,10 +2,6 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
 
 .controller('CreateEventsCtrl', function($scope, $firebase, $cookieStore, EventCreator) {
    angular.extend($scope, EventCreator);
-   // $scope.createEvent = function(eventTitle, eventDescription, eventCapacity){
-     // EventCreator.createEvent(eventTitle, eventDescription, eventCapacity);
-   // };
-
 
 })
 .factory('EventCreator', function ($q, $cookieStore, $state) {
