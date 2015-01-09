@@ -5,8 +5,7 @@ angular.module('sm-meetApp.joinEvent',  ["firebase"])
     var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events");
 
     $scope.list =  Events.throwTheEvents(ref);
-    console.log($scope.list)
-    console.log($scope.list.forEach);
+    console.log($scope.list);
 
     angular.forEach($scope.list, function(value, key) {
       console.log('ervrev');

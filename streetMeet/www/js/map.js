@@ -69,10 +69,9 @@ angular.module('sm-meetApp.map',  ['firebase'])
       var eventSync = $firebase(refEvent);
       var eventObj = eventSync.$asObject();
       eventObj.$loaded().then(function() {
-        console.log(eventObj.createdAt);
         // add marker for an event if it was created in the past 22 minutes
-        if (false) {
-        // if (eventObj.createdAt > Date.now() - 1320000) {
+        // if (false) {
+        if (eventObj.createdAt > Date.now() - 1320000) {
           var pos = new google.maps.LatLng(location[0], location[1]);
           var marker = new google.maps.Marker({
             position: pos,
