@@ -8,7 +8,7 @@ angular.module('sm-meetApp.map',  ['firebase'])
   Map.geolocationUpdate();
 })
 
-.factory('Map', function ($q, $location, $window, $rootScope, $cookieStore, $state) {
+.factory('Map', function ($q, $location, $window, $rootScope, $cookieStore, $state, $firebase) {
   // user location geofire
   var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/user_locations");
   var userGeoFire = new GeoFire(userRef);
@@ -67,8 +67,8 @@ angular.module('sm-meetApp.map',  ['firebase'])
       console.log(key);
       var refEvent = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events/"+key);
       refEvent.on('value', function(snap) {
-        // if (false) {
-        if (snap.val() && snap.val().createdAt > Date.now() - 1320000) {
+        if (false) {
+        // if (snap.val() && snap.val().createdAt > Date.now() - 1320000) {
           console.log(snap.val());
           var pos = new google.maps.LatLng(location[0], location[1]);
           var marker = new google.maps.Marker({
@@ -110,18 +110,36 @@ angular.module('sm-meetApp.map',  ['firebase'])
                 //   });
                 // });
 
-                // var sync = $firebase(id.child("/attendees"));
-                // var obj = sync.$asObject();
-                id.child("/attendees").once('value', function(attendees) {
-                  attendees.forEach(function(childSnap) {
-                    var userCurrEvent = ref.child("/users/"+childSnap.key()+"/currentEvent");
-                    userCurrEvent.once('value', function(currEvent) {
-                      if (currEvent.val() === key) {
+                var sync = $firebase(id.child("/attendees"));
+                var attendeeObj = sync.$asObject();
+                console.log('awefwaefawefaewfaewfewf');
+                attendeeObj.$loaded().then(function() {
+                  console.log(attendeeObj);
+                  angular.forEach(attendeeObj, function(attendeeValue, attendeeKey) {
+                    console.log(attendeeValue, attendeeKey);
+                    var userCurrEvent = ref.child("/users/"+attendeeKey+"/currentEvent");
+                    var currSync = $firebase(userCurrEvent);
+                    var currObj = currSync.$asObject();
+                    currObj.$loaded().then(function() {
+                      console.log(currObj.$value);
+                      console.log(currObj.$id);
+                      if (currObj.$value === key) {
                         userCurrEvent.remove();
                       }
-                    });
+                    })
+
                   });
                 });
+                // id.child("/attendees").once('value', function(attendees) {
+                //   attendees.forEach(function(childSnap) {
+                //     var userCurrEvent = ref.child("/users/"+childSnap.key()+"/currentEvent");
+                //     userCurrEvent.once('value', function(currEvent) {
+                //       if (currEvent.val() === key) {
+                //         userCurrEvent.remove();
+                //       }
+                //     });
+                //   });
+                // });
               }
             });
           }
