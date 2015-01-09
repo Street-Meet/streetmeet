@@ -70,7 +70,9 @@ angular.module('sm-meetApp.map',  ['firebase'])
       var eventObj = eventSync.$asObject();
       eventObj.$loaded().then(function() {
         console.log(eventObj.createdAt);
-        if (eventObj.createdAt > Date.now() - 1320000) {
+        // add marker for an event if it was created in the past 22 minutes
+        if (false) {
+        // if (eventObj.createdAt > Date.now() - 1320000) {
           var pos = new google.maps.LatLng(location[0], location[1]);
           var marker = new google.maps.Marker({
             position: pos,
@@ -83,24 +85,30 @@ angular.module('sm-meetApp.map',  ['firebase'])
         } else {
           var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
           var id = ref.child("/archived/events/"+key);
-          console.log(key, snap.val(), 'key, snapval');
           var locId = refLoc.child(key);
           // sets archived event data
-          id.set(snap.val(), function(error) {
+          var newObj = {};
+          angular.forEach(eventObj, function(eventValue, eventKey) {
+            newObj[eventKey] = eventValue;
+          })
+          // save event data
+          id.set(newObj, function(error) {
             if (error) {
               alert("Data could not be saved." + error);
             } else {
-              console.log(snap.val(), 'create archived event');
+              console.log(newObj, 'create archived event');
               // removes event from current evvents
               ref.child("/current/events/" + key).remove();
               // archives geoLocation
               geoFireArchived.set(key, geoFire.get(key)._result)
                 .then(geoFire.remove(key));
 
+              // get list of event's attendees
               var sync = $firebase(id.child("/attendees"));
               var attendeeObj = sync.$asObject();
               attendeeObj.$loaded().then(function() {
                 console.log(attendeeObj);
+                // iterate through each attendee
                 angular.forEach(attendeeObj, function(attendeeValue, attendeeKey) {
                   console.log(attendeeValue, attendeeKey);
                   var userCurrEvent = ref.child("/users/"+attendeeKey+"/currentEvent");
@@ -109,6 +117,7 @@ angular.module('sm-meetApp.map',  ['firebase'])
                   currObj.$loaded().then(function() {
                     console.log(currObj.$value);
                     console.log(currObj.$id);
+                    // remove current event from attendee's profile
                     if (currObj.$value === key) {
                       userCurrEvent.remove();
                     }
@@ -152,26 +161,6 @@ angular.module('sm-meetApp.map',  ['firebase'])
       //           // archives geoLocation
       //           geoFireArchived.set(key, geoFire.get(key)._result)
       //             .then(geoFire.remove(key));
-
-      //           var sync = $firebase(id.child("/attendees"));
-      //           var attendeeObj = sync.$asObject();
-      //           attendeeObj.$loaded().then(function() {
-      //             console.log(attendeeObj);
-      //             angular.forEach(attendeeObj, function(attendeeValue, attendeeKey) {
-      //               console.log(attendeeValue, attendeeKey);
-      //               var userCurrEvent = ref.child("/users/"+attendeeKey+"/currentEvent");
-      //               var currSync = $firebase(userCurrEvent);
-      //               var currObj = currSync.$asObject();
-      //               currObj.$loaded().then(function() {
-      //                 console.log(currObj.$value);
-      //                 console.log(currObj.$id);
-      //                 if (currObj.$value === key) {
-      //                   userCurrEvent.remove();
-      //                 }
-      //               })
-
-      //             });
-      //           });
       //           // id.child("/attendees").once('value', function(attendees) {
       //           //   attendees.forEach(function(childSnap) {
       //           //     var userCurrEvent = ref.child("/users/"+childSnap.key()+"/currentEvent");
