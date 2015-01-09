@@ -3,7 +3,60 @@ angular.module('sm-meetApp.joinEvent',  ["firebase"])
 .controller('JoinEventCtrl', ["$scope", "$firebase", 'Events', function($scope, $firebase, Events) {
     // angular.extend($scope, Events);
     var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events");
-   $scope.list =  Events.throwTheEvents(ref);
+
+    $scope.list =  Events.throwTheEvents(ref);
+
+    $scope.list = [
+      {
+        'title': 'title',
+        'description' : 'Lorem ipsum dolor sit amet.'
+      },
+      {
+        'title': 'title',
+        'description' : 'Lorem ipsum dolor sit amet.'
+      },
+      {
+        'title': 'title',
+        'description' : 'Lorem ipsum dolor sit amet.'
+      },
+      {
+        'title': 'title',
+        'description' : 'Lorem ipsum dolor sit amet.'
+      },
+      {
+        'title': 'title',
+        'description' : 'Lorem ipsum dolor sit amet.'
+      },
+      {
+        'title': 'title',
+        'description' : 'Lorem ipsum dolor sit amet.'
+      },
+      {
+        'title': 'title',
+        'description' : 'Lorem ipsum dolor sit amet.'
+      },
+      {
+        'title': 'title',
+        'description' : 'Lorem ipsum dolor sit amet.'
+      },
+      {
+        'title': 'title',
+        'description' : 'Lorem ipsum dolor sit amet.'
+      },
+      {
+        'title': 'title',
+        'description' : 'Lorem ipsum dolor sit amet.'
+      },
+      {
+        'title': 'title',
+        'description' : 'Lorem ipsum dolor sit amet.'
+      },
+      {
+        'title': 'title',
+        'description' : 'Lorem ipsum dolor sit amet.'
+      }
+    ];
+
 
 }])
 .factory("Events", ["$FirebaseArray", "$firebase", function($FirebaseArray, $firebase) {
