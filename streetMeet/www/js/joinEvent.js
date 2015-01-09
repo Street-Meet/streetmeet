@@ -74,8 +74,13 @@ angular.module('sm-meetApp.joinEvent',  ["firebase"])
     return sync.$asArray(); // this will be an instance of TotalEvents
   };
 
+  // var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events");
+
+  // var list = throwTheEvents(ref);
+
   return {
-    throwTheEvents : throwTheEvents
+    throwTheEvents : throwTheEvents,
+    // list : list
   };
 }])
 .filter('reverse', function() {
