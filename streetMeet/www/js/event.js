@@ -35,7 +35,7 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
 
 })
 
-.factory('Event', function ($q, $cookieStore, $state, $firebase) {
+.factory('Event', function ($q, $cookieStore, $state) {
   var joinEvent = function() {
     var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events/"+$state.params.id+"/attendees/"+$cookieStore.get('currentUser'));
     var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+$cookieStore.get('currentUser'));
