@@ -7,11 +7,6 @@ angular.module('sm-meetApp.joinEvent',  ["firebase"])
     $scope.list =  Events.throwTheEvents(ref);
     console.log($scope.list);
 
-    angular.forEach($scope.list, function(value, key) {
-      console.log('ervrev');
-      console.log(value, key);
-    })
-
     // $scope.list = [
     //   {
     //     'title': 'title',
