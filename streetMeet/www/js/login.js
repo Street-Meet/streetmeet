@@ -1,13 +1,12 @@
 angular.module('sm-meetApp.login',  ['firebase', 'ngCookies'])
 
-.controller('LoginCtrl', ["$scope",  "$firebaseAuth", "$cookieStore", "$state",
-  function($scope, $firebaseAuth, $cookieStore, $state) {
+.controller('LoginCtrl', ["$scope",  "$firebaseAuth", "$cookieStore", "$state", "$q",
+  function($scope, $firebaseAuth, $cookieStore, $state, $q) {
     $scope.currentUser =  $cookieStore.get('currentData') || null;
     $scope.currentUserId =  $cookieStore.get('currentUser') || null;
     $scope.theEvents;
     var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
     var auth = $firebaseAuth(ref);
-
     $scope.simpleLogin = function(theEmail, thePass){
       auth.$authWithPassword({
         email: theEmail,
@@ -22,46 +21,19 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies'])
     };
 
     //AngularFire OAuth
-
     $scope.registerAccount = function(theEmail, thePass) {
       ref.createUser({
-        email: theEmail,
-        password: thePass
-      }, function(error) {
-        if(error === null) {
-          auth.$authWithPassword({
-            email: theEmail,
-            password: thePass
-          }).then(function(authData) {
-            $cookieStore.put('currentUser', authData.uid );
-            $cookieStore.put('currentToken', authData.token );
-            $cookieStore.put('currentData', authData);
-
-            console.log("Logged in as:", authData.uid);
-            $scope.currentUserId = authData;
-            $state.go('mapCurrentEvents');
-            }).catch(function(error) {
-              console.error("Authentication failed:", error);
-            });
-        } else {
-          console.log(error);
-        }
-      });
-
+          email: theEmail,
+          password: thePass
+        }, function(error) {
+          if(error === null) {
+            $scope.simpleLogin(theEmail, thePass);
+            console.log("Stored user!");
+          } else {
+            console.log("Error!", error);
+          }
+        });
     }
-
-    // $scope.facebookLogin = function() {
-    //     $cordovaOauth.facebook("CLIENT_ID_HERE", ["email"]).then(function(result) {
-    //       // results
-    //       console.log('this is the authData: ', authData);
-    //       $cookieStore.put('currentUser', authData.uid );
-    //       $cookieStore.put('currentToken', authData.token );
-    //       console.log("Logged in as:", authData.uid);
-    //     }, function(error) {
-    //         // error
-    //         console.error("Authentication failed:", error);
-    //     });
-    // }
 
     $scope.loginWithFacebook = function(){
     auth.$authWithOAuthPopup("facebook",
@@ -80,7 +52,6 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies'])
         console.error("Authentication failed:", error);
       });
     };
-
 
     $scope.getSpecificEvent = function(event_id){
      //location for any given event

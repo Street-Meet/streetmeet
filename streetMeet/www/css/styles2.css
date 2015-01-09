@@ -112,6 +112,11 @@ button{
     color: #2c3e50;
   }
 
+  button.btn-red{
+    background: #e74c3c;
+    color: #fff;
+  }
+
   .btn-icon{
     float: left;
     display: block;
