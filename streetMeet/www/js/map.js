@@ -49,7 +49,7 @@ angular.module('sm-meetApp.map',  ['firebase'])
       console.log("Asking user to get their location");
       navigator.geolocation.getCurrentPosition(geolocationCallbackQuery, errorHandler);
     } else {
-      console.log("Your browser does not support the HTML5 Geolocation API")
+      console.log("Your browser does not support the HTML5 Geolocation API");
     }
   };
 
@@ -60,7 +60,7 @@ angular.module('sm-meetApp.map',  ['firebase'])
     var center = new google.maps.LatLng(latitude, longitude);
     var geoQuery = geoFire.query({
       center: [latitude, longitude],
-      radius: 10
+      radius: 1.5
     });
     map.setCenter(center);
     var onKeyEnteredRegistration = geoQuery.on("key_entered", function(key, location) {
