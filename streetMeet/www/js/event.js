@@ -3,11 +3,19 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
 .controller('EventCtrl', function($scope, $firebase, $cookieStore, $state, Event) {
   angular.extend($scope, Event);
   var refEvent = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events/"+$state.params.id);
-  refEvent.on('value', function(snap) {
-    // check to see if is a valid key, otherwise reroute
-    $scope.eventData = snap.val();
-    console.log($scope.eventData);
-  })
+  var eventSync = $firebase(refEvent);
+  var eventObj = eventSync.$asObject();
+  eventObj.$loaded().then(function() {
+    console.log(eventObj);
+    eventObj.$bindTo($scope, "eventData").then(function() {
+      console.log($scope.eventData);
+    })
+  });
+  // refEvent.on('value', function(snap) {
+  //   // check to see if is a valid key, otherwise reroute
+  //   $scope.eventData = snap.val();
+  //   console.log($scope.eventData);
+  // })
 
   var result = {};
 
@@ -15,23 +23,19 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
   var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
   var id = ref.child("/users/");
 
-
+  // list of attendees
   var attendeeObj = $firebase(refAttendees).$asObject();
   attendeeObj.$loaded().then(function() {
     console.log("loaded record:", attendeeObj.$id);
     angular.forEach(attendeeObj, function(value, key) {
-      console.log(key, value);
       var userObj = $firebase(ref.child("/users/"+key+"/userInfo")).$asObject();
+      // grab user info to later display for each attendee
       userObj.$loaded().then(function() {
         result[key] = userObj;
-        console.log(userObj.first_name);
-        console.log(result);
         $scope.attendees = result;
       })
     });
   });
-
-  console.log($scope.attendees);
 
 })
 
