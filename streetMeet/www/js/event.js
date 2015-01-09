@@ -28,19 +28,14 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
   attendeeObj.$loaded().then(function() {
     console.log("loaded record:", attendeeObj.$id);
     angular.forEach(attendeeObj, function(value, key) {
-      console.log(key, value);
       var userObj = $firebase(ref.child("/users/"+key+"/userInfo")).$asObject();
       // grab user info to later display for each attendee
       userObj.$loaded().then(function() {
         result[key] = userObj;
-        console.log(userObj.first_name);
-        console.log(result);
         $scope.attendees = result;
       })
     });
   });
-
-  console.log($scope.attendees);
 
 })
 
