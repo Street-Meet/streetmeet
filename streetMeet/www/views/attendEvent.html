@@ -42,7 +42,8 @@
           </div>
 
           <div class="item-img">
-            <img src={{attendee.picture.data.url}} alt="">
+            <img ng-show="attendee.picture.data.url" src={{attendee.picture.data.url}} alt="">
+            <span ng-show="!attendee.picture.data.url" alt="" class="fa fa-user">
           </div>
 
 
