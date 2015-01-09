@@ -66,10 +66,11 @@ angular.module('sm-meetApp.map',  ['firebase'])
     var onKeyEnteredRegistration = geoQuery.on("key_entered", function(key, location) {
       console.log(key);
       var refEvent = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events/"+key);
-      refEvent.on('value', function(snap) {
-        if (false) {
-        // if (snap.val() && snap.val().createdAt > Date.now() - 1320000) {
-          console.log(snap.val());
+      var eventSync = $firebase(refEvent);
+      var eventObj = eventSync.$asObject();
+      eventObj.$loaded().then(function() {
+        console.log(eventObj.createdAt);
+        if (eventObj.createdAt > Date.now() - 1320000) {
           var pos = new google.maps.LatLng(location[0], location[1]);
           var marker = new google.maps.Marker({
             position: pos,
@@ -80,71 +81,112 @@ angular.module('sm-meetApp.map',  ['firebase'])
             $state.go('attendEvent', {id: key});
           })
         } else {
-          // archives expired events
-          if(snap.val()) {
-            var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
-            var id = ref.child("/archived/events/"+key);
-            console.log(key, snap.val(), 'key, snapval');
-            var locId = refLoc.child(key);
-            // sets archived event data
-            id.set(snap.val(), function(error) {
-              if (error) {
-                alert("Data could not be saved." + error);
-              } else {
-                console.log(snap.val(), 'create archived event');
-                // removes event from current evvents
-                ref.child("/current/events/" + key).remove();
-                // archives geoLocation
-                geoFireArchived.set(key, geoFire.get(key)._result)
-                  .then(geoFire.remove(key));
+          var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
+          var id = ref.child("/archived/events/"+key);
+          console.log(key, snap.val(), 'key, snapval');
+          var locId = refLoc.child(key);
+          // sets archived event data
+          id.set(snap.val(), function(error) {
+            if (error) {
+              alert("Data could not be saved." + error);
+            } else {
+              console.log(snap.val(), 'create archived event');
+              // removes event from current evvents
+              ref.child("/current/events/" + key).remove();
+              // archives geoLocation
+              geoFireArchived.set(key, geoFire.get(key)._result)
+                .then(geoFire.remove(key));
 
-                // remove event from user's current
-                // id.child("/attendees").once('value', function(attendees) {
-                //   attendees.forEach(function(childSnap) {
-                //     var userCurrEvent = ref.child("/users/"+childSnap.key()+"/currentEvent");
-                //     userCurrEvent.once('value', function(currEvent) {
-                //       if (currEvent.val() === key) {
-                //         userCurrEvent.remove();
-                //       }
-                //     });
-                //   });
-                // });
+              var sync = $firebase(id.child("/attendees"));
+              var attendeeObj = sync.$asObject();
+              attendeeObj.$loaded().then(function() {
+                console.log(attendeeObj);
+                angular.forEach(attendeeObj, function(attendeeValue, attendeeKey) {
+                  console.log(attendeeValue, attendeeKey);
+                  var userCurrEvent = ref.child("/users/"+attendeeKey+"/currentEvent");
+                  var currSync = $firebase(userCurrEvent);
+                  var currObj = currSync.$asObject();
+                  currObj.$loaded().then(function() {
+                    console.log(currObj.$value);
+                    console.log(currObj.$id);
+                    if (currObj.$value === key) {
+                      userCurrEvent.remove();
+                    }
+                  })
 
-                var sync = $firebase(id.child("/attendees"));
-                var attendeeObj = sync.$asObject();
-                console.log('awefwaefawefaewfaewfewf');
-                attendeeObj.$loaded().then(function() {
-                  console.log(attendeeObj);
-                  angular.forEach(attendeeObj, function(attendeeValue, attendeeKey) {
-                    console.log(attendeeValue, attendeeKey);
-                    var userCurrEvent = ref.child("/users/"+attendeeKey+"/currentEvent");
-                    var currSync = $firebase(userCurrEvent);
-                    var currObj = currSync.$asObject();
-                    currObj.$loaded().then(function() {
-                      console.log(currObj.$value);
-                      console.log(currObj.$id);
-                      if (currObj.$value === key) {
-                        userCurrEvent.remove();
-                      }
-                    })
-
-                  });
                 });
-                // id.child("/attendees").once('value', function(attendees) {
-                //   attendees.forEach(function(childSnap) {
-                //     var userCurrEvent = ref.child("/users/"+childSnap.key()+"/currentEvent");
-                //     userCurrEvent.once('value', function(currEvent) {
-                //       if (currEvent.val() === key) {
-                //         userCurrEvent.remove();
-                //       }
-                //     });
-                //   });
-                // });
-              }
-            });
-          }
+              });
+            }
+          });
         }
       });
+      // refEvent.on('value', function(snap) {
+      //   // adds marker of live events to the map
+      //   // if (false) {
+      //   if (snap.val() && snap.val().createdAt > Date.now() - 1320000) {
+      //     console.log(snap.val());
+      //     var pos = new google.maps.LatLng(location[0], location[1]);
+      //     var marker = new google.maps.Marker({
+      //       position: pos,
+      //       map: map,
+      //       title: key
+      //     });
+      //     google.maps.event.addListener(marker, 'click', function() {
+      //       $state.go('attendEvent', {id: key});
+      //     })
+      //   } else {
+      //     // archives expired events
+      //     if(snap.val()) {
+      //       var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
+      //       var id = ref.child("/archived/events/"+key);
+      //       console.log(key, snap.val(), 'key, snapval');
+      //       var locId = refLoc.child(key);
+      //       // sets archived event data
+      //       id.set(snap.val(), function(error) {
+      //         if (error) {
+      //           alert("Data could not be saved." + error);
+      //         } else {
+      //           console.log(snap.val(), 'create archived event');
+      //           // removes event from current evvents
+      //           ref.child("/current/events/" + key).remove();
+      //           // archives geoLocation
+      //           geoFireArchived.set(key, geoFire.get(key)._result)
+      //             .then(geoFire.remove(key));
+
+      //           var sync = $firebase(id.child("/attendees"));
+      //           var attendeeObj = sync.$asObject();
+      //           attendeeObj.$loaded().then(function() {
+      //             console.log(attendeeObj);
+      //             angular.forEach(attendeeObj, function(attendeeValue, attendeeKey) {
+      //               console.log(attendeeValue, attendeeKey);
+      //               var userCurrEvent = ref.child("/users/"+attendeeKey+"/currentEvent");
+      //               var currSync = $firebase(userCurrEvent);
+      //               var currObj = currSync.$asObject();
+      //               currObj.$loaded().then(function() {
+      //                 console.log(currObj.$value);
+      //                 console.log(currObj.$id);
+      //                 if (currObj.$value === key) {
+      //                   userCurrEvent.remove();
+      //                 }
+      //               })
+
+      //             });
+      //           });
+      //           // id.child("/attendees").once('value', function(attendees) {
+      //           //   attendees.forEach(function(childSnap) {
+      //           //     var userCurrEvent = ref.child("/users/"+childSnap.key()+"/currentEvent");
+      //           //     userCurrEvent.once('value', function(currEvent) {
+      //           //       if (currEvent.val() === key) {
+      //           //         userCurrEvent.remove();
+      //           //       }
+      //           //     });
+      //           //   });
+      //           // });
+      //         }
+      //       });
+      //     }
+      //   }
+      // });
       console.log(key + " entered the query. Hi " + key + " at " + location);
     });
 
