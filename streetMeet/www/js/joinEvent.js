@@ -5,7 +5,6 @@ angular.module('sm-meetApp.joinEvent',  ["firebase"])
     var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events");
 
     $scope.list =  Events.throwTheEvents(ref);
-    console.log($scope.list);
 
     // $scope.list = [
     //   {
