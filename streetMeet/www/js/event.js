@@ -60,8 +60,8 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
           var userObj = userSync.$asObject();
           userObj.$loaded().then(function() {
             console.log(userObj.$value);
-            $scope.leaver = userObj.$value && !$scope.owner;
-            $scope.joiner = !$scope.owner && !$scope.leaver;
+            $scope.leaver = userObj.$value;
+            $scope.joiner = !$scope.leaver;
             $scope.initial = false;
           });
         }
