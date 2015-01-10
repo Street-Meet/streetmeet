@@ -18,21 +18,24 @@ angular.module('sm-meetApp.map',  ['firebase'])
   //archived location geofire
   var refArchivedLoc = new Firebase("https://boiling-torch-2747.firebaseio.com/archived/locations");
   var geoFireArchived = new GeoFire(refArchivedLoc);
-  var center = new google.maps.LatLng(47.785326, -122.405696);
-  var globalLatLng;
-  var marker = null;
-  var mapOptions = {
-    zoom: 15,
-    center: center,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  };
-  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
   // var initialize = function() {
-  //   map = map;
+    var center = new google.maps.LatLng(47.785326, -122.405696);
+    var globalLatLng;
+
+    var mapOptions = {
+      zoom: 15,
+      center: center,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+    // return map;
   // }
 
   // google.maps.event.addDomListener(window, 'load', initialize);
 
+
+  // var map = initialize();
+  var marker = null;
   // puts a marker on the center of the map to capture the location of a new event
   var createEvent = function() {
     $('<div/>').addClass('centerMarker').appendTo(map.getDiv())
