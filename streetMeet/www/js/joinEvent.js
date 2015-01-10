@@ -18,7 +18,7 @@ angular.module('sm-meetApp.joinEvent',  ["firebase"])
   });
   $scope.distance = {};
   var onKeyEnteredRegistration = geoQuery.on("key_entered", function(key, location, distance) {
-    $scope.distance[key] = Math.floor(distance*100)/100;
+    $scope.distance[key] = Math.floor(distance*100*0.621371)/100;
     console.log($scope.distance);
     console.log(key);
   });
