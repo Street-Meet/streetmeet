@@ -40,7 +40,8 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
       });
     });
     // logic for determining if the user is an owner, not attending or attending an event
-    var ownerRef = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events/owner");
+    var ownerRef = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events/"+$state.params.id +"/owner");
+    console.log($state.params.id);
     var ownerSync = $firebase(ownerRef);
     $scope.initial = true;
     $scope.owner = false;
@@ -48,16 +49,22 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
     $scope.joiner = false;
     ownerObj = ownerSync.$asObject();
     ownerObj.$loaded().then(function() {
-      $scope.owner = ownerObj.$value;
-      console.log(ownerObj.$value);
-      var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+$cookieStore.get('currentUser')+"/currentEvent");
-      var userSync = $firebase(userRef);
-      var userObj = userSync.$asObject();
-      userObj.$loaded().then(function() {
-        console.log(userObj.$value);
-        $scope.leaver = userObj.$value && !$scope.owner;
-        $scope.joiner = !$scope.owner && !$scope.leaver;
-        $scope.initial = false;
+      angular.forEach(ownerObj, function (value, key) {
+        if (key === $cookieStore.get('currentUser')) {
+          console.log(value);
+          $scope.owner = value;
+          $scope.initial = false;
+        } else {
+          var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+$cookieStore.get('currentUser')+"/currentEvent");
+          var userSync = $firebase(userRef);
+          var userObj = userSync.$asObject();
+          userObj.$loaded().then(function() {
+            console.log(userObj.$value);
+            $scope.leaver = userObj.$value && !$scope.owner;
+            $scope.joiner = !$scope.owner && !$scope.leaver;
+            $scope.initial = false;
+          });
+        }
       });
     });
   }
