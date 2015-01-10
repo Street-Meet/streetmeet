@@ -66,7 +66,6 @@ angular.module('sm-meetApp.map',  ['firebase'])
     map.setCenter(center);
     var onKeyEnteredRegistration = geoQuery.on("key_entered", function(key, location, distance) {
       console.log(key);
-      // $cookieStore.put(key+'distance', distance);
       var refEvent = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events/"+key);
       var eventSync = $firebase(refEvent);
       var eventObj = eventSync.$asObject();
