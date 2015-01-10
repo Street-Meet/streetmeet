@@ -604,6 +604,7 @@ ul.settings-list{
     li.setting-item .list-more-info{
       color: #e74c3c;
       font-size: 1em;
+      height: auto;
     }
     
       ul.setting-edit-options{
