@@ -6,45 +6,19 @@ angular.module('sm-meetApp.userInterfaceController',  [])
 
 .controller('uiController', ['$ionicGesture','$window', '$scope', '$ionicSideMenuDelegate', 'itemControls', '$q', function( $ionicGesture, $window, $scope, $ionicSideMenuDelegate, itemControls, $q){
 
-  console.log()
-
-  /**
-   * https://github.com/angular-ui/ui-router/wiki#state-change-events
-   */
-  // $rootScope.$on('$stateChangeStart', 
-  // function(event, toState, toParams, fromState, fromParams){ 
-  //     //event.preventDefault();
-  //     $scope.state = toState.name;
-  //     // console.log(event, toState, toParams, fromState, fromParams);
-  //     console.log(toState.name);
-  // });
-  
-
   $scope.loginState = 'login';
 
   $scope.loginSectionChange = function(section){
     $scope.loginState = section;
   };
 
-  $ionicSideMenuDelegate.canDragContent(false);
-
   /**
    * Expands the event list item details
    * @param  {object} $event The event object passed in the DOM by AngularJS
    * @return {null}  returns nothing
    */
-
-
-  var element = angular.element(document.querySelector('#listCurrentEvents'));
-  console.log(element);
-
-   // $ionicGesture.on('doubletap', function(){
-   //  console.log('bound');
-   // }, element);
-
-
   $scope.expandTap = function($event){
-    var eventBlock = itemControls.getDomItem($event);
+    var eventBlock = itemControls.getDomItem($event, '.item');
     var description = $(eventBlock).find('.event-description');
 
     //Reset left and right margins if it had been swiped
@@ -67,8 +41,12 @@ angular.module('sm-meetApp.userInterfaceController',  [])
   };
 
 
+  /**
+   * In Progress fix for drag controls no-scrolling problem on list events page
+   */
+
   $scope.dragVert = function($event){
-    var content = $(itemControls.getDomItem($event)).closest('ul');
+    var content = $(itemControls.getDomItem($event, '.item')).closest('ul');
     var wrapper = $(content).closest('.scroll-content');
     var hDiff = $(content).closest('ul').outerHeight() - $(wrapper).outerHeight();
     var currMarg = $(content).css('margin-top');
@@ -83,8 +61,6 @@ angular.module('sm-meetApp.userInterfaceController',  [])
       } 
 
       $(content).closest('ul').css('margin-top', tMarg);
-
-
     }
 
 
@@ -92,7 +68,7 @@ angular.module('sm-meetApp.userInterfaceController',  [])
     //console.log($(content).closest('ul').outerHeight());
 
     //console.log(currMarg);
-    console.log($event.gesture.deltaY);
+    // console.log($event.gesture.deltaY);
   };
 
   /**
@@ -100,12 +76,11 @@ angular.module('sm-meetApp.userInterfaceController',  [])
    * @param  {object} $event The event object passed in the DOM by AngularJS
    * @return {null} returns nothing
    */
-  
   $scope.onSwipe = function($event){
     //console.log($event);
     var direction = $event.gesture.direction;
     //var margins = {left: '-30%', right: '30%'};
-    var cont = itemControls.getDomItem($event);
+    var cont = itemControls.getDomItem($event, '.item');
 
     if($(cont).hasClass('swiped') && !$(cont).hasClass('swiped-'+direction)){
       itemControls.resetMarg(cont);
@@ -118,6 +93,32 @@ angular.module('sm-meetApp.userInterfaceController',  [])
       });
     }
   };
+
+  /**
+   * Profile settings edit controls
+   */
+  $scope.settingsTap = function($event){
+    var cont = itemControls.getDomItem($event, 'li');
+
+    if($(cont).hasClass('settings-edit-btn')){
+      $(cont).hide().siblings().fadeIn().css('display', "inline-block");
+      $(cont).closest('.item-content').animate({
+        height : '100px'
+      },200, function(){
+        //animation complete
+        $(cont).closest('.item-content').children('.settings-edit-field').fadeIn();
+      })
+    }else{
+      $(cont).siblings('.settings-edit-btn').fadeIn();
+      $(cont).closest('.item-content').children('.settings-edit-field').fadeOut(function(){
+        $(cont).closest('.item-content').animate({
+            height: '53px'
+        });
+      });
+      $(cont).closest('ul').children('.settings-confirm').hide();
+    }
+  };
+
 }])
 
 .factory('itemControls', [function(){
@@ -130,8 +131,8 @@ angular.module('sm-meetApp.userInterfaceController',  [])
       removeEvent : function(el){
         $(el).fadeOut();
       },
-      getDomItem : function($event){
-        return $($event.target).closest('.item');
+      getDomItem : function($event, selector){
+        return $($event.target).closest(selector);
       },
       lockVertScroll : function(){
 
