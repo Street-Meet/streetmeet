@@ -109,5 +109,6 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies', 'ngCordova','ionic
       $cookieStore.remove('currentToken');
 
 
+
   }
 }]);
