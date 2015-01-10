@@ -78,6 +78,11 @@ var meetApp = angular.module('sm-meetApp',
       templateUrl: 'views/userProfile.html',
       // controller: 'SettingsCtrl'
     })
+    .state('userProfileSettings', {
+      url: '/userProfileSettings',
+      templateUrl: 'views/userProfileSettings.html',
+      // controller: 'SettingsCtrl'
+    })
     .state('profileView', {
       url: '/profileView',
       templateUrl: 'templates/profileView.html',
