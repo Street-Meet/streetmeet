@@ -103,10 +103,15 @@ angular.module('sm-meetApp.userInterfaceController',  [])
 
     if($(cont).hasClass('settings-edit-btn')){
       $(cont).hide().siblings().fadeIn().css('display', "inline-block");
-      $(cont).closest('.item-content').children('.settings-edit-field').fadeIn();
+      $(cont).closest('.item-content').animate({
+        height : '100px'
+      },200, function(){
+        //animation complete
+        $(cont).closest('.item-content').children('.settings-edit-field').fadeIn();
+      })
     }else{
       $(cont).siblings('.settings-edit-btn').fadeIn();
-      $(cont).closest('.item-content').children('.settings-edit-field').fadeOut();
+      $(cont).closest('.item-content').css('height', 'auto').children('.settings-edit-field').fadeOut();
       $(cont).closest('ul').children('.settings-confirm').hide();
     }
 
