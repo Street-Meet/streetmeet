@@ -6,7 +6,7 @@
   <div class="login-area sticky-bottom clearfix">
     <!-- Login buttons -->
     <div class="loginSection login-options sticky-bottom" ng-show="loginState==='login'">
-      <button class="btn icon-btn" ng-click="loginWithFacebook()"> 
+      <button class="btn icon-btn" ng-click="loginWithFacebook()">
         <span class="btn-icon v-center"><i class="fa fa-facebook"></i></span>
         Login with Facebook
       </button>
@@ -36,19 +36,18 @@
     </form>
 
     <!-- Create account form -->
-    <form action="" class="loginSection createAccount sticky-bottom" ng-show="loginState==='createAccount'">
-
+    <form class="loginSection createAccount sticky-bottom" ng-show="loginState==='createAccount'">
         <input type="email" placeholder="Email" ng-model="theEmail"></input>
         <input type="password" placeholder="Password" ng-model="thePass"></input>
+        
         <button class="btn icon-btn" ng-click="registerAccount(theEmail, thePass)">
-
           <span class="btn-icon v-center"><i class="fa fa-plus-square"></i></span>
           Create Account
         </button>
         <span class="sub-btn-link">
           <a on-tap="loginSectionChange('login')">Cancel</a>
         </span>
-    </form> 
+    </form>
   </div>
 
   <div class="settings-btn">
@@ -60,4 +59,4 @@
   </ion-content>
 
 
-</ion-pane> 
+</ion-pane>
