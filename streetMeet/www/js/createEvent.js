@@ -10,7 +10,6 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
   var geoFire = new GeoFire(locRef);
   var createEvent = function(eventTitle, eventDescription, eventCapacity) {
     owner = $cookieStore.get('currentUser');
-    console.log(owner);
     var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+owner);
     var eventData ={
       title: eventTitle,
@@ -28,7 +27,6 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
         id.child("attendees/"+owner).set(true, function(error) {
           if (error) {
             alert("Data could not be saved." + error);
-            console.log('setting attendee');
           } else {
             console.log("Attendee data saved successfully.");
           }
@@ -39,7 +37,6 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
             alert("Data could not be saved." + error);
           } else {
             console.log(id.key());
-            console.log('setting owner');
             $state.go('attendEvent', {id: id.key()})
             console.log("Owner data saved successfully.");
           }
