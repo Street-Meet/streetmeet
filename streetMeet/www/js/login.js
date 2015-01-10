@@ -127,7 +127,6 @@ console.log('click en FAcebook login');
         .then(function(result) {
             console.log( JSON.stringify(result))  ;
             $localstorage.accessToken = result.access_token;
-            Auth.getFacebookMe(result.accessToken);
         }, function(error) {
             alert("There was a problem signing in!  See the console for logs");
             console.log(error); 
@@ -144,14 +143,6 @@ console.log('click en FAcebook login');
 .factory('Auth', ['$http', '$q', function($http, $q) {
      // call to get all nerds
   return {
-    getFacebookMe: function(token){
-      $http.get('/api/facebook/token').then(function(results){
-        console.log(results);
-      })
-      .catch(function(error){
-          console.log(error);
-      }
-    };
     connectMeetup : function() {
 
       // var mup = {
