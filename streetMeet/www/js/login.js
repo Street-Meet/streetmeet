@@ -106,16 +106,6 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies', 'ngCordova','ionic
       $cookieStore.remove('currentToken');
   };
 
-  // $scope.loginWithMeetup = function(){
-  //      Auth.connectMeetup()
-  //      .then(function(data){
-  //       console.log('MeetupData:', data);
-  //       $cookieStore.put('meetupCode', data)
-  //      }).catch(function(error) {
-  //       console.error("Authentication failed:", error);
-  //     });
-  //   };
-
     $scope.facebookLogin = function() {
       console.log('click en facebooklogin');
       if(!$localstorage.accessToken){
@@ -135,48 +125,4 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies', 'ngCordova','ionic
 
 
 
-}])
-.factory('Auth', ['$http', '$q', function($http, $q) {
-     // call to get all nerds
-  return {
-    connectMeetup : function() {
-
-      // var mup = {
-      //   clientId: "3fss73ueag5e744sp45cmopag2",
-      //   clientSecret:"g31i2o39pbf2qgscie95pkcdod",
-      //   redirectUri:"http://127.0.0.1:3000/api/meetupReturn/"
-      // };
-      // var url = 'https://secure.meetup.com/oauth2/authorize?' + mup.clientId + '&response_type=token&redirect_uri='+ mup.redirectUri;
-
-
-      // this needs to open an in-app browser. example are in $cordovaOauth
-      // window.location = '/login/meetup';
-
-        // // return $http.get(url).success(function(data) {
-        // //   console.warn('connectMeetup', data);
-        // //   return data;
-        // // })
-
-        // return $http.get('/api/meetup')
-        // .success(function(data) {
-        //     console.warn('connectMeetup', data);
-        //     return data;
-        //     // $http.get(data.location).then(function(res) {
-        //     //   console.log('RES connectMeetup', res);
-
-        //     // })
-
-
-        //  })
-        // .error(function(data) {
-        //     console.log('Error: ' , data);
-        // });
-    }
-  }
-
-  }]);
-  //TODO: CurrentUser as a service for every other view who wants to use it.
-
-
-
-
+}]);
