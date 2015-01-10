@@ -29,16 +29,48 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
     attendeeObj.$loaded().then(function() {
       console.log("loaded record:", attendeeObj.$id);
       angular.forEach(attendeeObj, function(value, key) {
-        var userObj = $firebase(ref.child("/users/"+key+"/userInfo")).$asObject();
-        // grab user info to later display for each attendee
-        userObj.$loaded().then(function() {
-          result[key] = userObj;
-          $scope.attendees = result;
-        });
+        if (value) {
+          var userObj = $firebase(ref.child("/users/"+key+"/userInfo")).$asObject();
+          // grab user info to later display for each attendee
+          userObj.$loaded().then(function() {
+            result[key] = userObj;
+            $scope.attendees = result;
+          });
+        }
+      });
+    });
+    // logic for determining if the user is an owner, not attending or attending an event
+    var ownerRef = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events/"+$state.params.id +"/owner");
+    console.log($state.params.id);
+    var ownerSync = $firebase(ownerRef);
+    $scope.initial = true;
+    $scope.owner = false;
+    $scope.leaver = false;
+    $scope.joiner = false;
+    ownerObj = ownerSync.$asObject();
+    ownerObj.$loaded().then(function() {
+      angular.forEach(ownerObj, function (value, key) {
+        if (key === $cookieStore.get('currentUser')) {
+          console.log(value);
+          $scope.owner = value;
+          $scope.initial = false;
+        } else {
+          var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+$cookieStore.get('currentUser')+"/currentEvent");
+          var userSync = $firebase(userRef);
+          var userObj = userSync.$asObject();
+          userObj.$loaded().then(function() {
+            console.log(userObj.$value);
+            $scope.leaver = userObj.$value && !$scope.owner;
+            $scope.joiner = !$scope.owner && !$scope.leaver;
+            $scope.initial = false;
+          });
+        }
       });
     });
   }
   $scope.update();
+
+  // user joins an event
   $scope.joinEvent =function() {
     var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events/"+$state.params.id+"/attendees/"+$cookieStore.get('currentUser'));
     var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+$cookieStore.get('currentUser'));
@@ -66,9 +98,26 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
     });
   }
 
+  // user leaves an event
+  $scope.leaveEvent =function() {
+    var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events/"+$state.params.id+"/attendees/"+$cookieStore.get('currentUser'));
+    var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+$cookieStore.get('currentUser'));
+    ref.set(false, function(error) {
+      if (error) {
+        alert("Data could not be saved." + error);
+      } else {
+        console.log("Attendee data saved successfully.");
+        $scope.update();
+      }
+    });
+    userRef.child("/currentEvent/").remove();
+  }
+
+
+
 })
 
-.factory('Event', function ($q, $cookieStore, $state) {
-  return{
+.factory('Event', function ($q, $cookieStore, $state, $firebase) {
+  return {
   };
  });
