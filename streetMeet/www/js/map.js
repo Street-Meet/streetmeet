@@ -213,7 +213,7 @@ angular.module('sm-meetApp.map',  ['firebase'])
     if (marker == null) {
         marker = new google.maps.Marker({
         position: myLatlng,
-        icon: '/img/blue_beer.png',
+        icon: '/img/piedPiper.gif',
         draggable: false
       });
     } else {
