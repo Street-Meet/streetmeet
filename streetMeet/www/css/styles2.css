@@ -155,6 +155,7 @@ button{
       bottom: 10px;
       right: 10px;
       cursor: pointer;
+      z-index: 1000;
     }
       .settings-btn a{
          color: rgba(44, 62, 80, .5); 
@@ -293,6 +294,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="num
   margin: 2.5em 5%;
   border-bottom: 2px solid #cccccc;
   border-top: 1px solid #fff;
+  clear: both;
 }
 
 /********** Layout **********/
@@ -466,7 +468,7 @@ ul#events-current{
       font-weight: 600;
     }
 
-  .event-more-info{
+  .event-more-info, .list-more-info{
     float: right;
     height: 100%;
     font-size: 1.5em;
@@ -492,6 +494,7 @@ ul#events-current{
     padding: 5%;
   }
 
+
   .detail-img img{
     width: 100px;
     float: left;
@@ -500,6 +503,7 @@ ul#events-current{
 
   .detail-info{
     float: left;
+    max-width: 220px;
   }
 
     .detail-info .time-remaining{
@@ -529,16 +533,123 @@ ul#events-current{
 
 /******* User Profile Pane ********/
   .profile-pic{
-    border-radius: 44px;
-    width: 80px;
-    height: 80px;
+    background: #808080;
+    border-radius: 44px; 
+    float: left;
     overflow: hidden;
   }
 
+    .userProfile .detail-info{
+      padding: 1em;
+      box-sizing: border-box;
+    }
+      .userProfile .detail-info span{
+        display: block;
+      }
+
+      
+      .userProfile .detail-section .inset-divider{
+        width: 100%;
+        margin: 0;
+      }
+
+    .profile-pic i{
+      padding: .32em .49em;
+      font-size: 3em;
+      color: #fff;
+      width: 85px;
+      height: 85px;
+      box-sizing: border-box;
+    }
+
+    .profile-name{
+      font-family: 'Josefin Slab', serif;
+      font-size: 1.2em;
+    }
+
+    .profile-description{
+      font-size: .875em;
+    }
+
+
+    ul.profile-social-links{
+      font-size: 2em;
+    }
+
+      ul.profile-social-links li{
+        display: inline-block;
+      }
+
+      ul.profile-social-links li a{
+        color: #2c3e50;
+      }
+
+    .userProfile .detail-description
+    {
+    }
+
+
+/******* Edit Profile Settings ********/
+ul.settings-list{
+
+}
+  li.setting-item{
+  }
+
+    li.settings-item .item-content{
+      padding: 1em 0 0;
+      box-sizing: border-box;
+    }
+
+    li.setting-item .list-more-info{
+      color: #e74c3c;
+      font-size: 1em;
+    }
+    
+      ul.setting-edit-options{
+
+      }
+
+        ul.setting-edit-options li{
+          display: inline-block;
+        }
+
+          ul.setting-edit-options li.settings-confirm{
+            display: none;
+          }
+
+          ul.setting-edit-options li.settings-confirm-edit-btn a{
+            color: #159e31;
+          }
 
 
 
 
+
+    li.setting-item label{
+      font-size: 1.1em;
+      padding: .55em 0 0 .4em;
+      height: 100%;
+      display: block;
+      float: left;
+      
+      margin-right: .25em;
+      color: #2c3e50;
+    }
+
+    li.setting-item .setting-current-val{
+      padding: 1em 0;
+      height: 100%;
+      display: block;
+      float: left;
+      
+      font-size: .875em;
+      color: #666666;
+    }
+
+    li.setting-item .settings-edit-field{
+      display: none;
+    }
 
 
 
