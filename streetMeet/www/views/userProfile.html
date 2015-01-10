@@ -10,14 +10,34 @@
    <ion-content class="has-header" >
 
     <div class="detail-section">
-     <div class="detail-img profile-pic">
-       <img src="http://lygsbtd.files.wordpress.com/2011/08/beer_toast.jpg" alt="">
+     <div class="detail-img profile-pic clearfix">
+        <img ng-show="attendee.picture.data.url" src={{attendee.picture.data.url}} alt="">
+        <i ng-show="!attendee.picture.data.url" class="fa fa-user v-center"></i>
+
      </div>
 
      <div class="detail-info">
+      <span class="profile-name">Rick Takes</span>  
+      <span class="profile-description">Software Engineer</span> 
       
+      <ul class="profile-social-links">
+        <li class="fbook">
+          <a href="">
+            <i class="fa fa-facebook-square"></i>
+          </a>
+        </li>
+        <li class="linkein">
+          <a href="">
+            <i class="fa fa-linkedin-square"></i>
+          </a>
+        </li>
+        <li class="twitter">
+          <a href="">
+            <i class="fa fa-twitter-square"></i>
+          </a>
+        </li>
+      </ul>
 
-       <h2 class="detail-title">{{eventData.title}} Rick Takes</h2>
 
      </div>
 
@@ -28,6 +48,12 @@
      </div>
 
    </div>
+
+
+   <button ui-sref="userProfileSettings" class="btn icon-btn sticky-bottom">
+     <span class="btn-icon v-center"><i class="fa fa-edit"></i></span>
+     Edit account info
+   </button>
      
   </ion-content>
 
