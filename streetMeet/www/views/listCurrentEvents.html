@@ -9,7 +9,7 @@
 
         <!-- ng-repeat="event in testList | reverse | timer" -->
 
-        <li on-swipe="onSwipe($event)" on-drag="dragVert($event)" on-tap="expandTap($event)" ng-repeat="event in list" class="slide-controls item event clearfix">
+        <li on-swipe="onSwipe($event)" on-drag="dragVert($event)" on-tap="expandTap($event)" ng-repeat="event in list | timer | reverse" class="slide-controls item event clearfix">
 
           <div class="slide-deny slide-button v-center" on-tap="removeTap($event)">
             Decline
@@ -23,7 +23,7 @@
             </div>
 
             <div class="event-meta">
-              <span class="event-distance">.3mi</span>
+              <span class="event-distance">{{distance[event.$id]}} mi.</span>
               <span class="event-time-remaining time-remaining">18:03</span>
             </div>
 
