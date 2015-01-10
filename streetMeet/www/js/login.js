@@ -90,10 +90,8 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies', 'ngCordova','ionic
       var result = [];
       userEventsRef.on("child_added", function(snap) {
         console.log('this is the snap:', snap.val());
-      eventsRef.child(snap.key()).on("value", function(data) {
+        eventsRef.child(snap.key()).on("value", function(data) {
           result.push(data.val());
-
-
         })
       $scope.theEvents = result;
       });
