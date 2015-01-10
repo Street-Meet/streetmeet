@@ -57,14 +57,16 @@ angular.module('sm-meetApp.map',  ['firebase'])
   var geolocationCallbackQuery = function(location) {
     var latitude = location.coords.latitude;
     var longitude = location.coords.longitude;
+    $cookieStore.put('userloc', location);
     var center = new google.maps.LatLng(latitude, longitude);
     var geoQuery = geoFire.query({
       center: [latitude, longitude],
       radius: 1.5
     });
     map.setCenter(center);
-    var onKeyEnteredRegistration = geoQuery.on("key_entered", function(key, location) {
+    var onKeyEnteredRegistration = geoQuery.on("key_entered", function(key, location, distance) {
       console.log(key);
+      // $cookieStore.put(key+'distance', distance);
       var refEvent = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events/"+key);
       var eventSync = $firebase(refEvent);
       var eventObj = eventSync.$asObject();
@@ -213,7 +215,7 @@ angular.module('sm-meetApp.map',  ['firebase'])
     if (marker == null) {
         marker = new google.maps.Marker({
         position: myLatlng,
-        icon: '/img/piedPiper.gif',
+        icon: '/img/blue_beer.png',
         draggable: false
       });
     } else {
