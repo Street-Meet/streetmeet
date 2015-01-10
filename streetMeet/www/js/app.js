@@ -18,7 +18,8 @@ var meetApp = angular.module('sm-meetApp',
     'sm-meetApp.userInterfaceController',
     'sm-meetApp.map',
     'sm-meetApp.currentUser',
-    'sm-meetApp.event'
+    'sm-meetApp.event',
+    'sm-meetApp.profile'
 
   ])
 // run in ionic
@@ -74,9 +75,9 @@ var meetApp = angular.module('sm-meetApp',
       // controller: 'SettingsCtrl'
     })
     .state('userProfile', {
-      url: '/userProfile',
+      url: '/userProfile/:id',
       templateUrl: 'views/userProfile.html',
-      // controller: 'SettingsCtrl'
+      controller: 'SettingsCtrl'
     })
     .state('userProfileSettings', {
       url: '/userProfileSettings',
