@@ -22,13 +22,7 @@ module.exports = function(config) {
         'https://cdn.firebase.com/libs/angularfire/0.9.0/angularfire.min.js',
         'node_modules/angular-mocks/angular-mocks.js',
         'www/lib/ngCordova/dist/ng-cordova.js',
-        'streetMeet/www/js/app.js',
-        'streetMeet/www/js/createEvent.js',
-        'streetMeet/www/js/currentUser.js',
-        'streetMeet/www/js/joinEvent.js',
-        'streetMeet/www/js/login.js',
-        'streetMeet/www/js/userInterfaceController.js',
-        'streetMeet/www/js/map.js',
+        'streetMeet/www/js/*.js',
         'spec/*.js'
     ],
 

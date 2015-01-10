@@ -3,120 +3,183 @@ angular.module('sm-meetApp.map',  ['firebase'])
 .controller('MapCtrl', function($scope, $firebase, Map) {
   angular.extend($scope, Map);
 
-  var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
-  var geoFire = new GeoFire(ref);
-
-
-
   // Get the current user's location
   Map.getLocation();
+  Map.geolocationUpdate();
+})
 
-
-  var center = new google.maps.LatLng(37.785326, -122.405696);
+.factory('Map', function ($q, $location, $window, $rootScope, $cookieStore, $state, $firebase) {
+  // user location geofire
+  var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/user_locations");
+  var userGeoFire = new GeoFire(userRef);
+  // event location geofire
+  var refLoc = new Firebase("https://boiling-torch-2747.firebaseio.com/current/locations");
+  var geoFire = new GeoFire(refLoc);
+  //archived location geofire
+  var refArchivedLoc = new Firebase("https://boiling-torch-2747.firebaseio.com/archived/locations");
+  var geoFireArchived = new GeoFire(refArchivedLoc);
+  var center = new google.maps.LatLng(47.785326, -122.405696);
+  var globalLatLng;
+  var marker = null;
   var mapOptions = {
     zoom: 15,
     center: center,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
-  $scope.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-  // $scope.map = new google.maps.Map(document.getElementById('map_canvas'),
-              // mapOptions);
+  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  // var initialize = function() {
+  //   map = map;
+  // }
 
+  // google.maps.event.addDomListener(window, 'load', initialize);
 
-  // Create a draggable circle centered on the map
-  // var circle = new google.maps.Circle({
-  //   strokeColor: "#6D3099",
-  //   strokeOpacity: 0.7,
-  //   strokeWeight: 1,
-  //   fillColor: "#B650FF",
-  //   fillOpacity: 0.35,
-  //   map: $scope.map,
-  //   center: center,
-  //   radius: 1000,
-  //   draggable: true
-  // });
-
-  google.maps.event.addListener($scope.map, 'drag', function() {
-      // console.log($scope.map.center);
-    });
-
-  $scope.createEvent = function() {
-
-    $('<div/>').addClass('centerMarker').appendTo($scope.map.getDiv())
-    //do something onclick
+  // puts a marker on the center of the map to capture the location of a new event
+  var createEvent = function() {
+    $('<div/>').addClass('centerMarker').appendTo(map.getDiv())
     .click(function(){
-      console.log($scope.map.center)
-      // var that=$(this);
-      // if(!that.data('win')){
-      //   that.data('win',new google.maps.InfoWindow({content:'this is the center'}));
-      //   that.data('win').bindTo('position',$scope.map,'center');
-      // }
-      // that.data('win').open($scope.map);
+      $cookieStore.put('eventLoc', map.getCenter());
+      console.log($cookieStore.get('eventLoc'), 'stored!')
+      $state.go('createEvent');
     });
-    // $scope.marker = new google.maps.Marker({
-    //   position: center,
-    //   draggable: true,
-    //   map: $scope.map,
-    //   title: 'Hello World!'
-    // });
-
-    // $scope.markLoc = function() {
-    //   console.log($scope.marker.getPosition());
-    // }
-
-    // var infowindow = new google.maps.InfoWindow({
-    //   // content: '<div style="min-width:80px">set location</div>',
-    //   content: "<button onclick='console.log(this)'>set location</button>"
-    // });
-
-    // infowindow.open($scope.map,$scope.marker);
-
-    // google.maps.event.addListener($scope.marker, 'drag', function() {
-    //   // $scope.map.setZoom(15);
-    //   $scope.map.setCenter($scope.marker.getPosition());
-    //   console.log($scope.marker.getPosition());
-    // });
-
-    // google.maps.event.addListener($scope.map, 'drag', function() {
-    //   $scope.marker.center = $scope.map.getPosition());
-    //   console.log(marker.getPosition());
-    // });
   };
 
-})
-
-.factory('Map', function ($q) {
-  var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
-  var geoFire = new GeoFire(ref);
-
+  // retrieves the user's current location
   var getLocation = function() {
     if (typeof navigator !== "undefined" && typeof navigator.geolocation !== "undefined") {
       console.log("Asking user to get their location");
-      navigator.geolocation.getCurrentPosition(geolocationCallback, errorHandler);
+      navigator.geolocation.getCurrentPosition(geolocationCallbackQuery, errorHandler);
     } else {
-      console.log("Your browser does not support the HTML5 Geolocation API")
+      console.log("Your browser does not support the HTML5 Geolocation API");
     }
   };
 
   /* Callback method from the geolocation API which receives the current user's location */
-  var geolocationCallback = function(location) {
+  var geolocationCallbackQuery = function(location) {
     var latitude = location.coords.latitude;
     var longitude = location.coords.longitude;
+    var center = new google.maps.LatLng(latitude, longitude);
+    var geoQuery = geoFire.query({
+      center: [latitude, longitude],
+      radius: 1.5
+    });
+    map.setCenter(center);
+    var onKeyEnteredRegistration = geoQuery.on("key_entered", function(key, location) {
+      console.log(key);
+      var refEvent = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events/"+key);
+      var eventSync = $firebase(refEvent);
+      var eventObj = eventSync.$asObject();
+      eventObj.$loaded().then(function() {
+        // add marker for an event if it was created in the past 22 minutes
+        // if (false) {
+        if (eventObj.createdAt > Date.now() - 1320000) {
+          var pos = new google.maps.LatLng(location[0], location[1]);
+          var marker = new google.maps.Marker({
+            position: pos,
+            map: map,
+            title: key
+          });
+          google.maps.event.addListener(marker, 'click', function() {
+            $state.go('attendEvent', {id: key});
+          })
+        } else {
+          var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
+          var id = ref.child("/archived/events/"+key);
+          var locId = refLoc.child(key);
+          // sets archived event data
+          var newObj = {};
+          angular.forEach(eventObj, function(eventValue, eventKey) {
+            newObj[eventKey] = eventValue;
+          })
+          // save event data
+          id.set(newObj, function(error) {
+            if (error) {
+              alert("Data could not be saved." + error);
+            } else {
+              console.log(newObj, 'create archived event');
+              // removes event from current evvents
+              ref.child("/current/events/" + key).remove();
+              // archives geoLocation
+              geoFireArchived.set(key, geoFire.get(key)._result)
+                .then(geoFire.remove(key));
+
+              // get list of event's attendees
+              var sync = $firebase(id.child("/attendees"));
+              var attendeeObj = sync.$asObject();
+              attendeeObj.$loaded().then(function() {
+                console.log(attendeeObj);
+                // iterate through each attendee
+                angular.forEach(attendeeObj, function(attendeeValue, attendeeKey) {
+                  console.log(attendeeValue, attendeeKey);
+                  var userCurrEvent = ref.child("/users/"+attendeeKey+"/currentEvent");
+                  var currSync = $firebase(userCurrEvent);
+                  var currObj = currSync.$asObject();
+                  currObj.$loaded().then(function() {
+                    console.log(currObj.$value);
+                    console.log(currObj.$id);
+                    // remove current event from attendee's profile
+                    if (currObj.$value === key) {
+                      userCurrEvent.remove();
+                    }
+                  })
+
+                });
+              });
+            }
+          });
+        }
+      });
+      // refEvent.on('value', function(snap) {
+      //   // adds marker of live events to the map
+      //   // if (false) {
+      //   if (snap.val() && snap.val().createdAt > Date.now() - 1320000) {
+      //     console.log(snap.val());
+      //     var pos = new google.maps.LatLng(location[0], location[1]);
+      //     var marker = new google.maps.Marker({
+      //       position: pos,
+      //       map: map,
+      //       title: key
+      //     });
+      //     google.maps.event.addListener(marker, 'click', function() {
+      //       $state.go('attendEvent', {id: key});
+      //     })
+      //   } else {
+      //     // archives expired events
+      //     if(snap.val()) {
+      //       var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
+      //       var id = ref.child("/archived/events/"+key);
+      //       console.log(key, snap.val(), 'key, snapval');
+      //       var locId = refLoc.child(key);
+      //       // sets archived event data
+      //       id.set(snap.val(), function(error) {
+      //         if (error) {
+      //           alert("Data could not be saved." + error);
+      //         } else {
+      //           console.log(snap.val(), 'create archived event');
+      //           // removes event from current evvents
+      //           ref.child("/current/events/" + key).remove();
+      //           // archives geoLocation
+      //           geoFireArchived.set(key, geoFire.get(key)._result)
+      //             .then(geoFire.remove(key));
+      //           // id.child("/attendees").once('value', function(attendees) {
+      //           //   attendees.forEach(function(childSnap) {
+      //           //     var userCurrEvent = ref.child("/users/"+childSnap.key()+"/currentEvent");
+      //           //     userCurrEvent.once('value', function(currEvent) {
+      //           //       if (currEvent.val() === key) {
+      //           //         userCurrEvent.remove();
+      //           //       }
+      //           //     });
+      //           //   });
+      //           // });
+      //         }
+      //       });
+      //     }
+      //   }
+      // });
+      console.log(key + " entered the query. Hi " + key + " at " + location);
+    });
+
     console.log("Retrieved user's location: [" + latitude + ", " + longitude + "]");
 
-    var username = "wesley";
-    geoFire.set(username, [latitude, longitude]).then(function() {
-      console.log("Current user " + username + "'s location has been added to GeoFire");
-
-      // When the user disconnects from Firebase (e.g. closes the app, exits the browser),
-      // remove their GeoFire entry
-      firebaseRef.child(username).onDisconnect().remove();
-
-      console.log("Added handler to remove user " + username + " from GeoFire when you leave this page.");
-      console.log("You can use the link above to verify that " + username + " was removed from GeoFire after you close this page.");
-    }).catch(function(error) {
-      console.log("Error adding user " + username + "'s location to GeoFire");
-    });
   }
 
   /* Handles any errors from trying to get the user's current location */
@@ -132,30 +195,53 @@ angular.module('sm-meetApp.map',  ['firebase'])
     }
   };
 
-  var initializeMap = function() {
-    // Get the location as a Google Maps latitude-longitude object
-    var center = [37.785326, -122.405696];
-    var loc = new google.maps.LatLng(center[0], center[1]);
-
-    // Create the Google Map
-    map = new google.maps.Map(document.getElementById("map-canvas"), {
-      center: loc,
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
+  var showLocation = function(position) {
+    var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+    var myLatlng = new google.maps.LatLng(latitude, longitude);
+    globalLatLng = myLatlng;
+    var userData = $cookieStore.get('currentUser');
+    console.log("User Data", userData);
+    //adds user location data to firebase
+    userGeoFire.set(userData, [latitude, longitude]).then(function() {
+      console.log("Provided keys have been added to GeoFire");
+    }, function(error) {
+      console.log("Error: " + error);
     });
 
-    // Create a draggable circle centered on the map
-    var circle = new google.maps.Circle({
-      strokeColor: "#6D3099",
-      strokeOpacity: 0.7,
-      strokeWeight: 1,
-      fillColor: "#B650FF",
-      fillOpacity: 0.35,
-      map: map,
-      center: loc,
-      radius: ((radiusInKm) * 1000),
-      draggable: true
-    });
+    //updates marker position by removing the old one and adding the new one
+    if (marker == null) {
+        marker = new google.maps.Marker({
+        position: myLatlng,
+        icon: '/img/blue_beer.png',
+        draggable: false
+      });
+    } else {
+      marker.setPosition(myLatlng);
+    }
+
+    if (marker && marker.setMap) {
+      marker.setMap(null);
+    }
+    marker.setMap(map);
+    console.log("Latitude : " + latitude + " Longitude: " + longitude);
+  }
+
+  //Updates user location on movement
+  var geolocationUpdate = function() {
+    if(navigator.geolocation) {
+      //var updateTimeout = {timeout: 1000};
+      var geoLoc = navigator.geolocation;
+      var watchID = geoLoc.watchPosition(showLocation, errorHandler)
+    } else {
+      throw new Error("geolocation not supported!");
+    }
+  }
+
+  var centerMapLocation = function() {
+    map.setCenter(globalLatLng);
+    console.log("centering map: ", mapOptions.center);
+  }
 
     //Update the query's criteria every time the circle is dragged
     // var updateCriteria = _.debounce(function() {
@@ -166,12 +252,16 @@ angular.module('sm-meetApp.map',  ['firebase'])
     //   });
     // }, 10);
     // google.maps.event.addListener(circle, "drag", updateCriteria);
-  }
+
 
   return {
     getLocation: getLocation,
-    geolocationCallback : geolocationCallback,
-    errorHandler: errorHandler
+    geolocationCallbackQuery : geolocationCallbackQuery,
+    errorHandler: errorHandler,
+    createEvent: createEvent,
+    map: map,
+    geolocationUpdate: geolocationUpdate,
+    centerMapLocation: centerMapLocation
   }
 
 });

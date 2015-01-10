@@ -10,6 +10,7 @@ var meetApp = angular.module('sm-meetApp',
     'ngCordova',
     'firebase',
     'ngCookies',
+    // 'ngCordova',
 
     //sm-meetApp Modules
     'sm-meetApp.login',
@@ -17,7 +18,8 @@ var meetApp = angular.module('sm-meetApp',
     'sm-meetApp.joinEvent',
     'sm-meetApp.userInterfaceController',
     'sm-meetApp.map',
-    'sm-meetApp.currentUser'
+    'sm-meetApp.currentUser',
+    'sm-meetApp.event'
 
   ])
 // run in ionic
@@ -47,27 +49,52 @@ var meetApp = angular.module('sm-meetApp',
     .state('login', {
       // url: '/login?code',
       url: '/login',
-      templateUrl: 'templates/login.html',
+      templateUrl : 'views/login.html',
       controller: 'LoginCtrl'
     })
     .state('createEvent', {
       url: '/createEvent',
-      templateUrl: 'templates/createEvent.html',
+      templateUrl: 'views/createEventForm.html',
       controller: 'CreateEventsCtrl'
     })
-    .state('joinEvent', {
-      url: '/joinEvent',
-      templateUrl: 'templates/joinEvent.html',
+    .state('listCurrentEvents', {
+      url: '/listEvents',
+      templateUrl: 'views/listCurrentEvents.html',
       controller: 'JoinEventCtrl'
     })
-    .state('mapView', {
-      url: '/mapView',
-      templateUrl: 'templates/mapView.html',
+    .state('viewSingleEvent', {
+      url: '/viewEvent/:id',
+      templateUrl: 'views/singleEvent.html',
+      controller: 'EventCtrl'
+    })
+    .state('attendEvent', {
+      url: '/event/:id',
+      templateUrl: 'views/attendEvent.html',
+      controller: 'EventCtrl'
+    })
+    .state('mapCurrentEvents', {
+      url: '/mapCurrentEvents',
+      templateUrl: 'views/mapCurrentEvents.html',
       controller: 'MapCtrl'
+    })
+    .state('settings', {
+      url: '/settings',
+      templateUrl: 'views/userSettings.html',
+      // controller: 'SettingsCtrl'
+    })
+    .state('userProfile', {
+      url: '/userProfile',
+      templateUrl: 'views/userProfile.html',
+      // controller: 'SettingsCtrl'
     })
     .state('profileView', {
       url: '/profileView',
       templateUrl: 'templates/profileView.html',
       controller: ''
+    })
+    .state('eventView', {
+      url: '/:id',
+      templateUrl: 'templates/eventView.html',
+      controller: 'EventCtrl'
     })
 });

@@ -5,13 +5,9 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title></title>
 
-
-    <!-- Fonts and CSS -->
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-    <link href="css/styles2.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic|Maven+Pro:400,700,500' rel='stylesheet' type='text/css'>
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
 
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
@@ -39,12 +35,6 @@
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
-    <!-- ngCordova -->
-    <script src="lib/ngCordova/dist/ng-cordova.min.js"></script>
-
-    <!-- Gesture controls QuoJS -->
-    <!-- <script src="lib/quojs/quo.standalone.js"></script> -->
-
     <!-- your app's js -->
     <script src="js/app.js"></script>
     <script src="js/login.js"></script>
@@ -54,18 +44,42 @@
     <script src="js/map.js"></script>
     <script src="js/currentUser.js"></script>
 
-    <script src="js/event.js"></script>
-
-
-    <script src="js/ng-cordova.min.js"></script>
 
   </head>
-  <body ng-app="sm-meetApp" class="platform-ios">
+  <body ng-app="sm-meetApp" >
     <div class="wrapper" ng-controller="uiController">
-      <ion-nav-view></ion-nav-view>
 
 
-    </div> <!-- .wrapper -->
+<ion-side-menus enable-menu-with-back-views="true" canDrag="false">
+  <ion-side-menu-content edge-drag-threshold="true" drag-content="false">
+
+    <ion-header-bar class="bar bar-stable bar-header">
+      <button class="button icon ion-navicon" menu-toggle="left"></button>
+      <h1 class="title">Current Events</h1>
+      <button class="button icon ion-android-add" ui-sref="createEvent"></button>
+    </ion-header-bar>
+
+    <ion-nav-view></ion-nav-view>
+
+  </ion-side-menu-content>
+
+  <!-- Left menu -->
+  <ion-side-menu side="left">
+    <ul class="list side-menu">
+      <li class="item" ui-sref="login" menu-toggle="left">Login</li>
+      <li class="item" ui-sref="createEvent" menu-toggle="left">Create an Event</li>
+      <li class="item" ui-sref="joinEvent" menu-toggle="left">Current Events</li>
+      <li class="item" ui-sref="mapView" menu-toggle="left">mapView</li>
+      <li class="item" ui-sref="profileView" menu-toggle="left">User Profile</li>
+      <li class="item" ng-click="authObj.$unauth()" ui-sref="login" menu-toggle="left">Logout</li>
+    </ul>
+  </ion-side-menu>
+
+</ion-side-menus>
+
+
+
+  </div> <!-- .wrapper -->
+
   </body>
 </html>
-

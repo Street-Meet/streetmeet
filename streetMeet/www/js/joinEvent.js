@@ -2,12 +2,65 @@ angular.module('sm-meetApp.joinEvent',  ["firebase"])
 
 .controller('JoinEventCtrl', ["$scope", "$firebase", 'Events', function($scope, $firebase, Events) {
     // angular.extend($scope, Events);
-    var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/events");
-   $scope.list =  Events.throwTheEvents(ref);
+    var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events");
+
+    $scope.list =  Events.throwTheEvents(ref);
+
+    // $scope.list = [
+    //   {
+    //     'title': 'title',
+    //     'description' : 'Lorem ipsum dolor sit amet.'
+    //   },
+    //   {
+    //     'title': 'title',
+    //     'description' : 'Lorem ipsum dolor sit amet.'
+    //   },
+    //   {
+    //     'title': 'title',
+    //     'description' : 'Lorem ipsum dolor sit amet.'
+    //   },
+    //   {
+    //     'title': 'title',
+    //     'description' : 'Lorem ipsum dolor sit amet.'
+    //   },
+    //   {
+    //     'title': 'title',
+    //     'description' : 'Lorem ipsum dolor sit amet.'
+    //   },
+    //   {
+    //     'title': 'title',
+    //     'description' : 'Lorem ipsum dolor sit amet.'
+    //   },
+    //   {
+    //     'title': 'title',
+    //     'description' : 'Lorem ipsum dolor sit amet.'
+    //   },
+    //   {
+    //     'title': 'title',
+    //     'description' : 'Lorem ipsum dolor sit amet.'
+    //   },
+    //   {
+    //     'title': 'title',
+    //     'description' : 'Lorem ipsum dolor sit amet.'
+    //   },
+    //   {
+    //     'title': 'title',
+    //     'description' : 'Lorem ipsum dolor sit amet.'
+    //   },
+    //   {
+    //     'title': 'title',
+    //     'description' : 'Lorem ipsum dolor sit amet.'
+    //   },
+    //   {
+    //     'title': 'title',
+    //     'description' : 'Lorem ipsum dolor sit amet.'
+    //   }
+    // ];
+
 
 }])
 .factory("Events", ["$FirebaseArray", "$firebase", function($FirebaseArray, $firebase) {
-  
+
     // create a new factory based on $FirebaseArray
   var TotalEvents = $FirebaseArray.$extendFactory({
     getEvents: function() {
@@ -21,7 +74,28 @@ angular.module('sm-meetApp.joinEvent',  ["firebase"])
     return sync.$asArray(); // this will be an instance of TotalEvents
   };
 
+  // var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events");
+
+  // var list = throwTheEvents(ref);
+
   return {
-    throwTheEvents : throwTheEvents
+    throwTheEvents : throwTheEvents,
+    // list : list
   };
-}]);
+}])
+.filter('reverse', function() {
+  return function(items) {
+    return items.slice().reverse();
+  };
+})
+.filter('timer', function() {
+  return function(items) {
+    var result = [];
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].createdAt && items[i].createdAt > Date.now() - 1320000) {
+        result.push(items[i]);
+      }
+    }
+    return result;
+  }
+});

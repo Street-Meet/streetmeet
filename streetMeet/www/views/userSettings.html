@@ -1,0 +1,86 @@
+<ion-pane id="listCurrentEvents" class="map-pane">
+  <ion-header-bar align-title="center" class="main-header">
+    <div class="buttons">
+      <div class="header-back-btn">
+        <a on-tap="$ionicGoBack()"><i class="fa fa-arrow-circle-left"></i></a>
+      </div>
+    </div>
+    <h1 class="title">Settings</h1>
+  </ion-header-bar>
+
+   <ion-content class="has-header" >
+
+      <ul id="events-current" class="list" >
+
+        <li class="item clearfix" ui-sref="login">
+
+          <div class="event-main clearfix item-content">
+            <div class="event-more-info" ui-sref="viewSingleEvent">
+              <i class="fa fa-angle-right v-center"></i>
+            </div>
+
+            <header class="event-header item-header">
+              <h2>Login</h2>
+              <span class="item-subtitle">Go to login</span>
+            </header> <!-- .event-header -->
+
+          </div> <!-- .event-main -->
+
+        </li> <!-- .item -->
+
+        <li class="item clearfix" ui-sref="listCurrentEvents">
+
+          <div class="event-main clearfix item-content">
+            <div class="event-more-info" ui-sref="viewSingleEvent">
+              <i class="fa fa-angle-right v-center"></i>
+            </div>
+
+            <header class="event-header item-header">
+              <h2>Current Events</h2>
+              <span class="item-subtitle">Go to Current events</span>
+            </header> <!-- .event-header -->
+
+          </div> <!-- .event-main -->
+
+        </li> <!-- .item -->
+
+        <li class="item clearfix" ui-sref="createEvent">
+
+          <div class="event-main clearfix item-content">
+            <div class="event-more-info" ui-sref="viewSingleEvent">
+              <i class="fa fa-angle-right v-center"></i>
+            </div>
+
+            <header class="event-header item-header">
+              <h2>Create Event</h2>
+              <span class="item-subtitle">Create an Event</span>
+            </header> <!-- .event-header -->
+
+          </div> <!-- .event-main -->
+
+        </li> <!-- .item -->
+
+        <li class="item clearfix" ui-sref="mapCurrentEvents">
+
+          <div class="event-main clearfix item-content">
+            <div class="event-more-info" ui-sref="viewSingleEvent">
+              <i class="fa fa-angle-right v-center"></i>
+            </div>
+
+            <header class="event-header item-header">
+              <h2>Map Event View</h2>
+              <span class="item-subtitle">Go to map</span>
+            </header> <!-- .event-header -->
+
+          </div> <!-- .event-main -->
+
+        </li> <!-- .item -->
+
+      </ul> <!-- .list -->
+
+      <button ui-sref="createAccount" class="btn icon-btn btn-red sticky-bottom" ng-click="logout()">
+        <span class="btn-icon v-center"><i class="fa fa-sign-out"></i></span>
+        Logout
+      </button>
+    </ion-content>
+</ion-pane>
