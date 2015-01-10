@@ -35,6 +35,7 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
           userObj.$loaded().then(function() {
             result[key] = userObj;
             $scope.attendees = result;
+            console.log(userObj);
           });
         }
       });
