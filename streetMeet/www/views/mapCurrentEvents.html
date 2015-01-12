@@ -2,12 +2,11 @@
 <ion-header-bar class="hTabs">
   <button class="header-tab" ui-sref="listCurrentEvents">List</button>
   <button class="header-tab" ng-click="createEvent()">Create Event</button>
+
 </ion-header-bar>
   <ion-content scroll="false">
-
-    <div id="map-canvas" data-tap-disabled="true"></div>
     <input id="pac-input" class="controls" type="text" placeholder="Enter a location">
-    </div>
+    <div id="map-canvas" data-tap-disabled="true"></div>
   </ion-content>
   <div class="settings-btn">
     <a ui-sref="settings">
