@@ -18,6 +18,20 @@ angular.module('sm-meetApp.map',  ['firebase'])
   //archived location geofire
   var refArchivedLoc = new Firebase("https://boiling-torch-2747.firebaseio.com/archived/locations");
   var geoFireArchived = new GeoFire(refArchivedLoc);
+  var center = new google.maps.LatLng(47.785326, -122.405696);
+  var globalLatLng;
+  var marker = null;
+  var mapOptions = {
+    zoom: 15,
+    center: center,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+  var input = /** @type {HTMLInputElement} */(
+      document.getElementById('pac-input'));
+  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  
+  var autocomplete = new google.maps.places.Autocomplete(input);
+  // autocomplete.bindTo('bounds', map);
   // var initialize = function() {
     var center = new google.maps.LatLng(47.785326, -122.405696);
     var globalLatLng;
