@@ -9,4 +9,5 @@ plugins/
 streetMeet/www/lib/
 streetMeet/platforms/
 streetMeet/npm-debug.log
+
 public/lib/
