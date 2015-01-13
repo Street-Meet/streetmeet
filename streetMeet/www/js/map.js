@@ -1,25 +1,33 @@
 angular.module('sm-meetApp.map',  ['firebase'])
 
-.controller('MapCtrl', function($scope, $firebase, Map, $cookieStore) {
+.controller('MapCtrl', function($scope, $firebase, Map, $cookieStore, $state, $stateParams) {
   angular.extend($scope, Map);
   // google.maps.event.addDomListener(window, 'load', Map.getLocation);
   // Get the current user's location
   // Map.getLocation();
+  // $state.transitionTo($state.current, $stateParams, {
+  //     reload: true,
+  //     inherit: false,
+  //     notify: true
+  // });
+  // window.location.reload(true)
+  // $state.go($state.current, {}, {reload: true});
   Map.geolocationUpdate();
   // $scope.inEvent = Map.inEvent;
   var currEventRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+$cookieStore.get('currentUser')+"/currentEvent");
   var eventSync = $firebase(currEventRef);
   var currEventObj = eventSync.$asObject();
-  currEventObj.$loaded().then(function() {
-    if (currEventObj.$value) {
-      $scope.inEvent = true;
-    } else {
-      $scope.inEvent = false;
-    }
-  });
+
   $scope.$on( "$ionicView.enter", function( scopes, states ) {
     // google.maps.event.trigger( Map.map, 'resize' );
-    Map.getLocation();
+    currEventObj.$loaded().then(function() {
+      if (currEventObj.$value) {
+        $scope.inEvent = true;
+      } else {
+        $scope.inEvent = false;
+      }
+    });
+    Map.geolocationCallbackQuery($cookieStore.get('userloc'));
     console.log('Did it work?')
   });
 })
@@ -151,7 +159,8 @@ angular.module('sm-meetApp.map',  ['firebase'])
   var getLocation = function() {
     if (typeof navigator !== "undefined" && typeof navigator.geolocation !== "undefined") {
       console.log("Asking user to get their location");
-      navigator.geolocation.getCurrentPosition(geolocationCallbackQuery, errorHandler);
+
+      navigator.geolocation.getCurrentPosition(geolocationCallbackQuery, errorHandler, {timeout:10000});
     } else {
       console.log("Your browser does not support the HTML5 Geolocation API");
     }
@@ -159,6 +168,7 @@ angular.module('sm-meetApp.map',  ['firebase'])
 
   /* Callback method from the geolocation API which receives the current user's location */
   var geolocationCallbackQuery = function(location) {
+    console.log(location);
     console.log('you think?')
     var latitude = location.coords.latitude;
     var longitude = location.coords.longitude;

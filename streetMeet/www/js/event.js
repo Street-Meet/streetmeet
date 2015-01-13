@@ -18,6 +18,10 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
   var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
   var id = ref.child("/users/");
 
+  $scope.refreshData = function() {
+    window.location.reload(true)
+  }
+
   // list of attendees
   $scope.update = function() {
     console.log('UPDATING')
@@ -142,6 +146,8 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
             });
           } else {
             $scope.update();
+            $state.go('mapCurrentEvents');
+            window.location.reload(true)
           }
         });
 
