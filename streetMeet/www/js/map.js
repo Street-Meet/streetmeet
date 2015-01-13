@@ -272,7 +272,7 @@ angular.module('sm-meetApp.map',  ['firebase'])
                       title: key
                     });
                     google.maps.event.addListener(marker, 'click', function() {
-                      $state.go('attendEvent', {id: currEventObj.$value});
+                      $state.transitionTo('attendEvent', {id: currEventObj.$value});
                     });
                   });
                 });
