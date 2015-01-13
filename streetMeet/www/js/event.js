@@ -2,7 +2,7 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
 
 .controller('EventCtrl', function($scope, $firebase, $cookieStore, $state, Event) {
   angular.extend($scope, Event);
-  var refEvent = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events/"+$state.params.id);
+  var refEvent = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+$state.params.id);
   var eventSync = $firebase(refEvent);
   var eventObj = eventSync.$asObject();
   eventObj.$loaded().then(function() {
@@ -19,7 +19,7 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
 
   var result = {};
 
-  var refAttendees = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events/"+$state.params.id+"/attendees");
+  var refAttendees = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+$state.params.id+"/attendees");
   var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
   var id = ref.child("/users/");
 
@@ -41,7 +41,7 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
       });
     });
     // logic for determining if the user is an owner, not attending or attending an event
-    var ownerRef = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events/"+$state.params.id +"/owner");
+    var ownerRef = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+$state.params.id +"/owner");
     console.log($state.params.id);
     var ownerSync = $firebase(ownerRef);
     $scope.initial = true;
@@ -73,7 +73,7 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
 
   // user joins an event
   $scope.joinEvent =function() {
-    var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events/"+$state.params.id+"/attendees/"+$cookieStore.get('currentUser'));
+    var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+$state.params.id+"/attendees/"+$cookieStore.get('currentUser'));
     var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+$cookieStore.get('currentUser'));
     ref.set(true, function(error) {
       if (error) {
@@ -101,7 +101,7 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
 
   // user leaves an event
   $scope.leaveEvent =function() {
-    var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/current/events/"+$state.params.id+"/attendees/"+$cookieStore.get('currentUser'));
+    var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+$state.params.id+"/attendees/"+$cookieStore.get('currentUser'));
     var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+$cookieStore.get('currentUser'));
     ref.set(false, function(error) {
       if (error) {
