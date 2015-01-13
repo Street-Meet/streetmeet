@@ -402,6 +402,7 @@ ul#events-current{
     padding: 0;
     background-color: transparent;
     cursor: pointer;
+    margin-left: 0;
   }
 
     li.item .item-content{
