@@ -124,7 +124,6 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
           }
         });
       })
-
       .then(function() {
         angular.forEach(ownerObj, function (value, key) {
           console.log('in forEach')
@@ -136,7 +135,6 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
                 alert("Data could not be saved." + error);
               } else {
                 console.log(id.key());
-                // $state.go('attendEvent', {id: id.key()})
                 $scope.update();
                 console.log("Owner data saved successfully.");
                 console.log('in promise');

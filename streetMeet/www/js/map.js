@@ -4,7 +4,7 @@ angular.module('sm-meetApp.map',  ['firebase'])
   angular.extend($scope, Map);
   // google.maps.event.addDomListener(window, 'load', Map.getLocation);
   // Get the current user's location
-  Map.getLocation();
+  // Map.getLocation();
   Map.geolocationUpdate();
   // $scope.inEvent = Map.inEvent;
   var currEventRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+$cookieStore.get('currentUser')+"/currentEvent");
@@ -19,7 +19,7 @@ angular.module('sm-meetApp.map',  ['firebase'])
   });
   $scope.$on( "$ionicView.enter", function( scopes, states ) {
     // google.maps.event.trigger( Map.map, 'resize' );
-    google.maps.event.addDomListener(window, 'load', Map.getLocation);
+    Map.getLocation();
     console.log('Did it work?')
   });
 })
@@ -160,6 +160,7 @@ angular.module('sm-meetApp.map',  ['firebase'])
 
   /* Callback method from the geolocation API which receives the current user's location */
   var geolocationCallbackQuery = function(location) {
+    console.log('you think?')
     var latitude = location.coords.latitude;
     var longitude = location.coords.longitude;
     $cookieStore.put('userloc', location);
