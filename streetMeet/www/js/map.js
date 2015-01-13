@@ -26,7 +26,6 @@ angular.module('sm-meetApp.map',  ['firebase'])
 
 .factory('Map', function ($q, $location, $window, $rootScope, $cookieStore, $state, $firebase) {
   // user location geofire
-  // var inEvent = false;
   var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/user_locations");
   var userGeoFire = new GeoFire(userRef);
   // event location geofire
@@ -137,14 +136,14 @@ angular.module('sm-meetApp.map',  ['firebase'])
     $('<div/>').addClass('centerMarker').appendTo(map.getDiv())
     .click(function(){
       $cookieStore.put('eventLoc', map.getCenter());
-      $state.go('createEvent');
-
-      //needs a promise to ensure that event address is properly filled in on the form
-      if($cookieStore.get('addressBox')) {
-      var eventAddress = $cookieStore.get('addressBox');
-      document.getElementById("location").value = eventAddress;
-      console.log("Event address: ", eventAddress);
-    }
+      $state.go('createEvent')
+        .then(function() {
+          if($cookieStore.get('addressBox')) {
+            var eventAddress = $cookieStore.get('addressBox');
+            document.getElementById("location").value = eventAddress;
+            console.log("Event address: ", eventAddress);
+          }
+        });
     });
   };
 
