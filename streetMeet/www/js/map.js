@@ -1,6 +1,6 @@
 angular.module('sm-meetApp.map',  ['firebase'])
 
-.controller('MapCtrl', function($scope, $firebase, Map, $cookieStore, $state, $stateParams) {
+.controller('MapCtrl', function($scope, $firebase, Map, $cookieStore, $state) {
   angular.extend($scope, Map);
   Map.geolocationUpdate();
   var currEventRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+$cookieStore.get('currentUser')+"/currentEvent");
@@ -256,7 +256,7 @@ angular.module('sm-meetApp.map',  ['firebase'])
                     title: key
                   });
                   google.maps.event.addListener(marker, 'click', function() {
-                    $state.go('userProfile', {id: key});
+                    $state.transitionTo('userProfile', {id: key});
                   });
                   console.log('current event', currEventObj.$value);
                   var eventLocRef = new Firebase("https://boiling-torch-2747.firebaseio.com/archived/locations/"+currEventObj.$value+"/l")
