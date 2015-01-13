@@ -10,7 +10,7 @@ var meetApp = angular.module('sm-meetApp',
     'ngCordova',
     'firebase',
     'ngCookies',
-    // 'ngCordova',
+    'ngCordova',
 
     //sm-meetApp Modules
     'sm-meetApp.login',

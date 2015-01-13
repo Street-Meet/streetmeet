@@ -45,11 +45,10 @@
             <i class="fa fa-angle-right v-center"></i>
           </div>
 
-          <div class="item-img">
-            <img ng-show="attendee.picture.data.url" src={{attendee.picture.data.url}} alt="">
-            <span ng-show="!attendee.picture.data.url" alt="" class="fa fa-user"><i class="fa fa-user"></i></span>
-
-          </div>
+           <div class="detail-img profile-pic clearfix">
+              <img ng-show="attendee.picture.data.url" src={{attendee.picture.data.url}} alt="">
+              <i ng-show="!attendee.picture.data.url" class="fa fa-user v-center"></i>
+           </div>
 
 
           <header class="event-header item-header">
