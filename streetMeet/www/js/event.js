@@ -18,6 +18,19 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
   var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
   var id = ref.child("/users/");
 
+  $scope.refreshData = function() {
+    $q(function(resolve, reject) {
+      $state.transitionTo('mapCurrentEvents', {
+        reload: true,
+        inherit: false,
+        notify: true
+      });
+      resolve();
+    }).then(function() {
+      window.location.reload(true);
+    })
+  }
+
   // list of attendees
   $scope.update = function() {
     console.log('UPDATING')
@@ -135,13 +148,38 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
                 alert("Data could not be saved." + error);
               } else {
                 console.log(id.key());
-                $scope.update();
+                $q(function(resolve, reject) {
+                  $scope.update();
+                  resolve();
+                }).then(function() {
+                  console.log('transitioning');
+                  $state.transitionTo('mapCurrentEvents', {
+                    reload: true,
+                    inherit: false,
+                    notify: false
+                  });
+                }).then(function() {
+                  window.location.reload(true);
+                });
                 console.log("Owner data saved successfully.");
                 console.log('in promise');
               }
             });
           } else {
-            $scope.update();
+            $q(function(resolve, reject) {
+              $scope.update();
+              console.log('updating');
+              resolve();
+            }).then(function() {
+              console.log('transitioning');
+              $state.transitionTo('mapCurrentEvents', {
+                reload: true,
+                inherit: false,
+                notify: false
+              });
+            }).then(function() {
+              window.location.reload(true);
+            });
           }
         });
 
