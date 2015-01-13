@@ -1,6 +1,6 @@
 angular.module('sm-meetApp.map',  ['firebase'])
 
-.controller('MapCtrl', function($scope, $firebase, Map, $cookieStore, $state, $stateParams) {
+.controller('MapCtrl', function($scope, $firebase, Map, $cookieStore, $state) {
   angular.extend($scope, Map);
   Map.geolocationUpdate();
   var currEventRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+$cookieStore.get('currentUser')+"/currentEvent");
@@ -170,7 +170,7 @@ angular.module('sm-meetApp.map',  ['firebase'])
     var center = new google.maps.LatLng(latitude, longitude);
     var geoQuery = geoFire.query({
       center: [latitude, longitude],
-      radius: 1.5
+      radius: 1.609344
     });
     map.setCenter(center);
     var currentUser = $cookieStore.get('currentUser');
@@ -205,7 +205,6 @@ angular.module('sm-meetApp.map',  ['firebase'])
                     inherit: false,
                     notify: true
                   });
-                  // $state.go('attendEvent', {id: key});
                 })
               } else {
                 console.log('reaching else');
@@ -256,7 +255,7 @@ angular.module('sm-meetApp.map',  ['firebase'])
                     title: key
                   });
                   google.maps.event.addListener(marker, 'click', function() {
-                    $state.go('userProfile', {id: key});
+                    $state.transitionTo('userProfile', {id: key});
                   });
                   console.log('current event', currEventObj.$value);
                   var eventLocRef = new Firebase("https://boiling-torch-2747.firebaseio.com/archived/locations/"+currEventObj.$value+"/l")
@@ -272,7 +271,7 @@ angular.module('sm-meetApp.map',  ['firebase'])
                       title: key
                     });
                     google.maps.event.addListener(marker, 'click', function() {
-                      $state.go('attendEvent', {id: currEventObj.$value});
+                      $state.transitionTo('attendEvent', {id: currEventObj.$value});
                     });
                   });
                 });
