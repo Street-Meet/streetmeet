@@ -4,60 +4,6 @@ angular.module('sm-meetApp.joinEvent',  ["firebase"])
   // angular.extend($scope, Events);
   var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/events");
 
-    $scope.list =  Events.throwTheEvents(ref);
-
-    // $scope.list = [
-    //   {
-    //     'title': 'title',
-    //     'description' : 'Lorem ipsum dolor sit amet.'
-    //   },
-    //   {
-    //     'title': 'title',
-    //     'description' : 'Lorem ipsum dolor sit amet.'
-    //   },
-    //   {
-    //     'title': 'title',
-    //     'description' : 'Lorem ipsum dolor sit amet.'
-    //   },
-    //   {
-    //     'title': 'title',
-    //     'description' : 'Lorem ipsum dolor sit amet.'
-    //   },
-    //   {
-    //     'title': 'title',
-    //     'description' : 'Lorem ipsum dolor sit amet.'
-    //   },
-    //   {
-    //     'title': 'title',
-    //     'description' : 'Lorem ipsum dolor sit amet.'
-    //   },
-    //   {
-    //     'title': 'title',
-    //     'description' : 'Lorem ipsum dolor sit amet.'
-    //   },
-    //   {
-    //     'title': 'title',
-    //     'description' : 'Lorem ipsum dolor sit amet.'
-    //   },
-    //   {
-    //     'title': 'title',
-    //     'description' : 'Lorem ipsum dolor sit amet.'
-    //   },
-    //   {
-    //     'title': 'title',
-    //     'description' : 'Lorem ipsum dolor sit amet.'
-    //   },
-    //   {
-    //     'title': 'title',
-    //     'description' : 'Lorem ipsum dolor sit amet.'
-    //   },
-    //   {
-    //     'title': 'title',
-    //     'description' : 'Lorem ipsum dolor sit amet.'
-    //   }
-    // ];
-
-
   $scope.list =  Events.throwTheEvents(ref);
 
   var refLoc = new Firebase("https://boiling-torch-2747.firebaseio.com/current/locations");
