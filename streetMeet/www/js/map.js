@@ -170,7 +170,7 @@ angular.module('sm-meetApp.map',  ['firebase'])
     var center = new google.maps.LatLng(latitude, longitude);
     var geoQuery = geoFire.query({
       center: [latitude, longitude],
-      radius: 1.5
+      radius: 1.609344
     });
     map.setCenter(center);
     var currentUser = $cookieStore.get('currentUser');
@@ -205,7 +205,6 @@ angular.module('sm-meetApp.map',  ['firebase'])
                     inherit: false,
                     notify: true
                   });
-                  // $state.go('attendEvent', {id: key});
                 })
               } else {
                 console.log('reaching else');
