@@ -1,6 +1,6 @@
 angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
 
-.controller('EventCtrl', function($scope, $firebase, $cookieStore, $state, Event) {
+.controller('EventCtrl', function($scope, $firebase, $cookieStore, $state, Event, $q) {
   angular.extend($scope, Event);
   var refEvent = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+$state.params.id);
   var eventSync = $firebase(refEvent);
@@ -11,11 +11,6 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
       console.log($scope.eventData);
     })
   });
-  // refEvent.on('value', function(snap) {
-  //   // check to see if is a valid key, otherwise reroute
-  //   $scope.eventData = snap.val();
-  //   console.log($scope.eventData);
-  // })
 
   var result = {};
 
@@ -25,6 +20,7 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
 
   // list of attendees
   $scope.update = function() {
+    console.log('UPDATING')
     var attendeeObj = $firebase(refAttendees).$asObject();
     attendeeObj.$loaded().then(function() {
       console.log("loaded record:", attendeeObj.$id);
@@ -40,18 +36,20 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
         }
       });
     });
+    console.log('UPDATING2')
     // logic for determining if the user is an owner, not attending or attending an event
     var ownerRef = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+$state.params.id +"/owner");
     console.log($state.params.id);
-    var ownerSync = $firebase(ownerRef);
     $scope.initial = true;
     $scope.owner = false;
     $scope.leaver = false;
     $scope.joiner = false;
+    var ownerSync = $firebase(ownerRef);
     ownerObj = ownerSync.$asObject();
     ownerObj.$loaded().then(function() {
+      console.log('UPDATING3')
       angular.forEach(ownerObj, function (value, key) {
-        if (key === $cookieStore.get('currentUser')) {
+        if (key === $cookieStore.get('currentUser') && value === true) {
           console.log(value);
           $scope.owner = value;
           $scope.initial = false;
@@ -64,6 +62,9 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
             $scope.leaver = userObj.$value;
             $scope.joiner = !$scope.leaver;
             $scope.initial = false;
+            console.log($scope.owner);
+            console.log($scope.leaver);
+            console.log($scope.joiner);
           });
         }
       });
@@ -101,21 +102,58 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
 
   // user leaves an event
   $scope.leaveEvent =function() {
-    var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+$state.params.id+"/attendees/"+$cookieStore.get('currentUser'));
-    var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+$cookieStore.get('currentUser'));
-    ref.set(false, function(error) {
-      if (error) {
-        alert("Data could not be saved." + error);
-      } else {
-        console.log("Attendee data saved successfully.");
-        $scope.update();
-      }
+    console.log('leaving event')
+    var ownerRef = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+$state.params.id +"/owner");
+    var ownerSync = $firebase(ownerRef);
+    ownerObj = ownerSync.$asObject();
+    ownerObj.$loaded().then(function() {
+      console.log('pre-promise');
+      $q(function(resolve, reject) {
+        console.log('in promise');
+        var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+$state.params.id+"/attendees/"+$cookieStore.get('currentUser'));
+        var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+$cookieStore.get('currentUser'));
+        ref.set(false, function(error) {
+          if (error) {
+            alert("Data could not be saved." + error);
+            reject('rejected');
+          } else {
+            console.log("Attendee data saved successfully.");
+            userRef.child("/currentEvent/").remove();
+            // $scope.update();
+            resolve('resolved');
+          }
+        });
+      })
+
+      .then(function() {
+        angular.forEach(ownerObj, function (value, key) {
+          console.log('in forEach')
+          if (key === $cookieStore.get('currentUser') && value === true) {
+            console.log('in if')
+            ownerRef.child(key).set(false, function(error) {
+              if (error) {
+                console.log('rejection')
+                alert("Data could not be saved." + error);
+              } else {
+                console.log(id.key());
+                // $state.go('attendEvent', {id: id.key()})
+                $scope.update();
+                console.log("Owner data saved successfully.");
+                console.log('in promise');
+              }
+            });
+          } else {
+            $scope.update();
+          }
+        });
+
+        console.log('after promise');
+
+
+
+      });
     });
-    userRef.child("/currentEvent/").remove();
   }
-
-
-
 })
 
 .factory('Event', function ($q, $cookieStore, $state, $firebase) {

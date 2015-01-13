@@ -2,8 +2,7 @@ angular.module('sm-meetApp.map',  ['firebase'])
 
 .controller('MapCtrl', function($scope, $firebase, Map, $cookieStore) {
   angular.extend($scope, Map);
-
-  google.maps.event.addDomListener(window, 'load', Map.initialize);
+  // google.maps.event.addDomListener(window, 'load', Map.getLocation);
   // Get the current user's location
   Map.getLocation();
   Map.geolocationUpdate();
@@ -17,6 +16,11 @@ angular.module('sm-meetApp.map',  ['firebase'])
     } else {
       $scope.inEvent = false;
     }
+  });
+  $scope.$on( "$ionicView.enter", function( scopes, states ) {
+    // google.maps.event.trigger( Map.map, 'resize' );
+    google.maps.event.addDomListener(window, 'load', Map.getLocation);
+    console.log('Did it work?')
   });
 })
 
