@@ -7,9 +7,10 @@ var meetApp = angular.module('sm-meetApp',
   [
     // external modules
     'ionic',
+    'ngCordova',
     'firebase',
     'ngCookies',
-    // 'ngCordova',
+    'ngCordova',
 
     //sm-meetApp Modules
     'sm-meetApp.login',
@@ -18,7 +19,8 @@ var meetApp = angular.module('sm-meetApp',
     'sm-meetApp.userInterfaceController',
     'sm-meetApp.map',
     'sm-meetApp.currentUser',
-    'sm-meetApp.event'
+    'sm-meetApp.event',
+    'sm-meetApp.profile'
 
   ])
 // run in ionic
@@ -35,10 +37,19 @@ var meetApp = angular.module('sm-meetApp',
   });
 })
 // set up routing
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
+  // $httpProvider.defaults.useXDomain = true;
+  // $httpProvider.defaults.useXDomain = true;
+  // delete $httpProvider.defaults.headers.common['X-Requested-With'];
+
   $urlRouterProvider.otherwise('/login');
+
+  // I'll do it without html5 for now
+  // TODO: refactor with push state
+  // $locationProvider.html5Mode(true);
   $stateProvider
     .state('login', {
+      // url: '/login?code',
       url: '/login',
       templateUrl : 'views/login.html',
       controller: 'LoginCtrl'
@@ -74,9 +85,9 @@ var meetApp = angular.module('sm-meetApp',
       // controller: 'SettingsCtrl'
     })
     .state('userProfile', {
-      url: '/userProfile',
+      url: '/userProfile/:id',
       templateUrl: 'views/userProfile.html',
-      // controller: 'SettingsCtrl'
+      controller: 'SettingsCtrl'
     })
     .state('userProfileSettings', {
       url: '/userProfileSettings',

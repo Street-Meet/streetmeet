@@ -11,7 +11,7 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/styles2.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic|Maven+Pro:400,700,500' rel='stylesheet' type='text/css'>
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
 
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
@@ -24,6 +24,7 @@
 
     <!-- Google Maps -->
     <script src="https://maps.googleapis.com/maps/api/js?key="></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
 
     <!-- RSVP -->
     <script src="http://rsvpjs-builds.s3.amazonaws.com/rsvp-latest.min.js"></script>
@@ -54,11 +55,14 @@
     <script src="js/map.js"></script>
     <script src="js/currentUser.js"></script>
     <script src="js/event.js"></script>
+    <script src="js/profile.js"></script>
 
+    <script src="js/utils.js"></script>
 
+    <script src="js/ng-cordova.min.js"></script>
 
   </head>
-  <body ng-app="sm-meetApp" >
+  <body ng-app="sm-meetApp" class="platform-ios">
     <div class="wrapper" ng-controller="uiController">
       <ion-nav-view></ion-nav-view>
 

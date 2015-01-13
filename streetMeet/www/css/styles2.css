@@ -146,7 +146,7 @@ button{
 
     button.inline-btn .btn-icon{
       padding: 0em;
-      
+
     }
 
     .settings-btn{
@@ -158,7 +158,7 @@ button{
       z-index: 1000;
     }
       .settings-btn a{
-         color: rgba(44, 62, 80, .5); 
+         color: rgba(44, 62, 80, .5);
       }
 
   .header-back-btn
@@ -205,6 +205,16 @@ li.slide-controls, li.item.slide-controls{
 
 .header-tab{
   width: 50%;
+  box-sizing: border-box;
+  border-radius: 0;
+  background: #2c3e50;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.header-tab-full{
+  width: 100%;
   box-sizing: border-box;
   border-radius: 0;
   background: #2c3e50;
@@ -309,7 +319,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="num
   margin: 0;
   padding: 10px 0 0 0;
 }
-  
+
   .main-header h1{
     text-align: center;
     margin: 0;
@@ -392,6 +402,7 @@ ul#events-current{
     padding: 0;
     background-color: transparent;
     cursor: pointer;
+    margin-left: 0;
   }
 
     li.item .item-content{
@@ -534,7 +545,7 @@ ul#events-current{
 /******* User Profile Pane ********/
   .profile-pic{
     background: #808080;
-    border-radius: 44px; 
+    border-radius: 44px;
     float: left;
     overflow: hidden;
   }
@@ -547,7 +558,7 @@ ul#events-current{
         display: block;
       }
 
-      
+
       .userProfile .detail-section .inset-divider{
         width: 100%;
         margin: 0;
@@ -606,7 +617,7 @@ ul.settings-list{
       font-size: 1em;
       height: auto;
     }
-    
+
       ul.setting-edit-options{
 
       }
@@ -633,7 +644,7 @@ ul.settings-list{
       height: 100%;
       display: block;
       float: left;
-      
+
       margin-right: .25em;
       color: #2c3e50;
     }
@@ -643,7 +654,7 @@ ul.settings-list{
       height: 100%;
       display: block;
       float: left;
-      
+
       font-size: .875em;
       color: #666666;
     }
@@ -663,4 +674,4 @@ ul.settings-list{
 
 
 
-  
+

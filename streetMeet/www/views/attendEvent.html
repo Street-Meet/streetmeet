@@ -1,10 +1,11 @@
 <ion-pane id="singleEvent" class="detail-view event-pane">
   <ion-header-bar class="hTabs">
-    <button class="header-tab" ui-sref="mapCurrentEvents">Back to Map</button>
+    <button class="header-tab" ng-click="$ionicGoBack()" ng-hide="owner">Back</button>
     <button class="header-tab" ng-show="initial"></button>
     <button class="header-tab" ng-click="joinEvent()" ng-show="joiner">Join Event</button>
     <button class="header-tab" ng-click="leaveEvent()" ng-show="leaver">Leave Event</button>
     <button class="header-tab" ng-click="" ng-show="owner">Edit Event</button>
+    <button class="header-tab" ng-click="leaveEvent()" ng-show="owner">Leave Event</button>
   </ion-header-bar>
   <ion-content class="has-header">
 
@@ -40,7 +41,7 @@
       <li class="item">
         <div class="clearfix item-content">
 
-          <div class="event-more-info" ui-sref="viewSingleEvent">
+          <div class="event-more-info" ui-sref="userProfile({id:'facebook:'+attendee.id})">
             <i class="fa fa-angle-right v-center"></i>
           </div>
 

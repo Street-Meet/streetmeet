@@ -5,9 +5,12 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
 
 })
 .factory('EventCreator', function ($q, $cookieStore, $state) {
-  var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/current");
-  var locRef = ref.child("/locations");
-  var geoFire = new GeoFire(locRef);
+  var ref = new Firebase("https://boiling-torch-2747.firebaseio.com");
+  var locRef = new Firebase("https://boiling-torch-2747.firebaseio.com/curr/locations");
+  var currGeoFire = new GeoFire(locRef);
+
+  var archRef = new Firebase("https://boiling-torch-2747.firebaseio.com/archived/locations");
+  var archGeoFire = new GeoFire(archRef);
   var createEvent = function(eventTitle, eventDescription, eventCapacity) {
     owner = $cookieStore.get('currentUser');
     var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+owner);
@@ -37,13 +40,20 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
             alert("Data could not be saved." + error);
           } else {
             console.log(id.key());
-            $state.go('attendEvent', {id: id.key()})
+            $state.go('attendEvent', {id: id.key()});
             console.log("Owner data saved successfully.");
           }
         });
       }
     });
-    geoFire.set(id.key(), [$cookieStore.get('eventLoc').k, $cookieStore.get('eventLoc').D]).then(function() {
+    currGeoFire.set(id.key(), [$cookieStore.get('eventLoc').k, $cookieStore.get('eventLoc').D]).then(function() {
+        console.log(id.key());
+        console.log(currGeoFire);
+        console.log("Provided key has been added to Current GeoFire");
+      }, function(error) {
+        console.log("Error: " + error);
+      });
+    archGeoFire.set(id.key(), [$cookieStore.get('eventLoc').k, $cookieStore.get('eventLoc').D]).then(function() {
         console.log("Provided key has been added to GeoFire");
       }, function(error) {
         console.log("Error: " + error);
@@ -62,8 +72,6 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
         console.log("Current event added to user!");
       }
     });
-
-
   }
   return{
     createEvent: createEvent

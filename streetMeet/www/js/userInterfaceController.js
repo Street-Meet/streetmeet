@@ -61,8 +61,7 @@ angular.module('sm-meetApp.userInterfaceController',  [])
       } 
 
       $(content).closest('ul').css('margin-top', tMarg);
-    }
-
+    };
 
     //console.log(hDiff);
     //console.log($(content).closest('ul').outerHeight());
@@ -71,28 +70,61 @@ angular.module('sm-meetApp.userInterfaceController',  [])
     // console.log($event.gesture.deltaY);
   };
 
+
+  $scope.listDrag = function($event){
+    var liItem = $(itemControls.getDomItem($event, '.item')).closest('li');
+    var leftMin = -113;
+    var posChange = 0;
+    var margin = 0;
+    var currentMarg = parseInt($(liItem).css('margin-left'));
+
+    
+
+    $(liItem).siblings('.swiped').each(function(key, value){
+      itemControls.resetMarg(value);
+    });
+
+
+    if($event.gesture.direction === 'left' && ($event.gesture.deltaX+currentMarg) < leftMin){
+      margin = leftMin;
+    }else if($event.gesture.direction === 'left'){
+      margin = currentMarg - $event.gesture.distance;
+    }
+    if($event.gesture.direction === 'right' && currentMarg === 0){
+
+    }else if($event.gesture.direction === 'right' && (currentMarg+$event.gesture.deltaX) > 100){
+      margin = 0;
+    }else if($event.gesture.direction === 'right'){
+      margin = currentMarg + $event.gesture.distance;
+    }
+
+    $(liItem).css('margin-left', margin).addClass('swiped');
+    //console.log($event);
+  }; 
+
+
   /**
    * Show and hide event controls for joining or removing event 
    * @param  {object} $event The event object passed in the DOM by AngularJS
    * @return {null} returns nothing
    */
-  $scope.onSwipe = function($event){
-    //console.log($event);
-    var direction = $event.gesture.direction;
-    //var margins = {left: '-30%', right: '30%'};
-    var cont = itemControls.getDomItem($event, '.item');
+  // $scope.onSwipe = function($event){
+  //   //console.log($event);
+  //   var direction = $event.gesture.direction;
+  //   //var margins = {left: '-30%', right: '30%'};
+  //   var cont = itemControls.getDomItem($event, '.item');
 
-    if($(cont).hasClass('swiped') && !$(cont).hasClass('swiped-'+direction)){
-      itemControls.resetMarg(cont);
-    }else{
-      itemControls.resetMarg($(cont).siblings());
-      $(cont).addClass('swiped swiped-left').animate({
-        left: '-30%'
-      }, function(){
-        //animation complete
-      });
-    }
-  };
+  //   if($(cont).hasClass('swiped') && !$(cont).hasClass('swiped-'+direction)){
+  //     itemControls.resetMarg(cont);
+  //   }else{
+  //     itemControls.resetMarg($(cont).siblings());
+  //     $(cont).addClass('swiped swiped-left').animate({
+  //       left: '-30%'
+  //     }, function(){
+  //       //animation complete
+  //     });
+  //   }
+  // };
 
   /**
    * Profile settings edit controls
@@ -125,7 +157,7 @@ angular.module('sm-meetApp.userInterfaceController',  [])
     return {
       resetMarg : function(el){
         $(el).removeClass('swiped-left swiped-right swiped').animate({
-            left: '0'
+            "margin-left": '0'
         })
       },
       removeEvent : function(el){
@@ -134,7 +166,7 @@ angular.module('sm-meetApp.userInterfaceController',  [])
       getDomItem : function($event, selector){
         return $($event.target).closest(selector);
       },
-      lockVertScroll : function(){
+      snapDrag : function(){
 
       }
 
