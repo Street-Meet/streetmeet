@@ -26,6 +26,7 @@ angular.module('sm-meetApp.map',  ['firebase'])
     center: center,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
+  var globalAddress;
 
   /*Geocoding and address autofill*/
   var input = /** @type {HTMLInputElement} */(
@@ -35,10 +36,14 @@ angular.module('sm-meetApp.map',  ['firebase'])
   var autocomplete = new google.maps.places.Autocomplete(input);
   autocomplete.bindTo('bounds', map);
   var infowindow = new google.maps.InfoWindow();
+  var locationBoxMarker = new google.maps.Marker({
+    map: map,
+    anchorPoint: new google.maps.Point(0, -29)
+  });
   
   google.maps.event.addListener(autocomplete, 'place_changed', function() {
     infowindow.close();
-    marker.setVisible(false);
+    locationBoxMarker.setVisible(false);
     var place = autocomplete.getPlace();
     if (!place.geometry) {
       return;
@@ -51,15 +56,15 @@ angular.module('sm-meetApp.map',  ['firebase'])
       map.setCenter(place.geometry.location);
       map.setZoom(17);  // Why 17? Because it looks good.
     }
-    marker.setIcon(/** @type {google.maps.Icon} */({
+    locationBoxMarker.setIcon(/** @type {google.maps.Icon} */({
       url: place.icon,
       size: new google.maps.Size(71, 71),
       origin: new google.maps.Point(0, 0),
       anchor: new google.maps.Point(17, 34),
       scaledSize: new google.maps.Size(35, 35)
     }));
-    marker.setPosition(place.geometry.location);
-    marker.setVisible(true);
+    locationBoxMarker.setPosition(place.geometry.location);
+    locationBoxMarker.setVisible(true);
 
     var address = '';
     if (place.address_components) {
@@ -71,7 +76,9 @@ angular.module('sm-meetApp.map',  ['firebase'])
     }
 
     infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
-    infowindow.open(map, marker);
+    infowindow.open(map, locationBoxMarker);
+    $cookieStore.put('addressBox', address);
+    console.log("address box", $cookieStore.get('addressBox', address));
   });
 
 
@@ -99,8 +106,14 @@ angular.module('sm-meetApp.map',  ['firebase'])
     $('<div/>').addClass('centerMarker').appendTo(map.getDiv())
     .click(function(){
       $cookieStore.put('eventLoc', map.getCenter());
-      console.log($cookieStore.get('eventLoc'), 'stored!')
       $state.go('createEvent');
+
+      //needs a promise to ensure that event address is properly filled in on the form
+      if($cookieStore.get('addressBox')) {
+      var eventAddress = $cookieStore.get('addressBox');
+      document.getElementById("location").value = eventAddress;
+      console.log("Event address: ", eventAddress);
+    }
     });
   };
 
