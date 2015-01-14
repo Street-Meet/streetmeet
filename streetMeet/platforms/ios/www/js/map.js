@@ -153,6 +153,9 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
   var marker = null;
   // puts a marker on the center of the map to capture the location of a new event
   var createEvent = function() {
+
+    angular.element('#pac-input').slideDown();
+
     $('<div/>').addClass('centerMarker').appendTo(map.getDiv())
     .click(function(){
       $cookieStore.put('eventLoc', map.getCenter());
@@ -276,9 +279,10 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
                   var marker = new google.maps.Marker({
                     position: pos,
                     map: map,
-                    icon: '/img/piedPiper.gif',
+                    icon: '/img/icon_user_pos_animated.gif',
                     draggable: false,
-                    title: key
+                    title: key,
+                    optimized : false
                   });
                   google.maps.event.addListener(marker, 'click', function() {
                     $state.transitionTo('userProfile', {id: key});
@@ -294,14 +298,14 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
                       position: pos,
                       map: map,
                       draggable: false,
-                      title: key
+                      title: key,
+                      icon: '/img/icon_map_event_blue.png',
                     });
                     google.maps.event.addListener(marker, 'click', function() {
                       $state.transitionTo('attendEvent', {id: currEventObj.$value});
                     });
                   });
                 });
-
               });
             })
           });
@@ -341,7 +345,7 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
     if (marker == null) {
         marker = new google.maps.Marker({
         position: myLatlng,
-        icon: '/img/blue_beer.png',
+        icon: '/img/icon_user_pos_animated.png',
         draggable: false
       });
     } else {
