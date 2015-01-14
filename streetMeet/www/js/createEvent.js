@@ -1,9 +1,9 @@
-angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
+angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies', 'timer'])
 
 .controller('CreateEventsCtrl', function($scope, $firebase, $cookieStore, EventCreator) {
    angular.extend($scope, EventCreator);
    $scope.eventAddress = $cookieStore.get('addressBox');
-
+   $scope.timerRunning = true;
 })
 .factory('EventCreator', function ($q, $cookieStore, $state) {
   var ref = new Firebase("https://boiling-torch-2747.firebaseio.com");
@@ -15,14 +15,22 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
   var createEvent = function(eventTitle, eventDescription, eventCapacity, eventAddress) {
     // console.log($state.current.name);
     owner = $cookieStore.get('currentUser');
-    var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+owner);
+    var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/" + owner);
     var eventData = {
       title: eventTitle,
       description: eventDescription,
       capacity: eventCapacity,
       address: eventAddress,
-      createdAt: Date.now()
+      createdAt: Date.now(),
+      timeLeft: "2000"
     };
+    
+    //grab Date.now()
+    //minutes remaining is the difference between 22 minutes from createdAt and Date.now();
+
+    var timeRemaining = 2000;
+    //((eventData.createdAt + 1320000) - Date.now()).toString();
+    console.log("event", eventData)
     var id = ref.child("/events").push();
 
     id.set(eventData, function(error) {
