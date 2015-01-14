@@ -223,6 +223,7 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
                 var marker = new google.maps.Marker({
                   position: pos,
                   map: map,
+                  icon: '/img/icon_map_join_blue-16.png',
                   title: key
                 });
                 google.maps.event.addListener(marker, 'click', function() {
