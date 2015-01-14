@@ -22,7 +22,7 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies', 'timer'])
       capacity: eventCapacity,
       address: eventAddress,
       createdAt: Date.now(),
-      timeLeft: "2000"
+      timeLeft: 2000
     };
     
     //grab Date.now()
