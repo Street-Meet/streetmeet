@@ -6,7 +6,6 @@ plugins/
 **/.DS_Store
 **/public/.DS_Store
 streetMeet/www/lib/
-streetMeet/platforms/
 streetMeet/npm-debug.log
 
 public/lib/
