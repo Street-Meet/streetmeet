@@ -99,12 +99,11 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies', 'ngCordova','ionic
       $scope.theEvents = result;
       });
 
-  };
-  $scope.logout = function(){
+    };
+    $scope.logout = function(){
       auth.$unauth();
       $cookieStore.remove('currentData')
       $cookieStore.remove('currentUser')
       $cookieStore.remove('currentToken');
-
-  }
+    }
 }]);
