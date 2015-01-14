@@ -279,9 +279,10 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
                   var marker = new google.maps.Marker({
                     position: pos,
                     map: map,
-                    icon: '/img/piedPiper.gif',
+                    icon: '/img/icon_user_pos_animated.gif',
                     draggable: false,
-                    title: key
+                    title: key,
+                    optimized : false
                   });
                   google.maps.event.addListener(marker, 'click', function() {
                     $state.transitionTo('userProfile', {id: key});
