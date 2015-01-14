@@ -1,0 +1,677 @@
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+  }
+* html .clearfix             { zoom: 1; } /* IE6 */
+*:first-of-type+html .clearfix { zoom: 1; } /* IE7 */
+/************** End Clearfix **************/
+
+/********* Ionic Style Resets *********/
+.button{
+  min-height: 0;
+  font-size: 1em;
+  line-height: 2.25em;
+}
+
+.platform-ios.platform-cordova:not(.fullscreen) .bar-header:not(.bar-subheader) > * {
+margin-top: 0px;
+}
+
+
+/********* End Ionic Style Resets *********/
+
+html, body{
+  width: 100%;
+  height: 100%;
+}
+
+.pane{
+  background: #e6e6e6;
+}
+
+/********** Text styles **********/
+body{
+  font-size: 16px; /*Set the base font*/
+  font-family: 'Maven Pro', sans-serif;
+  background: #e6e6e6;
+}
+
+a{
+  text-decoration: none;
+  color: #e74c3c;
+}
+
+.sub-btn-link{
+  color: #fff;
+  display: block;
+  margin: 0 5%;
+  font-size: .875em;
+}
+
+  .sub-btn-link a{
+    font-size: 1.2em;
+  }
+
+h1, h2, h3{
+  font-family: 'Josefin Slab', serif;
+}
+
+h1{
+  color: #fff;
+  font-weight: 400;
+  font-size: 4.6em;
+  line-height: .75em;
+}
+
+  h1.sub-heading{
+    font-size: 2.5em;
+    line-height: 1em;
+    margin: 0 0 0 5%;
+  }
+
+.half-page-heading{
+  display: block;
+  margin: 0 15%;
+  padding: 20% 0 0;
+  text-shadow: 1px 1px 1px rgba(150, 150, 150, 1);
+}
+
+.time-remaining{
+  font-family: 'Josefin Slab', serif;
+  color: #e74c3c;
+  font-weight: 600;
+}
+
+.brand-red{
+  color: #e74c3c;
+}
+
+.brand-drk-blue{
+  color: #2980b9;
+}
+
+/********* UI Elements *********/
+
+button{
+  width: 90%;
+  margin: 0 5% .65em;
+  padding: .75em 0;
+  clear: both;
+  text-align: left;
+  border: none;
+  border-radius: 2px;
+  font-family: 'Josefin Slab', serif;
+  font-size: 1.25em;
+  font-weight: 600;
+  background: #2980b9; /* default blue */
+  color: #fff;
+}
+
+  button.btn-light{
+    background: #ecf0f1;
+    color: #2c3e50;
+  }
+
+  button.btn-red{
+    background: #e74c3c;
+    color: #fff;
+  }
+
+  .btn-icon{
+    float: left;
+    display: block;
+    width: 30px;
+    margin: 0 .6em 0 0;
+    padding: 0 1.2em;
+    border-right: 2px solid #fff;
+    text-align: center;
+    font-size: 1.2em;
+  }
+
+    button.btn-light .btn-icon{
+      border-right: 2px solid #2c3e50;
+    }
+
+  button.inline-btn{
+    width: auto;
+    padding: 0 .5em;
+    margin: .6em 0;
+    font-size: .85em;
+    height: 30px;
+  }
+
+    button.inline-btn .btn-icon{
+      padding: 0em;
+
+    }
+
+    .settings-btn{
+      position: absolute;
+      font-size: 2em;
+      bottom: 10px;
+      right: 10px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+      .settings-btn a{
+         color: rgba(44, 62, 80, .5);
+      }
+
+  .header-back-btn
+  {
+    font-size: 2em;
+    text-align: center;
+    padding: .2em 0 0 .2em;
+  }
+    .header-back-btn a{
+      color: #fff;
+    }
+
+/* Slide controls */
+.slide-button{
+  width: 30%;
+  height: 100%;
+  top: 0;
+  position: absolute;
+  text-align: center;
+  color: #fff;
+  font-family: 'Josefin Slab', serif;
+  font-size: 1.4em;
+}
+
+.slide-deny {
+  background: #e74c3c;
+  left: 100%;
+}
+
+.slide-confirm{
+  background: #477725;
+  left: -30%;
+}
+
+li.slide-controls, li.item.slide-controls{
+  overflow: visible;
+}
+
+
+/**** Navigation ****/
+.bar.hTabs{
+  padding: 0;
+}
+
+.header-tab{
+  width: 50%;
+  box-sizing: border-box;
+  border-radius: 0;
+  background: #2c3e50;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.header-tab-full{
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 0;
+  background: #2c3e50;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+  .header-tab:first-child{
+    border-right: 1px solid #ecf0f1;
+  }
+
+  .header-tab:last-child{
+    border-left: 1px solid #ecf0f1;
+  }
+
+
+/********** Forms **********/
+form{
+  width: 100%;
+/*  position: absolute;
+  bottom: 20px;*/
+}
+
+input[type="text"], input[type="email"], input[type="password"], input[type="number"]{
+  width: 90%;
+  margin: 0 auto .65em;
+  padding: 0 15px;
+  border-radius: 30px;
+}
+
+
+
+
+/********** Utility Classes **********/
+.v-center{
+  /* Internet Explorer 10 */
+  display:-ms-flexbox;
+  -ms-flex-pack:center;
+  -ms-flex-align:center;
+
+  /* Firefox */
+  display:-moz-box;
+  -moz-box-pack:center;
+  -moz-box-align:center;
+
+  /* Safari, Opera, and Chrome */
+  display:-webkit-box;
+  -webkit-box-pack:center;
+  -webkit-box-align:center;
+
+  /* W3C */
+  display:box;
+  box-pack:center;
+  box-align:center;
+}
+
+.sticky-bottom{
+  position: absolute;
+  bottom: 40px;
+}
+
+.mid-header{
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 0;
+  background: #2c3e50;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  color: #fff;
+}
+
+  .mid-header h3{
+    font-size: 1.2em;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    font-weight: 600;
+    padding: .4em;
+  }
+
+.inset-divider{
+  display: block;
+  height: 1px;
+  width: 90%;
+  margin: 2.5em 5%;
+  border-bottom: 2px solid #cccccc;
+  border-top: 1px solid #fff;
+  clear: both;
+}
+
+/********** Layout **********/
+
+.main-header{
+  width: 100%;
+  background: #2c3e50;
+  box-sizing: border-box;
+  border-radius: 0;
+  background: #2c3e50;
+  text-align: center;
+  margin: 0;
+  padding: 10px 0 0 0;
+}
+
+  .main-header h1{
+    text-align: center;
+    margin: 0;
+  }
+
+    .bar > .title{
+      font-size: 1.75em;
+      font-weight: 600;
+      top: 10px;
+    }
+
+
+
+/******* Login Panes *******/
+.login-pane {
+  background: url(../img/bg_city_grad.png) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.login-area{
+  width: 100%;
+}
+
+#main-logo{
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto 10%;
+  height: 35%;
+  text-align: center;
+/*  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 80%;
+  background-image: url(../img/logo_verge22.png);*/
+}
+
+  #main-logo img{
+    width: 70%;
+    margin: 15% auto 0;
+  }
+
+
+.loginSection.ng-hide-add,
+.loginSection.ng-hide-remove {
+  -webkit-transition:0.5s linear all;
+  transition:0.25s linear all;
+
+  /* remember to add this */
+  display:block!important;
+  opacity:1;
+}
+.loginSection.ng-hide {
+  opacity:0;
+}
+
+
+/******* Create Event Pane ********/
+
+
+.createEvent-pane {
+  background: url(../img/bg_createEvent.png) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+
+/******* List Events Pane ********/
+ul#events-current{
+
+}
+
+  li.item{
+    width: 100%;
+    height: auto;
+    border: none;
+    padding: 0;
+    background-color: transparent;
+    cursor: pointer;
+    margin-left: 0;
+  }
+
+    li.item .item-content{
+      margin: 0 5%;
+      border-bottom: 2px solid #cccccc;
+      border-top: 1px solid #fff;
+      width: 90%;
+    }
+
+      li.item:first-child .item-content{
+        border-top: none;
+      }
+
+      li.item:last-child .item-content{
+        border-bottom: none;
+      }
+
+    li.item .item-header{
+      padding: .85em 0 0;
+      width: 53%;
+      text-overflow: ellipsis;
+    }
+
+    li.event .event-header h2{
+      text-transform: uppercase;
+      font-size: 1em;
+      margin: 0;
+    }
+
+      li.item .item-subtitle{
+        font-size: .75em;
+      }
+
+    li.event .event-header h2 .event-distance{
+      text-transform: none;
+      font-size: .875em;
+    }
+
+  .event-icon, .item-img{
+
+    float: left;
+    text-align: center;
+    height: 100%;
+    padding: .5em;
+    color: #fff;
+  }
+
+    .event-icon i{
+      background: #808080;
+      border-radius: 44px;
+      padding: .32em .35em;
+      font-size: 2em;
+    }
+
+    .item-img img{
+      border-radius: 44px;
+      width: 65px;
+    }
+
+  .event-meta{
+    padding: .85em 0 0;
+    float: right;
+    font-family: 'Josefin Slab', serif;
+    height: 100%;
+  }
+
+    .event-meta span{
+      display: block;
+    }
+
+    .event-time-remaining{
+      color: #e74c3c;
+      font-size: 1.2em;
+      font-weight: 600;
+    }
+
+  .event-more-info, .list-more-info{
+    float: right;
+    height: 100%;
+    font-size: 1.5em;
+    color: #2c3e50;
+    padding: 1em .5em 1em;
+  }
+
+  .event-description{
+    padding: 1em;
+    clear: both;
+    display: none;
+    width: 100%;
+    word-wrap: normal;
+  }
+
+
+/******* Detail View Pane ********/
+.detail-view{
+
+}
+
+  .detail-section{
+    padding: 5%;
+  }
+
+
+  .detail-img img{
+    width: 100px;
+    float: left;
+    margin: 0 1em 1em 0;
+  }
+
+  .detail-info{
+    float: left;
+    max-width: 220px;
+  }
+
+    .detail-info .time-remaining{
+      font-size: 1.2em;
+
+    }
+
+    .detail-title{
+      font-size: 1.2em;
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    .event-location-title, .event-location-address{
+      display: block;
+      font-size: .875em;
+      line-height: 1em;
+      color: #666666;
+    }
+
+  .detail-description{
+    clear: both;
+    font-size: .875em;
+    line-height: 1.2em;
+  }
+
+
+/******* User Profile Pane ********/
+  .profile-pic{
+    background: #808080;
+    border-radius: 44px;
+    float: left;
+    overflow: hidden;
+  }
+
+    .userProfile .detail-info{
+      padding: 1em;
+      box-sizing: border-box;
+    }
+      .userProfile .detail-info span{
+        display: block;
+      }
+
+
+      .userProfile .detail-section .inset-divider{
+        width: 100%;
+        margin: 0;
+      }
+
+    .profile-pic i{
+      padding: .32em .49em;
+      font-size: 3em;
+      color: #fff;
+      width: 85px;
+      height: 85px;
+      box-sizing: border-box;
+    }
+
+    .profile-name{
+      font-family: 'Josefin Slab', serif;
+      font-size: 1.2em;
+    }
+
+    .profile-description{
+      font-size: .875em;
+    }
+
+
+    ul.profile-social-links{
+      font-size: 2em;
+    }
+
+      ul.profile-social-links li{
+        display: inline-block;
+      }
+
+      ul.profile-social-links li a{
+        color: #2c3e50;
+      }
+
+    .userProfile .detail-description
+    {
+    }
+
+
+/******* Edit Profile Settings ********/
+ul.settings-list{
+
+}
+  li.setting-item{
+  }
+
+    li.settings-item .item-content{
+      padding: 1em 0 0;
+      box-sizing: border-box;
+    }
+
+    li.setting-item .list-more-info{
+      color: #e74c3c;
+      font-size: 1em;
+      height: auto;
+    }
+
+      ul.setting-edit-options{
+
+      }
+
+        ul.setting-edit-options li{
+          display: inline-block;
+        }
+
+          ul.setting-edit-options li.settings-confirm{
+            display: none;
+          }
+
+          ul.setting-edit-options li.settings-confirm-edit-btn a{
+            color: #159e31;
+          }
+
+
+
+
+
+    li.setting-item label{
+      font-size: 1.1em;
+      padding: .55em 0 0 .4em;
+      height: 100%;
+      display: block;
+      float: left;
+
+      margin-right: .25em;
+      color: #2c3e50;
+    }
+
+    li.setting-item .setting-current-val{
+      padding: 1em 0;
+      height: 100%;
+      display: block;
+      float: left;
+
+      font-size: .875em;
+      color: #666666;
+    }
+
+    li.setting-item .settings-edit-field{
+      display: none;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
