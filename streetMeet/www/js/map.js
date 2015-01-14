@@ -345,7 +345,7 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
     if (marker == null) {
         marker = new google.maps.Marker({
         position: myLatlng,
-        icon: '/img/blue_beer.png',
+        icon: '/img/icon_user_pos_animated.png',
         draggable: false
       });
     } else {
