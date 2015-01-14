@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>4BDC2EF8-7900-41A9-8201-66A64EBBD494</string>
+	<key>IDESourceControlProjectName</key>
+	<string>streetMeet</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>94CB77047A6EEB8483C93856560BBEF12077CB2C</key>
+		<string>https://github.com/chitopolo/streetmeet.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>streetMeet/platforms/ios/streetMeet.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>94CB77047A6EEB8483C93856560BBEF12077CB2C</key>
+		<string>../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/chitopolo/streetmeet.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>94CB77047A6EEB8483C93856560BBEF12077CB2C</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>94CB77047A6EEB8483C93856560BBEF12077CB2C</string>
+			<key>IDESourceControlWCCName</key>
+			<string>streetmeet</string>
+		</dict>
+	</array>
+</dict>
+</plist>

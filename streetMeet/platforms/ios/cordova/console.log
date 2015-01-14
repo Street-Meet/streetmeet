@@ -1,0 +1,121 @@
+2015-01-12 22:29:14.074 streetMeet[4072:1428994] DiskCookieStorage changing policy from 2 to 0, cookie file: file:///Users/chitopolo/Library/Developer/CoreSimulator/Devices/73FA96DB-78A7-484E-85CA-B8F49D6BC022/data/Containers/Data/Application/73230175-D766-4CA9-BA9A-76735074E58E/Library/Cookies/Cookies.binarycookies
+2015-01-12 22:29:14.388 streetMeet[4072:1428994] Apache Cordova native platform version 3.7.0 is starting.
+2015-01-12 22:29:14.388 streetMeet[4072:1428994] Multi-tasking -> Device: YES, App: YES
+2015-01-12 22:29:14.402 streetMeet[4072:1428994] Unlimited access to network resources
+2015-01-12 22:29:15.275 streetMeet[4072:1428994] Resetting plugins due to page load.
+2015-01-12 22:29:16.844 streetMeet[4072:1428994] Finished load of: http://10.95.192.177:8100/#/login
+2015-01-12 22:29:34.988 streetMeet[4072:1428994] Setting the WebView's frame to {{0, 0}, {375, 623}}
+2015-01-12 22:29:35.018 streetMeet[4072:1428994] THREAD WARNING: ['InAppBrowser'] took '329.115723' ms. Plugin should use a background thread.
+2015-01-12 22:35:57.803 streetMeet[4072:1428994] locationManager::didFailWithError (null)
+2015-01-12 23:26:30.684 streetMeet[9449:1470465] Apache Cordova native platform version 3.7.0 is starting.
+2015-01-12 23:26:30.688 streetMeet[9449:1470465] Multi-tasking -> Device: YES, App: YES
+2015-01-12 23:26:30.706 streetMeet[9449:1470465] Unlimited access to network resources
+2015-01-12 23:26:31.571 streetMeet[9449:1470465] Resetting plugins due to page load.
+2015-01-12 23:26:32.673 streetMeet[9449:1470465] Finished load of: http://10.95.192.177:8100/#/login
+2015-01-12 23:31:20.127 streetMeet[9449:1470465] Setting the WebView's frame to {{0, 0}, {375, 623}}
+2015-01-12 23:31:20.157 streetMeet[9449:1470465] THREAD WARNING: ['InAppBrowser'] took '332.446289' ms. Plugin should use a background thread.
+2015-01-13 09:04:06.573 streetMeet[12339:1497139] Apache Cordova native platform version 3.7.0 is starting.
+2015-01-13 09:04:06.575 streetMeet[12339:1497139] Multi-tasking -> Device: YES, App: YES
+2015-01-13 09:04:06.591 streetMeet[12339:1497139] Unlimited access to network resources
+2015-01-13 09:04:07.344 streetMeet[12339:1497139] Resetting plugins due to page load.
+2015-01-13 09:04:07.970 streetMeet[12339:1497139] Finished load of: http://10.6.22.238:8100/
+2015-01-13 09:04:32.424 streetMeet[12650:1498109] Apache Cordova native platform version 3.7.0 is starting.
+2015-01-13 09:04:32.425 streetMeet[12650:1498109] Multi-tasking -> Device: YES, App: YES
+2015-01-13 09:04:32.427 streetMeet[12650:1498109] Unlimited access to network resources
+2015-01-13 09:04:32.819 streetMeet[12650:1498109] Resetting plugins due to page load.
+2015-01-13 09:04:33.220 streetMeet[12650:1498109] Finished load of: http://10.6.22.238:8100/
+2015-01-13 09:11:13.981 streetMeet[13536:1502746] Apache Cordova native platform version 3.7.0 is starting.
+2015-01-13 09:11:13.982 streetMeet[13536:1502746] Multi-tasking -> Device: YES, App: YES
+2015-01-13 09:11:13.983 streetMeet[13536:1502746] Unlimited access to network resources
+2015-01-13 09:11:14.420 streetMeet[13536:1502746] Resetting plugins due to page load.
+2015-01-13 09:11:14.919 streetMeet[13536:1502746] Finished load of: http://10.6.22.238:8100/
+2015-01-13 09:13:08.843 streetMeet[13536:1504540] Terminating since there is no system app.
+2015-01-13 09:19:44.053 streetMeet[15116:1514676] DiskCookieStorage changing policy from 2 to 0, cookie file: file:///Users/chitopolo/Library/Developer/CoreSimulator/Devices/73FA96DB-78A7-484E-85CA-B8F49D6BC022/data/Containers/Data/Application/763C716A-9B6E-4111-AF23-38F04CE4D22F/Library/Cookies/Cookies.binarycookies
+2015-01-13 09:19:44.443 streetMeet[15116:1514676] Apache Cordova native platform version 3.7.0 is starting.
+2015-01-13 09:19:44.443 streetMeet[15116:1514676] Multi-tasking -> Device: YES, App: YES
+2015-01-13 09:19:44.457 streetMeet[15116:1514676] Unlimited access to network resources
+2015-01-13 09:19:46.653 streetMeet[15116:1514676] Resetting plugins due to page load.
+2015-01-13 09:19:47.720 streetMeet[15116:1514676] Finished load of: file:///Users/chitopolo/Library/Developer/CoreSimulator/Devices/73FA96DB-78A7-484E-85CA-B8F49D6BC022/data/Containers/Bundle/Application/33B459F2-1A64-4059-91FF-A691E14DEA33/streetMeet.app/www/index.html#/login
+2015-01-13 09:19:50.686 streetMeet[15116:1514676] Setting the WebView's frame to {{0, 0}, {375, 623}}
+2015-01-13 09:19:50.704 streetMeet[15116:1514676] THREAD WARNING: ['InAppBrowser'] took '272.121094' ms. Plugin should use a background thread.
+2015-01-13 09:23:02.813 streetMeet[15116:1514676] Setting the WebView's frame to {{0, 0}, {375, 623}}
+2015-01-13 09:23:02.820 streetMeet[15116:1514676] THREAD WARNING: ['InAppBrowser'] took '192.374023' ms. Plugin should use a background thread.
+2015-01-13 09:23:27.939 streetMeet[15116:1514676] Setting the WebView's frame to {{0, 0}, {375, 623}}
+2015-01-13 09:23:27.946 streetMeet[15116:1514676] THREAD WARNING: ['InAppBrowser'] took '196.100098' ms. Plugin should use a background thread.
+2015-01-13 09:25:10.650 streetMeet[16123:1520848] Apache Cordova native platform version 3.7.0 is starting.
+2015-01-13 09:25:10.652 streetMeet[16123:1520848] Multi-tasking -> Device: YES, App: YES
+2015-01-13 09:25:10.666 streetMeet[16123:1520848] Unlimited access to network resources
+2015-01-13 09:25:11.466 streetMeet[16123:1520848] Resetting plugins due to page load.
+2015-01-13 09:25:12.429 streetMeet[16123:1520848] Finished load of: http://10.6.22.238:8100/#/login
+2015-01-13 09:25:23.068 streetMeet[16123:1520848] Setting the WebView's frame to {{0, 0}, {375, 623}}
+2015-01-13 09:25:23.098 streetMeet[16123:1520848] THREAD WARNING: ['InAppBrowser'] took '333.911377' ms. Plugin should use a background thread.
+2015-01-13 09:49:11.378 streetMeet[20671:1546558] Apache Cordova native platform version 3.7.0 is starting.
+2015-01-13 09:49:11.381 streetMeet[20671:1546558] Multi-tasking -> Device: YES, App: YES
+2015-01-13 09:49:11.397 streetMeet[20671:1546558] Unlimited access to network resources
+2015-01-13 09:49:12.258 streetMeet[20671:1546558] Resetting plugins due to page load.
+2015-01-13 09:49:12.563 streetMeet[20671:1546558] Finished load of: http://10.95.192.177:8100/
+2015-01-13 09:49:44.006 streetMeet[21020:1547882] Apache Cordova native platform version 3.7.0 is starting.
+2015-01-13 09:49:44.007 streetMeet[21020:1547882] Multi-tasking -> Device: YES, App: YES
+2015-01-13 09:49:44.008 streetMeet[21020:1547882] Unlimited access to network resources
+2015-01-13 09:49:44.401 streetMeet[21020:1547882] Resetting plugins due to page load.
+2015-01-13 09:49:44.651 streetMeet[21020:1547882] Finished load of: http://10.95.192.177:8100/
+2015-01-13 09:51:08.500 streetMeet[21489:1550072] Apache Cordova native platform version 3.7.0 is starting.
+2015-01-13 09:51:08.505 streetMeet[21489:1550072] Multi-tasking -> Device: YES, App: YES
+2015-01-13 09:51:08.508 streetMeet[21489:1550072] Unlimited access to network resources
+2015-01-13 09:51:08.952 streetMeet[21489:1550072] Resetting plugins due to page load.
+2015-01-13 09:51:10.265 streetMeet[21489:1550072] Finished load of: http://10.95.192.177:8100/#/login
+2015-01-13 09:51:18.359 streetMeet[21489:1550072] Setting the WebView's frame to {{0, 0}, {375, 623}}
+2015-01-13 09:51:18.389 streetMeet[21489:1550072] THREAD WARNING: ['InAppBrowser'] took '304.272949' ms. Plugin should use a background thread.
+2015-01-13 09:51:24.203 streetMeet[21489:1550072] Setting the WebView's frame to {{0, 0}, {375, 623}}
+2015-01-13 09:51:24.208 streetMeet[21489:1550072] THREAD WARNING: ['InAppBrowser'] took '203.701904' ms. Plugin should use a background thread.
+2015-01-13 09:51:41.329 streetMeet[21489:1550072] Resetting plugins due to page load.
+2015-01-13 09:51:41.329 streetMeet[21489:1550072] IAB.close() called but it was already closed.
+2015-01-13 09:51:42.358 streetMeet[21489:1550072] Finished load of: http://10.95.192.177:8100/#/login
+2015-01-13 09:59:32.736 streetMeet[21489:1550072] Resetting plugins due to page load.
+2015-01-13 09:59:32.743 streetMeet[21489:1550072] IAB.close() called but it was already closed.
+2015-01-13 09:59:34.140 streetMeet[21489:1550072] Finished load of: http://10.95.192.177:8100/#/login
+2015-01-13 09:59:36.185 streetMeet[21489:1550072] Resetting plugins due to page load.
+2015-01-13 09:59:36.185 streetMeet[21489:1550072] IAB.close() called but it was already closed.
+2015-01-13 09:59:37.167 streetMeet[21489:1550072] Finished load of: http://10.95.192.177:8100/#/login
+2015-01-13 10:28:29.648 streetMeet[21489:1550072] Setting the WebView's frame to {{0, 0}, {375, 623}}
+2015-01-13 10:28:29.701 streetMeet[21489:1550072] THREAD WARNING: ['InAppBrowser'] took '468.993896' ms. Plugin should use a background thread.
+2015-01-13 10:28:30.081 streetMeet[21489:1550072] webView:didFailLoadWithError - -1005: The network connection was lost.
+2015-01-13 10:29:33.237 streetMeet[25071:1580787] Apache Cordova native platform version 3.7.0 is starting.
+2015-01-13 10:29:33.241 streetMeet[25071:1580787] Multi-tasking -> Device: YES, App: YES
+2015-01-13 10:29:33.260 streetMeet[25071:1580787] Unlimited access to network resources
+2015-01-13 10:29:33.985 streetMeet[25071:1580787] Resetting plugins due to page load.
+2015-01-13 10:29:35.239 streetMeet[25071:1580787] Finished load of: http://10.6.22.238:8100/#/login
+2015-01-13 10:29:38.011 streetMeet[25071:1580787] Setting the WebView's frame to {{0, 0}, {375, 623}}
+2015-01-13 10:29:38.050 streetMeet[25071:1580787] THREAD WARNING: ['InAppBrowser'] took '411.416992' ms. Plugin should use a background thread.
+2015-01-13 10:30:00.120 streetMeet[25071:1580787] webView:didFailLoadWithError - 102: Frame load interrupted
+2015-01-13 10:30:01.081 streetMeet[25071:1580787] Setting the WebView's frame to {{0, 0}, {375, 623}}
+2015-01-13 10:30:01.087 streetMeet[25071:1580787] THREAD WARNING: ['InAppBrowser'] took '196.204102' ms. Plugin should use a background thread.
+2015-01-13 10:30:39.584 streetMeet[25746:1582981] Apache Cordova native platform version 3.7.0 is starting.
+2015-01-13 10:30:39.586 streetMeet[25746:1582981] Multi-tasking -> Device: YES, App: YES
+2015-01-13 10:30:39.587 streetMeet[25746:1582981] Unlimited access to network resources
+2015-01-13 10:30:39.983 streetMeet[25746:1582981] Resetting plugins due to page load.
+2015-01-13 10:30:40.955 streetMeet[25746:1582981] Finished load of: http://10.6.22.238:8100/#/login
+2015-01-13 10:30:48.146 streetMeet[25746:1582981] Setting the WebView's frame to {{0, 0}, {375, 623}}
+2015-01-13 10:30:48.157 streetMeet[25746:1582981] THREAD WARNING: ['InAppBrowser'] took '226.123291' ms. Plugin should use a background thread.
+2015-01-13 10:31:27.681 streetMeet[25746:1582981] Resetting plugins due to page load.
+2015-01-13 10:31:27.681 streetMeet[25746:1582981] IAB.close() called but it was already closed.
+2015-01-13 10:31:28.557 streetMeet[25746:1582981] Finished load of: http://10.6.22.238:8100/#/login
+2015-01-13 10:36:15.865 streetMeet[25746:1582981] Resetting plugins due to page load.
+2015-01-13 10:36:15.866 streetMeet[25746:1582981] IAB.close() called but it was already closed.
+2015-01-13 10:36:17.232 streetMeet[25746:1582981] Finished load of: http://10.6.22.238:8100/#/login
+2015-01-13 10:37:18.724 streetMeet[25746:1582981] Resetting plugins due to page load.
+2015-01-13 10:37:18.725 streetMeet[25746:1582981] IAB.close() called but it was already closed.
+2015-01-13 10:37:19.453 streetMeet[25746:1582981] Finished load of: http://10.6.22.238:8100/#/login
+2015-01-13 10:37:19.831 streetMeet[25746:1582981] Resetting plugins due to page load.
+2015-01-13 10:37:19.832 streetMeet[25746:1582981] IAB.close() called but it was already closed.
+2015-01-13 10:37:20.357 streetMeet[25746:1582981] Finished load of: http://10.6.22.238:8100/#/login
+2015-01-13 10:37:57.830 streetMeet[27146:1590907] Apache Cordova native platform version 3.7.0 is starting.
+2015-01-13 10:37:57.832 streetMeet[27146:1590907] Multi-tasking -> Device: YES, App: YES
+2015-01-13 10:37:57.847 streetMeet[27146:1590907] Unlimited access to network resources
+2015-01-13 10:37:58.551 streetMeet[27146:1590907] Resetting plugins due to page load.
+2015-01-13 10:37:59.624 streetMeet[27146:1590907] Finished load of: http://10.6.22.238:8100/#/login
+2015-01-13 10:38:04.663 streetMeet[27146:1590907] Setting the WebView's frame to {{0, 0}, {375, 623}}
+2015-01-13 10:38:04.691 streetMeet[27146:1590907] THREAD WARNING: ['InAppBrowser'] took '328.841797' ms. Plugin should use a background thread.
+2015-01-13 10:38:13.387 streetMeet[27146:1590907] THREAD WARNING: ['Geolocation'] took '49.361816' ms. Plugin should use a background thread.
+2015-01-13 10:38:13.404 streetMeet[27146:1590907] THREAD WARNING: ['Geolocation'] took '16.241211' ms. Plugin should use a background thread.
+2015-01-13 10:38:13.429 streetMeet[27146:1590907] locationManager::didFailWithError (null)
