@@ -2,6 +2,7 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
 
 .controller('CreateEventsCtrl', function($scope, $firebase, $cookieStore, EventCreator) {
    angular.extend($scope, EventCreator);
+   $scope.eventAddress = $cookieStore.get('addressBox');
 
 })
 .factory('EventCreator', function ($q, $cookieStore, $state) {
@@ -11,14 +12,15 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
 
   var archRef = new Firebase("https://boiling-torch-2747.firebaseio.com/archived/locations");
   var archGeoFire = new GeoFire(archRef);
-  var createEvent = function(eventTitle, eventDescription, eventCapacity) {
-    console.log($state.current.name);
+  var createEvent = function(eventTitle, eventDescription, eventCapacity, eventAddress) {
+    // console.log($state.current.name);
     owner = $cookieStore.get('currentUser');
     var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+owner);
-    var eventData ={
+    var eventData = {
       title: eventTitle,
       description: eventDescription,
       capacity: eventCapacity,
+      address: eventAddress,
       createdAt: Date.now()
     };
     var id = ref.child("/events").push();
