@@ -2,7 +2,6 @@
 # http://git-scm.com/docs/gitignore
 
 node_modules/
-plugins/
 **/.DS_Store
 **/public/.DS_Store
 streetMeet/www/lib/
