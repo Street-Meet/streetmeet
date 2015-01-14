@@ -138,13 +138,6 @@ angular.module('sm-meetApp.map',  ['firebase'])
     .click(function(){
       $cookieStore.put('eventLoc', map.getCenter());
       $state.transitionTo('createEvent');
-        // .then(function() {
-        //   if($cookieStore.get('addressBox')) {
-        //     var eventAddress = $cookieStore.get('addressBox');
-        //     document.getElementById('location').value = $cookieStore.get('address');
-        //     console.log("Event address: ", eventAddress);
-        //   }
-        // });
     });
   };
 
