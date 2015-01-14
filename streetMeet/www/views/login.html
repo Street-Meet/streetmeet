@@ -31,7 +31,7 @@
         Sign in
       </button>
       <span class="sub-btn-link">
-        <a on-tap="loginSectionChange('login')">Cancel</a>
+        <a on-tap="loginSectionChange('login')" >Cancel</a>
       </span>
     </form>
 
@@ -39,7 +39,7 @@
     <form class="loginSection createAccount sticky-bottom" ng-show="loginState==='createAccount'">
         <input type="email" placeholder="Email" ng-model="theEmail"></input>
         <input type="password" placeholder="Password" ng-model="thePass"></input>
-        
+
         <button class="btn icon-btn" ng-click="registerAccount(theEmail, thePass)">
           <span class="btn-icon v-center"><i class="fa fa-plus-square"></i></span>
           Create Account
