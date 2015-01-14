@@ -119,3 +119,12 @@
 2015-01-13 10:38:13.387 streetMeet[27146:1590907] THREAD WARNING: ['Geolocation'] took '49.361816' ms. Plugin should use a background thread.
 2015-01-13 10:38:13.404 streetMeet[27146:1590907] THREAD WARNING: ['Geolocation'] took '16.241211' ms. Plugin should use a background thread.
 2015-01-13 10:38:13.429 streetMeet[27146:1590907] locationManager::didFailWithError (null)
+2015-01-13 18:54:53.600 streetMeet[64189:1860702] Apache Cordova native platform version 3.7.0 is starting.
+2015-01-13 18:54:53.604 streetMeet[64189:1860702] Multi-tasking -> Device: YES, App: YES
+2015-01-13 18:54:53.621 streetMeet[64189:1860702] Unlimited access to network resources
+2015-01-13 18:54:54.526 streetMeet[64189:1860702] Resetting plugins due to page load.
+2015-01-13 18:54:55.739 streetMeet[64189:1860702] Finished load of: http://10.6.22.238:8100/#/login
+2015-01-13 18:55:01.125 streetMeet[64189:1860702] Setting the WebView's frame to {{0, 0}, {375, 623}}
+2015-01-13 18:55:01.147 streetMeet[64189:1860702] THREAD WARNING: ['InAppBrowser'] took '295.336914' ms. Plugin should use a background thread.
+2015-01-13 18:55:02.511 streetMeet[64189:1860702] THREAD WARNING: ['Geolocation'] took '34.877197' ms. Plugin should use a background thread.
+2015-01-13 18:55:02.524 streetMeet[64189:1860702] locationManager::didFailWithError (null)
