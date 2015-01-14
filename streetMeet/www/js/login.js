@@ -19,7 +19,7 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies', 'ngCordova','ionic
       }).then(function(authData) {
         $cookieStore.put('currentUser', authData.uid );
         console.log("Logged in as:", authData.uid);
-        $state.go('mapCurrentEvents');
+        $state.transitionTo('mapCurrentEvents');
       }).catch(function(error) {
         console.error("Authentication failed:", error);
       });

@@ -1,6 +1,7 @@
-angular.module('sm-meetApp.map',  ['firebase'])
+angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
 
-.controller('MapCtrl', function($scope, $firebase, Map, $cookieStore, $state) {
+.controller('MapCtrl', function($scope, $firebase, Map, $cookieStore, $state, $cordovaGeolocation) {
+
   angular.extend($scope, Map);
   Map.geolocationUpdate();
   var currEventRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+$cookieStore.get('currentUser')+"/currentEvent");
@@ -25,7 +26,7 @@ angular.module('sm-meetApp.map',  ['firebase'])
   });
 })
 
-.factory('Map', function ($q, $location, $window, $rootScope, $cookieStore, $state, $firebase) {
+.factory('Map', function ($q, $location, $window, $rootScope, $cookieStore, $state, $firebase, $cordovaGeolocation) {
   // user location geofire
   var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/user_locations");
   var userGeoFire = new GeoFire(userRef);
@@ -36,7 +37,25 @@ angular.module('sm-meetApp.map',  ['firebase'])
   var refArchivedLoc = new Firebase("https://boiling-torch-2747.firebaseio.com/archived/locations");
   var geoFireArchived = new GeoFire(refArchivedLoc);
 
+  
+
+  var app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
+  if ( app ) {
+      // PhoneGap application
+      $cordovaGeolocation
+      .getCurrentPosition(posOptions)
+      .then(function (position) {
+        var lat  = position.coords.latitude
+        var long = position.coords.longitude
+      
+        var center = new google.maps.LatLng(lat, long);
+      });
+
+  } else {
+      // Web page
   var center = new google.maps.LatLng(47.785326, -122.405696);
+  }   
+
   var globalLatLng;
   var marker = null;
   var mapOptions = {
@@ -143,13 +162,28 @@ angular.module('sm-meetApp.map',  ['firebase'])
 
   // retrieves the user's current location
   var getLocation = function() {
-    if (typeof navigator !== "undefined" && typeof navigator.geolocation !== "undefined") {
-      console.log("Asking user to get their location");
 
-      navigator.geolocation.getCurrentPosition(geolocationCallbackQuery, errorHandler, {timeout:10000});
+
+    var app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
+    if ( app ) {
+        // PhoneGap application
+        $cordovaGeolocation
+        .getCurrentPosition(posOptions)
+        .then(function (position) {
+         geolocationCallbackQuery(position);
+        });
     } else {
-      console.log("Your browser does not support the HTML5 Geolocation API");
-    }
+      // Web page
+      if (typeof navigator !== "undefined" && typeof navigator.geolocation !== "undefined") {
+        console.log("Asking user to get their location");
+        navigator.geolocation.getCurrentPosition(geolocationCallbackQuery, errorHandler, {timeout:10000});
+      } else {
+        console.log("Your browser does not support the HTML5 Geolocation API");
+      }
+    }  
+
+
+    
   };
 
   /* Callback method from the geolocation API which receives the current user's location */
