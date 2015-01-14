@@ -1,0 +1,13 @@
+<ion-view>
+  <ion-content scroll="false">
+    <header class="bar bar-stable bar-header has-header">
+      <h1 class="title">Map View</h1>
+      <button class="button ion-pinpoint" ng-click="centerMapLocation()"></button>
+      <button class="button icon ion-android-add" ng-click="createEvent()"></button>
+      <input id="pac-input" class="controls" type="text"
+        placeholder="Enter a location">
+    </header>
+    <div id="map-canvas" data-tap-disabled="true"></div>
+
+  </ion-content>
+</ion-view>

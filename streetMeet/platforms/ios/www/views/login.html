@@ -1,0 +1,62 @@
+<ion-pane id="loginPane" class="login-pane">
+  <ion-content scroll="false">
+    <div id="main-logo">
+      <img class="v-center" src="../../img/logo_verge22.png" alt="">
+    </div>
+  <div class="login-area sticky-bottom clearfix">
+    <!-- Login buttons -->
+    <div class="loginSection login-options sticky-bottom" ng-show="loginState==='login'">
+      <button class="btn icon-btn" ng-click="loginWithFacebook()">
+        <span class="btn-icon v-center"><i class="fa fa-facebook"></i></span>
+        Login with Facebook
+      </button>
+
+      <button on-tap="loginSectionChange('createAccount')" class="btn icon-btn btn-light">
+        <span class="btn-icon v-center"><i class="fa fa-envelope"></i></span>
+        Signup with email
+      </button>
+
+      <span class="sub-btn-link">
+        Already have an account? <a on-tap="loginSectionChange('emailSignin')">Sign in</a>
+      </span>
+    </div>
+
+    <!-- Email signin form -->
+    <form action="" class="loginSection signin sticky-bottom" ng-show="loginState==='emailSignin'">
+      <input type="email" placeholder="Email" ng-model="theEmail"></input>
+      <input type="password" placeholder="Password" ng-model="thePass"></input>
+
+      <button ui-sref="mapCurrentEvents" class="btn icon-btn" ng-click="simpleLogin(theEmail, thePass)">
+        <span class="btn-icon v-center"><i class="fa fa-sign-in"></i></span>
+        Sign in
+      </button>
+      <span class="sub-btn-link">
+        <a on-tap="loginSectionChange('login')">Cancel</a>
+      </span>
+    </form>
+
+    <!-- Create account form -->
+    <form class="loginSection createAccount sticky-bottom" ng-show="loginState==='createAccount'">
+        <input type="email" placeholder="Email" ng-model="theEmail"></input>
+        <input type="password" placeholder="Password" ng-model="thePass"></input>
+        
+        <button class="btn icon-btn" ng-click="registerAccount(theEmail, thePass)">
+          <span class="btn-icon v-center"><i class="fa fa-plus-square"></i></span>
+          Create Account
+        </button>
+        <span class="sub-btn-link">
+          <a on-tap="loginSectionChange('login')">Cancel</a>
+        </span>
+    </form>
+  </div>
+
+  <div class="settings-btn">
+    <a ui-sref="settings">
+      <i class="fa fa-cog"></i>
+    </a>
+  </div>
+
+  </ion-content>
+
+
+</ion-pane>
