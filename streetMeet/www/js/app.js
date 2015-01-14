@@ -21,7 +21,6 @@ var meetApp = angular.module('sm-meetApp',
     'sm-meetApp.currentUser',
     'sm-meetApp.event',
     'sm-meetApp.profile'
-
   ])
 // run in ionic
 .run(function($ionicPlatform) {
