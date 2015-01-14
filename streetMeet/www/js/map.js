@@ -68,9 +68,6 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
   var refArchivedLoc = new Firebase("https://boiling-torch-2747.firebaseio.com/archived/locations");
   var geoFireArchived = new GeoFire(refArchivedLoc);
 
-  // var geocoder;
-  // var address;
-
   var app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
   if ( app ) {
       // PhoneGap application
