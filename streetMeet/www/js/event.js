@@ -18,6 +18,9 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
   var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
   var id = ref.child("/users/");
 
+  // $scope.eventId = $state.params.id;
+  // console.log($scope.eventId);
+
   $scope.refreshData = function() {
     $q(function(resolve, reject) {
       $state.transitionTo('mapCurrentEvents', {
