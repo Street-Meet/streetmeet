@@ -75,8 +75,14 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
         console.log("Current event added to user!");
       }
     });
+    removeCookie();
+  }
+
+  removeCookie = function() {
+    $cookieStore.remove("addressBox");
   }
   return{
-    createEvent: createEvent
+    createEvent: createEvent,
+    removeCookie: removeCookie
   };
  });
