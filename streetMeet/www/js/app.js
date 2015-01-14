@@ -101,3 +101,4 @@ var meetApp = angular.module('sm-meetApp',
       controller: 'EditEventCtrl'
     })
 });
+
