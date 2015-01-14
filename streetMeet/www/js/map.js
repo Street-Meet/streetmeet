@@ -153,6 +153,9 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
   var marker = null;
   // puts a marker on the center of the map to capture the location of a new event
   var createEvent = function() {
+
+    angular.element('#pac-input').slideDown();
+
     $('<div/>').addClass('centerMarker').appendTo(map.getDiv())
     .click(function(){
       $cookieStore.put('eventLoc', map.getCenter());
