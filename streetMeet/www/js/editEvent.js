@@ -8,6 +8,16 @@ angular.module('sm-meetApp.editEvent',  ["firebase"])
     console.log(eventObj);
     eventObj.$bindTo($scope, "eventData").then(function() {
       console.log($scope.eventData);
-    })
+    });
+  }).then(function() {
+    $scope.eventTitle = $scope.eventData.title;
+    $scope.eventDescription = $scope.eventData.description;
+    $scope.eventCapacity = $scope.eventData.capacity;
+    $scope.eventAddress = $scope.eventData.address;
   });
+
+  $scope.save = function(permanent, edit) {
+    $scope.eventData[permanent] = edit;
+  }
+
 });

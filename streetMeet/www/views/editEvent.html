@@ -16,7 +16,7 @@
            <div class="list-more-info">
             <ul class="setting-edit-options">
               <li class="settings-edit-btn" on-tap="settingsTap($event)"><a href="">Edit</a></li>
-              <li class="settings-confirm-edit-btn settings-confirm" on-tap="settingsTap($event)"><a href=""><i class="fa fa-check"></i></a></li>
+              <li class="settings-confirm-edit-btn settings-confirm" on-tap="settingsTap($event)"><a href=""><i class="fa fa-check" on-tap="save('title', eventTitle)"></i></a></li>
               <li class="settings-cancel-edit-btn settings-confirm" on-tap="settingsTap($event)"><a href=""><i class="fa fa-close"></i></a></li>
             </ul>
 
@@ -26,7 +26,7 @@
              <span class="setting-current-val v-center">{{eventData.title}}</span>
            </div>
            <div class="settings-edit-field">
-             <input type="text" placeholder="Event title"></input>
+             <input type="text" placeholder="Event title" ng-model="eventTitle"></input>
            </div>
          </div>
        </li>
@@ -37,7 +37,7 @@
            <div class="list-more-info">
             <ul class="setting-edit-options">
               <li class="settings-edit-btn" on-tap="settingsTap($event)"><a href="">Edit</a></li>
-              <li class="settings-confirm-edit-btn settings-confirm" on-tap="settingsTap($event)"><a href=""><i class="fa fa-check"></i></a></li>
+              <li class="settings-confirm-edit-btn settings-confirm" on-tap="settingsTap($event)"><a href=""><i class="fa fa-check" on-tap="save('description', eventDescription)"></i></a></li>
               <li class="settings-cancel-edit-btn settings-confirm" on-tap="settingsTap($event)"><a href=""><i class="fa fa-close"></i></a></li>
             </ul>
 
@@ -47,7 +47,7 @@
              <span class="setting-current-val v-center">{{eventData.description}}</span>
            </div>
            <div class="settings-edit-field">
-             <input type="text" placeholder="Event description (100 character max)"></input>
+             <input type="text" placeholder="Event description (100 character max)" ng-model="eventDescription"></input>
            </div>
          </div>
        </li>
@@ -59,7 +59,7 @@
            <div class="list-more-info">
             <ul class="setting-edit-options">
               <li class="settings-edit-btn" on-tap="settingsTap($event)"><a href="">Edit</a></li>
-              <li class="settings-confirm-edit-btn settings-confirm" on-tap="settingsTap($event)"><a href=""><i class="fa fa-check"></i></a></li>
+              <li class="settings-confirm-edit-btn settings-confirm" on-tap="settingsTap($event)"><a href=""><i class="fa fa-check" on-tap="save('capacity', eventCapacity)"></i></a></li>
               <li class="settings-cancel-edit-btn settings-confirm" on-tap="settingsTap($event)"><a href=""><i class="fa fa-close"></i></a></li>
             </ul>
 
@@ -69,7 +69,7 @@
              <span class="setting-current-val v-center">{{eventData.capacity}}</span>
            </div>
            <div class="settings-edit-field">
-             <input type="number" name="quantity" min="2" max="1000" placeholder="Capacity (2-1000)"></input>
+             <input type="number" name="quantity" min="2" max="1000" placeholder="Capacity (2-1000)" ng-model="eventCapacity"></input>
            </div>
          </div>
        </li>
@@ -81,7 +81,7 @@
            <div class="list-more-info">
             <ul class="setting-edit-options">
               <li class="settings-edit-btn" on-tap="settingsTap($event)"><a href="">Edit</a></li>
-              <li class="settings-confirm-edit-btn settings-confirm" on-tap="settingsTap($event)"><a href=""><i class="fa fa-check"></i></a></li>
+              <li class="settings-confirm-edit-btn settings-confirm" on-tap="settingsTap($event)"><a href=""><i class="fa fa-check" on-tap="save('address', eventAddress)"></i></a></li>
               <li class="settings-cancel-edit-btn settings-confirm" on-tap="settingsTap($event)"><a href=""><i class="fa fa-close"></i></a></li>
             </ul>
 
@@ -91,7 +91,7 @@
              <span class="setting-current-val v-center">{{eventData.address}}</span>
            </div>
            <div class="settings-edit-field">
-             <input type="text" placeholder="Location"></input>
+             <input type="text" placeholder="Location" ng-model="eventAddress"></input>
            </div>
          </div>
        </li>
