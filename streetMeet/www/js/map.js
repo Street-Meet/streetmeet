@@ -32,8 +32,8 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
         if (status == google.maps.GeocoderStatus.OK) {
           console.log(results[0].formatted_address);
           $scope.reverseAddress = results[0].formatted_address;
-          $scope.$apply();
           $cookieStore.put("addressBox", $scope.reverseAddress)
+          $scope.$apply();
           console.log($scope.reverseAddress);
         } else {
           alert("Geocoder failed due to: " + status);
