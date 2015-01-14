@@ -1,0 +1,64 @@
+<ion-pane id="userProfile" class="userProfile">
+  <ion-header-bar align-title="center" class="main-header">
+    <div class="buttons">
+      <div class="header-back-btn">
+        <a on-tap="$ionicGoBack()"><i class="fa fa-arrow-circle-left"></i></a>
+      </div>
+    </div>
+    <h1 class="title">Profile</h1>
+  </ion-header-bar>
+   <ion-content class="has-header" >
+
+    <div class="detail-section">
+     <div class="detail-img profile-pic clearfix">
+        <img ng-show="attendee.picture.data.url" src={{attendee.picture.data.url}} alt="">
+        <i ng-show="!attendee.picture.data.url" class="fa fa-user v-center"></i>
+     </div>
+
+     <div class="detail-info">
+      <span class="profile-name">{{profile.first_name + ' ' + profile.last_name}}</span>
+      <span class="profile-description">Software Engineer</span>
+
+      <ul class="profile-social-links">
+        <li class="fbook">
+          <a href="">
+            <i class="fa fa-facebook-square"></i>
+          </a>
+        </li>
+        <li class="linkein">
+          <a href="">
+            <i class="fa fa-linkedin-square"></i>
+          </a>
+        </li>
+        <li class="twitter">
+          <a href="">
+            <i class="fa fa-twitter-square"></i>
+          </a>
+        </li>
+      </ul>
+
+
+     </div>
+
+     <div class="inset-divider"></div>
+
+     <div class="detail-description">
+       <p>{{eventData.description}} Description will go here</p>
+     </div>
+
+   </div>
+
+
+   <button ui-sref="userProfileSettings" class="btn icon-btn sticky-bottom">
+     <span class="btn-icon v-center"><i class="fa fa-edit"></i></span>
+     Edit account info
+   </button>
+
+  </ion-content>
+
+  <div class="settings-btn">
+    <a ui-sref="settings">
+      <i class="fa fa-cog"></i>
+    </a>
+  </div>
+</ion-pane>
