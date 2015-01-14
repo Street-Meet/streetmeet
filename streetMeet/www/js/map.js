@@ -135,6 +135,7 @@ angular.module('sm-meetApp.map',  ['firebase'])
   // puts a marker on the center of the map to capture the location of a new event
   var createEvent = function() {
     $('<div/>').addClass('centerMarker').appendTo(map.getDiv())
+<<<<<<< HEAD
       .click(function(){
         $cookieStore.put('eventLoc', map.getCenter());
         $('div').removeClass('centerMarker');
@@ -147,6 +148,19 @@ angular.module('sm-meetApp.map',  ['firebase'])
             }
           });
       });
+=======
+    .click(function(){
+      $cookieStore.put('eventLoc', map.getCenter());
+      $state.transitionTo('createEvent');
+        // .then(function() {
+        //   if($cookieStore.get('addressBox')) {
+        //     var eventAddress = $cookieStore.get('addressBox');
+        //     document.getElementById('location').value = $cookieStore.get('address');
+        //     console.log("Event address: ", eventAddress);
+        //   }
+        // });
+    });
+>>>>>>> Event location now adds to database
   };
 
   // retrieves the user's current location
