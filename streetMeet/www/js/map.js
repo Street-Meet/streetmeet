@@ -298,14 +298,14 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
                       position: pos,
                       map: map,
                       draggable: false,
-                      title: key
+                      title: key,
+                      icon: '/img/icon_map_event_blue.png',
                     });
                     google.maps.event.addListener(marker, 'click', function() {
                       $state.transitionTo('attendEvent', {id: currEventObj.$value});
                     });
                   });
                 });
-
               });
             })
           });
