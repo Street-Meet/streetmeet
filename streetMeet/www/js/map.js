@@ -37,7 +37,7 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
   var refArchivedLoc = new Firebase("https://boiling-torch-2747.firebaseio.com/archived/locations");
   var geoFireArchived = new GeoFire(refArchivedLoc);
 
-  
+  var geocoder;
 
   var app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
   if ( app ) {
@@ -47,14 +47,14 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
       .then(function (position) {
         var lat  = position.coords.latitude
         var long = position.coords.longitude
-      
+
         var center = new google.maps.LatLng(lat, long);
       });
 
   } else {
       // Web page
   var center = new google.maps.LatLng(47.785326, -122.405696);
-  }   
+  }
 
   var globalLatLng;
   var marker = null;
@@ -143,6 +143,7 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+    geocoder = new google.maps.Geocoder();
     return map;
   }
 
@@ -161,6 +162,7 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
       $cookieStore.put('eventLoc', map.getCenter());
       $state.transitionTo('createEvent');
     });
+    geocoder = new google.maps.Geocoder();
   };
 
   // retrieves the user's current location
@@ -183,10 +185,10 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
       } else {
         console.log("Your browser does not support the HTML5 Geolocation API");
       }
-    }  
+    }
 
 
-    
+
   };
 
   /* Callback method from the geolocation API which receives the current user's location */
