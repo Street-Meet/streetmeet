@@ -20,7 +20,8 @@ var meetApp = angular.module('sm-meetApp',
     'sm-meetApp.map',
     'sm-meetApp.currentUser',
     'sm-meetApp.event',
-    'sm-meetApp.profile'
+    'sm-meetApp.profile',
+    'sm-meetApp.editEvent'
   ])
 // run in ionic
 .run(function($ionicPlatform) {
@@ -93,8 +94,9 @@ var meetApp = angular.module('sm-meetApp',
       templateUrl: 'views/userProfileSettings.html'
     })
     .state('editEventSettings', {
-      url: '/editEvent',
-      templateUrl: 'views/editEvent.html'
+      url: '/editEvent/:id',
+      templateUrl: 'views/editEvent.html',
+      controller: 'EditEventCtrl'
     })
     .state('profileView', {
       url: '/profileView',
