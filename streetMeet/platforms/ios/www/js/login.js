@@ -42,30 +42,34 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies', 'ngCordova','ionic
     }
 
     $scope.loginWithFacebook = function(){
+      auth.$authWithOAuthPopup("facebook",
+        {scope: "email, user_events" }) // scope has the permissions requested
+        .then(function(authData) {
+          var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+authData.uid+"/userInfo");
+          ref.set(authData.facebook.cachedUserProfile, function(error) {
+            if (error) {
+              console.log('error setting data!');
+            }
+          })
+          ref.child("display_name").set(authData.facebook.cachedUserProfile.first_name, function(error) {
+            if (error) {
+              console.log('error setting display name!');
+            }
+          })
+          console.log('this is the authData: ', authData);
 
-    auth.$authWithOAuthPopup("facebook",
-      {scope: "email, user_events" }) // scope has the permissions requested
-      .then(function(authData) {
-        var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+authData.uid+"/userInfo");
-        ref.set(authData.facebook.cachedUserProfile, function(error) {
-          if (error) {
-            console.log('error setting data!');
-          }
-        })
-        console.log('this is the authData: ', authData);
+          $cookieStore.put('currentUser', authData.uid );
+          $cookieStore.put('currentToken', authData.token );
+          $cookieStore.put('currentData', authData.facebook.cachedUserProfile );
 
-        $cookieStore.put('currentUser', authData.uid );
-        $cookieStore.put('currentToken', authData.token );
-        $cookieStore.put('currentData', authData.facebook.cachedUserProfile );
-
-        console.log("Logged in as:", authData.uid);
-        console.log('all of it', authData);
-        $scope.currentUser = authData.facebook.cachedUserProfile;
-        $scope.currentUserId = authData;
-        $state.go('mapCurrentEvents');
-      }).catch(function(error) {
-        console.error("Authentication failed:", error);
-      });
+          console.log("Logged in as:", authData.uid);
+          console.log('all of it', authData);
+          $scope.currentUser = authData.facebook.cachedUserProfile;
+          $scope.currentUserId = authData;
+          $state.go('mapCurrentEvents');
+        }).catch(function(error) {
+          console.error("Authentication failed:", error);
+        });
     };
 
 
@@ -99,12 +103,11 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies', 'ngCordova','ionic
       $scope.theEvents = result;
       });
 
-  };
-  $scope.logout = function(){
+    };
+    $scope.logout = function(){
       auth.$unauth();
       $cookieStore.remove('currentData')
       $cookieStore.remove('currentUser')
       $cookieStore.remove('currentToken');
-
-  }
+    }
 }]);

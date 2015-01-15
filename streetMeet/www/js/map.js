@@ -68,9 +68,6 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
   var refArchivedLoc = new Firebase("https://boiling-torch-2747.firebaseio.com/archived/locations");
   var geoFireArchived = new GeoFire(refArchivedLoc);
 
-  // var geocoder;
-  // var address;
-
   var app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
   if ( app ) {
       // PhoneGap application
@@ -230,7 +227,7 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
       if (!currEventObj.$value) {
       // if (true) {
         var onKeyEnteredRegistration = function() {
-          console.log('register key')
+          console.log('register key');
           geoQuery.on("key_entered", function(key, location, distance) {
             console.log(key);
             var refEvent = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+key);
@@ -363,13 +360,16 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
 
     //updates marker position by removing the old one and adding the new one
     if (marker == null) {
-        marker = new google.maps.Marker({
+      marker = new google.maps.Marker({
+        map: map,
         position: myLatlng,
         icon: '/img/icon_user_pos_animated.png',
         draggable: false
       });
+      console.log('?????');
     } else {
       marker.setPosition(myLatlng);
+      console.log('!!!!!');
     }
 
     if (marker && marker.setMap) {

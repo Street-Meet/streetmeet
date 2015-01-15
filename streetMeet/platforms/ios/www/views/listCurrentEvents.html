@@ -3,12 +3,13 @@
     <button class="header-tab" ui-sref="mapCurrentEvents">Map</button>
     <button class="header-tab" ui-sref="createEvent">Create Event</button>
   </ion-header-bar>
-   <ion-content class="has-header">
-      <ul id="events-current" class="list">
+   <ion-content class="has-header" scroll="false">
+
+      <ul id="events-current" class="list"  >
 
         <!-- ng-repeat="event in testList | reverse | timer" -->
 
-        <li on-drag="listDrag($event)" on-tap="expandTap($event)" ng-repeat="event in list | timer | reverse" class="slide-controls item event clearfix">
+        <li on-swipe="onSwipe($event)" on-drag="dragVert($event)" on-tap="expandTap($event)" ng-repeat="event in list | timer | reverse" class="slide-controls item event clearfix">
 
           <div class="slide-deny slide-button v-center" on-tap="removeTap($event)">
             Decline
@@ -23,8 +24,9 @@
 
             <div class="event-meta">
               <span class="event-distance">{{distance[event.$id]}} mi.</span>
-              <span class="event-time-remaining time-remaining">18:03</span>
+              <timer />
             </div>
+              <!-- <span class="event-time-remaining time-remaining">18:03</span> -->
 
             <div class="event-icon item-img">
               <i class="fa fa-beer v-center"></i>
@@ -32,7 +34,7 @@
 
             <header class="event-header item-header">
               <h2>{{ event.title }}</h2>
-              <span class="item-subtitle">Sad Bar - 1234 sad avenue</span>
+              <span class="item-subtitle">{{ event.address }}</span>
             </header> <!-- .event-header -->
 
             <div class="event-description">
