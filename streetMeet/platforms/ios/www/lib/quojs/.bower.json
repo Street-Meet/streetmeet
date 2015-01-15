@@ -1,0 +1,29 @@
+{
+  "name": "QuoJS",
+  "version": "3.0.6",
+  "description": "Micro #JavaScript Library for Mobile Devices",
+  "homepage": "http://quojs.tapquo.com",
+  "authors": [
+    "Javi Jimenez",
+    "Javi Jimenez <javi@tapquo.com>"
+  ],
+  "main": "quo.js",
+  "license": "MIT",
+  "keywords": [
+    "mobile"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/soyjavi/bower-quojs.git"
+  },
+  "_release": "3.0.6",
+  "_resolution": {
+    "type": "version",
+    "tag": "3.0.6",
+    "commit": "51e94d286ecf2a6096355a4482c59115696dd742"
+  },
+  "_source": "git://github.com/soyjavi/bower-quojs.git",
+  "_target": "~3.0.6",
+  "_originalSource": "quojs",
+  "_direct": true
+}
