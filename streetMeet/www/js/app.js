@@ -21,7 +21,11 @@ var meetApp = angular.module('sm-meetApp',
     'sm-meetApp.event',
     'sm-meetApp.profile',
     'sm-meetApp.editEvent',
-    'sm-meetApp.profileSettings'
+    'sm-meetApp.profileSettings',
+    'sm-meetApp.allMap',
+    'sm-meetApp.attendeeMap',
+    'sm-meetApp.eventsMap'
+
   ])
 // run in ionic
 .run(function($ionicPlatform) {
@@ -77,12 +81,14 @@ var meetApp = angular.module('sm-meetApp',
     .state('mapCurrentEvents', {
       url: '/mapCurrentEvents',
       templateUrl: 'views/mapCurrentEvents.html',
-      controller: 'MapCtrl'
+      // controller: 'MapCtrl'
+      controller: 'EventsMapCtrl'
     })
     .state('mapAttendees', {
       url: '/mapAttendees',
       templateUrl: 'views/mapAttendees.html',
       controller: 'MapCtrl'
+      // controller: 'AttendeeMapCtrl'
     })
     .state('settings', {
       url: '/settings',

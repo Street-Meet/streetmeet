@@ -1,6 +1,6 @@
 <ion-pane id="singleEvent" class="detail-view event-pane">
   <ion-header-bar align-title="center" class="main-header">
-    <div class="buttons">
+    <div class="buttons" ng-show="joiner">
       <div class="header-back-btn">
         <a on-tap="$ionicGoBack()"><i class="fa fa-arrow-circle-left"></i></a>
       </div>
@@ -37,7 +37,9 @@
     <header class="mid-header">
       <div class="top-right-control">
         <ul>
-          <li><a ui-sref="mapAttendees" ng-click="refreshData()" ng-show="owner || leaver"><i class="fa fa-map-marker"></i></a></li>
+          <!-- <li><a ui-sref="mapAttendees" ng-click="refreshData()" ng-show="owner || leaver"><i class="fa fa-map-marker"> -->
+          <li><a ui-sref="mapAttendees" ng-show="owner || leaver"><i class="fa fa-map-marker">
+          </i></a></li>
         </ul>
       </div>
       <h3>Attendees</h3>
