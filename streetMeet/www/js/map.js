@@ -22,7 +22,6 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
     } else {
       Map.getLocation();
     }
-    console.log('Did it work?')
   });
 
   var geocode = function() {
@@ -30,11 +29,9 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
     google.maps.event.addListener(Map.map, 'dragend', function() {
       geocoder.geocode({'latLng': Map.map.getCenter()}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
-          console.log(results[0].formatted_address);
           $scope.reverseAddress = results[0].formatted_address;
           $cookieStore.put("addressBox", $scope.reverseAddress)
           $scope.$apply();
-          console.log($scope.reverseAddress);
         } else {
           alert("Geocoder failed due to: " + status);
         }
@@ -153,7 +150,6 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
     infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
     infowindow.open(map, locationBoxMarker);
     $cookieStore.put('addressBox', address);
-    console.log("address box", $cookieStore.get('addressBox', address));
   });
 
 
@@ -216,20 +212,9 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
 
   /* Callback method from the geolocation API which receives the current user's location */
   var geolocationCallbackQuery = function(location) {
-    console.log(location);
-    console.log('you think?')
     var latitude = location.coords.latitude;
     var longitude = location.coords.longitude;
     $cookieStore.put('userloc', location);
-    var pos = new google.maps.LatLng(latitude, longitude);
-    var marker = new google.maps.Marker({
-      position: pos,
-      map: map,
-      icon: '/img/icon_user_pos_animated.gif',
-      draggable: false,
-      title: $cookieStore.get("currentUser"),
-      optimized : false
-    });
     var center = new google.maps.LatLng(latitude, longitude);
     var geoQuery = geoFire.query({
       center: [latitude, longitude],
@@ -241,18 +226,23 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
     var eventSync = $firebase(currEventRef);
     var currEventObj = eventSync.$asObject();
     currEventObj.$loaded().then(function() {
-      console.log('current event', currEventObj.$value)
       if (!currEventObj.$value) {
       // if (true) {
+        var pos = new google.maps.LatLng(latitude, longitude);
+        var marker = new google.maps.Marker({
+          position: pos,
+          map: map,
+          icon: '/img/icon_user_pos_animated.gif',
+          draggable: false,
+          title: $cookieStore.get("currentUser"),
+          optimized : false
+        });
         var onKeyEnteredRegistration = function() {
-          console.log('register key')
           geoQuery.on("key_entered", function(key, location, distance) {
-            console.log(key);
             var refEvent = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+key);
             var eventSync = $firebase(refEvent);
             var eventObj = eventSync.$asObject();
             eventObj.$loaded().then(function() {
-              console.log('eventObj yo');
               // add marker for an event if it was created in the past 22 minutes
               // if (false) {
               if (eventObj.createdAt > Date.now() - 1320000) {
@@ -271,7 +261,6 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
                   });
                 })
               } else {
-                console.log('reaching else');
                 var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
                 var id = ref.child("/curr/locations");
                 var geoFire = new GeoFire(id);
@@ -280,7 +269,6 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
                   var sync = $firebase(id.child("/attendees"));
                   var attendeeObj = sync.$asObject();
                   attendeeObj.$loaded().then(function() {
-                  console.log(attendeeObj);
                 });
               }
             });
@@ -290,22 +278,17 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
           console.log("Retrieved user's location: [" + latitude + ", " + longitude + "]");
         }();
       } else {
-        console.log('else');
         var vergingDisplay = function() {
           var currentUser = $cookieStore.get('currentUser');
           var currEventRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+currentUser+"/currentEvent");
           var eventSync = $firebase(currEventRef);
           var currEventObj = eventSync.$asObject();
           currEventObj.$loaded().then(function() {
-            console.log(currEventObj.$value);
-
             var attendeeRef = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+currEventObj.$value+"/attendees");
             var attendeeSync = $firebase(attendeeRef);
             var attendeeObj = attendeeSync.$asObject();
             attendeeObj.$loaded().then(function() {
-              console.log(attendeeObj);
               angular.forEach(attendeeObj, function(value, key) {
-                console.log(key);
                 var userLocRef = new Firebase("https://boiling-torch-2747.firebaseio.com/user_locations/"+key+"/l");
                 var userLocSync = $firebase(userLocRef);
                 var userLocObject = userLocSync.$asObject();
@@ -322,12 +305,10 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
                   google.maps.event.addListener(marker, 'click', function() {
                     $state.transitionTo('userProfile', {id: key});
                   });
-                  console.log('current event', currEventObj.$value);
                   var eventLocRef = new Firebase("https://boiling-torch-2747.firebaseio.com/archived/locations/"+currEventObj.$value+"/l")
                   var eventLocSync = $firebase(eventLocRef);
                   var eventLocObj = eventLocSync.$asObject();
                   eventLocObj.$loaded().then(function() {
-                    console.log(currEventObj.$value);
                     var pos = new google.maps.LatLng(eventLocObj[0], eventLocObj[1]);
                     var marker = new google.maps.Marker({
                       position: pos,
@@ -368,7 +349,6 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
     var myLatlng = new google.maps.LatLng(latitude, longitude);
     globalLatLng = myLatlng;
     var userData = $cookieStore.get('currentUser');
-    console.log("User Data", userData);
     //adds user location data to firebase
     userGeoFire.set(userData, [latitude, longitude]).then(function() {
       console.log("Provided keys have been added to GeoFire");
@@ -407,7 +387,6 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
 
   var centerMapLocation = function() {
     map.setCenter(globalLatLng);
-    console.log("centering map: ", mapOptions.center);
   }
 
     //Update the query's criteria every time the circle is dragged
