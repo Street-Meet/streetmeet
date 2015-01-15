@@ -100,14 +100,5 @@ var meetApp = angular.module('sm-meetApp',
       templateUrl: 'views/editEvent.html',
       controller: 'EditEventCtrl'
     })
-    .state('profileView', {
-      url: '/profileView',
-      templateUrl: 'templates/profileView.html',
-      controller: ''
-    })
-    .state('eventView', {
-      url: '/:id',
-      templateUrl: 'templates/eventView.html',
-      controller: 'EventCtrl'
-    })
 });
+

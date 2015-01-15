@@ -543,12 +543,28 @@ ul#events-current{
 
 
 /******* User Profile Pane ********/
+ul.user-list{
+  margin: 10px 0;
+}
+
   .profile-pic{
     background: #808080;
     border-radius: 44px;
     float: left;
+    width: 70px;
+    height: 70px;
     overflow: hidden;
+    margin: 0 10px 0 0;
   }
+
+    .profile-pic i{
+      padding: .2em 0;
+      font-size: 3em;
+      color: #fff;
+      text-align: center;
+      box-sizing: border-box;
+      width: 100%;
+    }
 
     .userProfile .detail-info{
       padding: 1em;
@@ -564,14 +580,7 @@ ul#events-current{
         margin: 0;
       }
 
-    .profile-pic i{
-      padding: .32em .49em;
-      font-size: 3em;
-      color: #fff;
-      width: 85px;
-      height: 85px;
-      box-sizing: border-box;
-    }
+
 
     .profile-name{
       font-family: 'Josefin Slab', serif;
