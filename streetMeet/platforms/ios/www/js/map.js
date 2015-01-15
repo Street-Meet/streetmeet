@@ -24,37 +24,6 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
     }
     console.log('Did it work?')
   });
-
-  var geocode = function() {
-    geocoder = new google.maps.Geocoder();
-    google.maps.event.addListener(Map.map, 'dragend', function() {
-      geocoder.geocode({'latLng': Map.map.getCenter()}, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-          console.log(results[0].formatted_address);
-          $scope.reverseAddress = results[0].formatted_address;
-          $cookieStore.put("addressBox", $scope.reverseAddress)
-          $scope.$apply();
-          console.log($scope.reverseAddress);
-        } else {
-          alert("Geocoder failed due to: " + status);
-        }
-      })
-    })
-  }
-
-  // puts a marker on the center of the map to capture the location of a new event
-  $scope.createEvent = function() {
-
-    angular.element('#pac-input').slideDown();
-
-    $('<div/>').addClass('centerMarker').appendTo(Map.map.getDiv())
-    .click(function(){
-      $cookieStore.put('eventLoc', Map.map.getCenter());
-      $state.transitionTo('createEvent');
-    });
-    geocode();
-  };
-
 })
 
 .factory('Map', function ($q, $location, $window, $rootScope, $cookieStore, $state, $firebase, $cordovaGeolocation) {
@@ -68,6 +37,8 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
   var refArchivedLoc = new Firebase("https://boiling-torch-2747.firebaseio.com/archived/locations");
   var geoFireArchived = new GeoFire(refArchivedLoc);
 
+  
+
   var app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
   if ( app ) {
       // PhoneGap application
@@ -76,14 +47,14 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
       .then(function (position) {
         var lat  = position.coords.latitude
         var long = position.coords.longitude
-
+      
         var center = new google.maps.LatLng(lat, long);
       });
 
   } else {
       // Web page
   var center = new google.maps.LatLng(47.785326, -122.405696);
-  }
+  }   
 
   var globalLatLng;
   var marker = null;
@@ -172,12 +143,22 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-    geocoder = new google.maps.Geocoder();
     return map;
   }
 
+  // google.maps.event.addDomListener(window, 'load', initialize);
+
+
   var map = initialize();
   var marker = null;
+  // puts a marker on the center of the map to capture the location of a new event
+  var createEvent = function() {
+    $('<div/>').addClass('centerMarker').appendTo(map.getDiv())
+    .click(function(){
+      $cookieStore.put('eventLoc', map.getCenter());
+      $state.transitionTo('createEvent');
+    });
+  };
 
   // retrieves the user's current location
   var getLocation = function() {
@@ -199,10 +180,10 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
       } else {
         console.log("Your browser does not support the HTML5 Geolocation API");
       }
-    }
+    }  
 
 
-
+    
   };
 
   /* Callback method from the geolocation API which receives the current user's location */
@@ -242,7 +223,6 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
                 var marker = new google.maps.Marker({
                   position: pos,
                   map: map,
-                  icon: '/img/icon_map_join_blue-16.png',
                   title: key
                 });
                 google.maps.event.addListener(marker, 'click', function() {
@@ -296,10 +276,9 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
                   var marker = new google.maps.Marker({
                     position: pos,
                     map: map,
-                    icon: '/img/icon_user_pos_animated.gif',
+                    icon: '/img/piedPiper.gif',
                     draggable: false,
-                    title: key,
-                    optimized : false
+                    title: key
                   });
                   google.maps.event.addListener(marker, 'click', function() {
                     $state.transitionTo('userProfile', {id: key});
@@ -315,14 +294,14 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
                       position: pos,
                       map: map,
                       draggable: false,
-                      title: key,
-                      icon: '/img/icon_map_event_blue.png',
+                      title: key
                     });
                     google.maps.event.addListener(marker, 'click', function() {
                       $state.transitionTo('attendEvent', {id: currEventObj.$value});
                     });
                   });
                 });
+
               });
             })
           });
@@ -362,7 +341,7 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
     if (marker == null) {
         marker = new google.maps.Marker({
         position: myLatlng,
-        icon: '/img/icon_user_pos_animated.png',
+        icon: '/img/blue_beer.png',
         draggable: false
       });
     } else {
@@ -407,6 +386,7 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
     getLocation: getLocation,
     geolocationCallbackQuery : geolocationCallbackQuery,
     errorHandler: errorHandler,
+    createEvent: createEvent,
     map: map,
     geolocationUpdate: geolocationUpdate,
     centerMapLocation: centerMapLocation,

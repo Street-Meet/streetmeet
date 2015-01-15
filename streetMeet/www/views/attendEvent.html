@@ -5,7 +5,7 @@
     <button class="header-tab" ng-click="joinEvent()" ng-show="joiner">Join Event</button>
     <button class="header-tab" ng-click="leaveEvent()" ng-show="leaver">Leave Event</button>
     <button class="header-tab" ng-show="owner" ui-sref="editEventSettings({id: eventData.$id})">Edit Event</button>
-    <button class="header-tab" on-tap="leaveEvent()" ng-show="owner">Leave Event</button>
+    <button class="header-tab" ng-click="leaveEvent()" ng-show="owner">Leave Event</button>
   </ion-header-bar>
   <ion-content class="has-header">
 

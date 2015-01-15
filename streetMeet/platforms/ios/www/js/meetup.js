@@ -13,10 +13,16 @@ angular.module('sm-meetApp.meetup',  ["firebase"])
         $scope.feed = data.data;
        });
    };
+    
+
+
+
+
+
 
 }])
 .factory("Meetup", ["$FirebaseArray", "$firebase", function($FirebaseArray, $firebase) {
-
+  
     // create a new factory based on $FirebaseArray
     return {
       get : function(theToken) {

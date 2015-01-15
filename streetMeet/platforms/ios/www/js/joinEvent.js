@@ -6,7 +6,7 @@ angular.module('sm-meetApp.joinEvent',  ["firebase"])
 
   $scope.list =  Events.throwTheEvents(ref);
 
-  var refLoc = new Firebase("https://boiling-torch-2747.firebaseio.com/curr/locations");
+  var refLoc = new Firebase("https://boiling-torch-2747.firebaseio.com/current/locations");
   var geoFire = new GeoFire(refLoc);
   var location = $cookieStore.get('userloc');
   var latitude = location.coords.latitude;
