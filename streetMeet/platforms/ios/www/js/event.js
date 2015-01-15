@@ -18,6 +18,9 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
   var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
   var id = ref.child("/users/");
 
+  // $scope.eventId = $state.params.id;
+  // console.log($scope.eventId);
+
   $scope.refreshData = function() {
     $q(function(resolve, reject) {
       $state.transitionTo('mapCurrentEvents', {
@@ -154,12 +157,12 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
                 }).then(function() {
                   console.log('transitioning');
                   $state.transitionTo('mapCurrentEvents', {
-                    reload: true,
+                    // reload: true,
                     inherit: false,
                     notify: false
                   });
                 }).then(function() {
-                  window.location.reload(true);
+                  // window.location.reload(true);
                 });
                 console.log("Owner data saved successfully.");
                 console.log('in promise');

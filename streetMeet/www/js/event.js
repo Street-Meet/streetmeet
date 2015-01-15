@@ -161,9 +161,7 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
                     inherit: false,
                     notify: false
                   });
-                }).then(function() {
-                  window.location.reload(true);
-                });
+                })
                 console.log("Owner data saved successfully.");
                 console.log('in promise');
               }

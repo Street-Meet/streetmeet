@@ -4,8 +4,8 @@
     <button class="header-tab" ng-show="initial"></button>
     <button class="header-tab" ng-click="joinEvent()" ng-show="joiner">Join Event</button>
     <button class="header-tab" ng-click="leaveEvent()" ng-show="leaver">Leave Event</button>
-    <button class="header-tab" ng-click="" ng-show="owner">Edit Event</button>
-    <button class="header-tab" ng-click="leaveEvent()" ng-show="owner">Leave Event</button>
+    <button class="header-tab" ng-show="owner" ui-sref="editEventSettings({id: eventData.$id})">Edit Event</button>
+    <button class="header-tab" on-tap="leaveEvent()" ng-show="owner">Leave Event</button>
   </ion-header-bar>
   <ion-content class="has-header">
 
@@ -15,10 +15,9 @@
     </div>
 
     <div class="detail-info">
-      <span class="time-remaining">18:03</span>
-
+      <span class="time-remaining"><span>
       <h2 class="detail-title">{{eventData.title}}</h2>
-      <span class="event-location-title">Sad Bar</span>
+      <!-- <span class="event-location-title">Sad Bar</span> -->
       <span class="event-location-address">{{ eventData.address }}</span>
 
       <button class="inline-btn icon-btn" ui-sref="mapCurrentEvents" ng-click="refreshData()">
@@ -52,7 +51,7 @@
 
 
           <header class="event-header item-header">
-            <h2>{{attendee['first_name'] + ' ' + attendee['last_name']}}</h2>
+            <h2>{{attendee.display_name}}</h2>
             <span class="item-subtitle">"Something Witty"</span>
           </header> <!-- .event-header -->
 
