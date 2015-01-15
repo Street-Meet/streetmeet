@@ -246,9 +246,6 @@ input[type="text"], input[type="email"], input[type="password"], input[type="num
   border-radius: 30px;
 }
 
-
-
-
 /********** Utility Classes **********/
 .v-center{
   /* Internet Explorer 10 */
@@ -286,6 +283,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="num
   margin: 0;
   padding: 0;
   color: #fff;
+  position: relative;
 }
 
   .mid-header h3{
@@ -331,6 +329,20 @@ input[type="text"], input[type="email"], input[type="password"], input[type="num
       top: 10px;
     }
 
+.top-right-control{
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+  .top-right-control ul li{
+    display: inline-block;
+  }
+
+  .top-right-control ul li a{
+    color: #2980b9;
+    font-size: 1.2em;
+  }
 
 
 /******* Login Panes *******/
@@ -500,7 +512,6 @@ ul#events-current{
 .detail-view{
 
 }
-
   .detail-section{
     padding: 5%;
   }
@@ -541,8 +552,24 @@ ul#events-current{
     line-height: 1.2em;
   }
 
+  
+
 
 /******* User Profile Pane ********/
+  .mid-header .top-right-control ul li a {
+    color: #fff;
+    width: 25px;
+    height: 25px;
+    display: block;
+    border-radius: 3px;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 1px 0 0 0;
+    border: 1px solid #2c3e50;
+    background: #2980b9;
+    z-index: 500;
+  }
+
 ul.user-list{
   margin: 10px 0;
 }
@@ -556,6 +583,10 @@ ul.user-list{
     overflow: hidden;
     margin: 0 10px 0 0;
   }
+
+    .profile-pic img{
+      width: 100%;
+    }
 
     .profile-pic i{
       padding: .2em 0;
@@ -573,7 +604,6 @@ ul.user-list{
       .userProfile .detail-info span{
         display: block;
       }
-
 
       .userProfile .detail-section .inset-divider{
         width: 100%;
@@ -642,10 +672,6 @@ ul.settings-list{
           ul.setting-edit-options li.settings-confirm-edit-btn a{
             color: #159e31;
           }
-
-
-
-
 
     li.setting-item label{
       font-size: 1.1em;
