@@ -305,6 +305,10 @@ input[type="text"], input[type="email"], input[type="password"], input[type="num
   clear: both;
 }
 
+.toggledOff{
+  display: none;
+}
+
 /********** Layout **********/
 
 .main-header{
