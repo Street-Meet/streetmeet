@@ -1,11 +1,15 @@
 <ion-pane id="mapCurrentEvents" class="map-pane">
+
 <ion-header-bar class="hTabs">
-  <button class="header-tab" ui-sref="listCurrentEvents" ng-hide="inEvent">List</button>
-  <button class="header-tab" ng-click="createEvent()" ng-hide="inEvent">Create Event</button>
-  <button class="header-tab-full" ng-show="inEvent">Attendee Map</button>
+  <button class="header-tab" ui-sref="listCurrentEvents">List</button>
+  <button class="header-tab" ng-click="createEvent()">Create Event</button>
 </ion-header-bar>
+
+
+
+
   <ion-content scroll="false">
-    <input id="pac-input" class="controls" type="text" placeholder="Enter a location">
+    <input id="pac-input" class="controls" type="text" placeholder="Enter a location" ng-model="reverseAddress">
     <div id="map-canvas" data-tap-disabled="true"></div>
   </ion-content>
   <div class="settings-btn">
