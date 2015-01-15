@@ -8,6 +8,9 @@ angular.module('sm-meetApp.userInterfaceController',  [])
 
   $scope.loginState = 'login';
 
+  /**
+   * Control the type of user login 
+   */
   $scope.loginSectionChange = function(section){
     $scope.loginState = section;
   };
@@ -62,12 +65,6 @@ angular.module('sm-meetApp.userInterfaceController',  [])
 
       $(content).closest('ul').css('margin-top', tMarg);
     };
-
-    //console.log(hDiff);
-    //console.log($(content).closest('ul').outerHeight());
-
-    //console.log(currMarg);
-    // console.log($event.gesture.deltaY);
   };
 
 
@@ -77,8 +74,6 @@ angular.module('sm-meetApp.userInterfaceController',  [])
     var posChange = 0;
     var margin = 0;
     var currentMarg = parseInt($(liItem).css('margin-left'));
-
-    
 
     $(liItem).siblings('.swiped').each(function(key, value){
       itemControls.resetMarg(value);
@@ -102,29 +97,6 @@ angular.module('sm-meetApp.userInterfaceController',  [])
     //console.log($event);
   }; 
 
-
-  /**
-   * Show and hide event controls for joining or removing event 
-   * @param  {object} $event The event object passed in the DOM by AngularJS
-   * @return {null} returns nothing
-   */
-  // $scope.onSwipe = function($event){
-  //   //console.log($event);
-  //   var direction = $event.gesture.direction;
-  //   //var margins = {left: '-30%', right: '30%'};
-  //   var cont = itemControls.getDomItem($event, '.item');
-
-  //   if($(cont).hasClass('swiped') && !$(cont).hasClass('swiped-'+direction)){
-  //     itemControls.resetMarg(cont);
-  //   }else{
-  //     itemControls.resetMarg($(cont).siblings());
-  //     $(cont).addClass('swiped swiped-left').animate({
-  //       left: '-30%'
-  //     }, function(){
-  //       //animation complete
-  //     });
-  //   }
-  // };
 
   /**
    * Profile settings edit controls
@@ -151,6 +123,15 @@ angular.module('sm-meetApp.userInterfaceController',  [])
     }
   };
 
+  /**
+   * Toggle item display
+   */
+   $scope.toggleItem = function($event, containingEl, target){
+     var element = itemControls.getDomItem($event, containingEl);
+     $(element).toggle().siblings(target).toggle();
+   };
+
+
 }])
 
 .factory('itemControls', [function(){
@@ -166,7 +147,7 @@ angular.module('sm-meetApp.userInterfaceController',  [])
       getDomItem : function($event, selector){
         return $($event.target).closest(selector);
       },
-      snapDrag : function(){
+      toggleItem : function(){
 
       }
 
