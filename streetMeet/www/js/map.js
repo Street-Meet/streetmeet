@@ -221,6 +221,15 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
     var latitude = location.coords.latitude;
     var longitude = location.coords.longitude;
     $cookieStore.put('userloc', location);
+    var pos = new google.maps.LatLng(latitude, longitude);
+    var marker = new google.maps.Marker({
+      position: pos,
+      map: map,
+      icon: '/img/icon_user_pos_animated.gif',
+      draggable: false,
+      title: $cookieStore.get("currentUser"),
+      optimized : false
+    });
     var center = new google.maps.LatLng(latitude, longitude);
     var geoQuery = geoFire.query({
       center: [latitude, longitude],
