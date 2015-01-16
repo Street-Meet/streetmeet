@@ -1,0 +1,19 @@
+<ion-pane id="map" class="map-pane">
+  <ion-header-bar class="hTabs" >
+      <button class="header-tab" ui-sref="listCurrentEvents" ng-show="!isEvent">List</button>
+      <button class="header-tab create-toggle" ng-click=" toggleItem($event, 'button', '.create-toggle'); createEventMarker();" ng-show="!isEvent">Create Event</button>
+      <button class="btn-red header-tab create-toggle toggledOff" ng-click="toggleItem($event, 'button', '.create-toggle'); cancelCreateEvent();" ng-show="!isEvent">Cancel</button>
+      <button class="header-tab-full" ng-show="isEvent" >Attendee Map</button>
+  </ion-header-bar>
+
+
+  <ion-content scroll="false">
+    <input id="pac-input" class="controls" type="text" placeholder="Enter a location" ng-model="reverseAddress">
+    <div id="map-canvas" data-tap-disabled="true"></div>
+  </ion-content>
+  <div class="settings-btn">
+    <a ui-sref="settings">
+      <i class="fa fa-cog"></i>
+    </a>
+  </div>
+</ion-pane>
