@@ -12,6 +12,7 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
     currEventObj.$loaded().then(function() {
       if (currEventObj.$value) {
         $scope.inEvent = true;
+        $scope.event = currEventObj.$value;
       } else {
         $scope.inEvent = false;
       }

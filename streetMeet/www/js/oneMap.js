@@ -65,6 +65,7 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
     currEventObj.$loaded().then(function() {
       if (currEventObj.$value) {
         $scope.isEvent =true;
+        $scope.event = currEventObj.$value;
         OneMap.vergingDisplay();
       } else {
         $scope.isEvent = false;
@@ -90,7 +91,7 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
   var reverseAddress;
   var map;
   var dragListener;
-  var firstTime = true;
+  var bounds = new google.maps.LatLngBounds();
 
   // Sets the map on all markers in the array.
   var setAllMap = function(map) {
@@ -238,6 +239,8 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
             icon: '/img/icon_map_join_blue-16.png',
             title: key
           });
+          // bounds.extend(pos);
+
           markers.push(marker);
           google.maps.event.addListener(marker, 'click', function() {
             $state.transitionTo('attendEvent', {id: key}, {
@@ -251,6 +254,16 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
         }
       });
     });
+
+    google.maps.event.addListener(map, 'dragend', function() {
+      if (bounds.contains(map.getCenter())) return;
+      // We're out of bounds - Move the map back within the bounds
+      map.panToBounds(bounds)
+     });
+    google.maps.event.addListener(map, 'zoom_changed', function() {
+         if (map.getZoom() < 14) map.setZoom(14);
+       });
+    console.log("Retrieved user's location: [" + latitude + ", " + longitude + "]");
   };
 
   // show attendees converging to an event on the screen
@@ -319,7 +332,7 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
     var longitude = userloc.coords.longitude;
     var center = new google.maps.LatLng(latitude, longitude)
     var mapOptions = {
-      zoom: 15,
+      zoom: 14,
       center: center,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
@@ -339,6 +352,7 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
       optimized : false,
       title: $cookieStore.get('currentUser')
     });
+    bounds.extend(center);
     google.maps.event.addListener(marker, 'click', function() {
       $state.transitionTo('userProfile', {id: marker.title});
     });
