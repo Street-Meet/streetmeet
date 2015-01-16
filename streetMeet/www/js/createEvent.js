@@ -18,6 +18,7 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
    $scope.createEvent = function(eventTitle, eventDescription, eventCapacity, eventAddress) {
      // console.log($state.current.name);
      owner = $cookieStore.get('currentUser');
+     var eventTime = moment().add(22, 'minutes').calendar();
      var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/" + owner);
      var eventData = {
        title: eventTitle,
@@ -25,15 +26,9 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
        capacity: eventCapacity,
        address: eventAddress,
        createdAt: Date.now(),
-       timeLeft: 2000
+       timeLeft: eventTime
      };
 
-     //grab Date.now()
-     //minutes remaining is the difference between 22 minutes from createdAt and Date.now();
-
-     var timeRemaining = 2000;
-     //((eventData.createdAt + 1320000) - Date.now()).toString();
-     console.log("event", eventData)
      var id = ref.child("/events").push();
 
      id.set(eventData, function(error) {
