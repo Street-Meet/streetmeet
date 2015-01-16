@@ -1,6 +1,6 @@
 angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
 
-.controller('OneMapCtrl', function($scope, $firebase, OneMap, $cookieStore, $state, $cordovaGeolocation) {
+.controller('OneMapCtrl', function($scope, $firebase, OneMap, $cookieStore, $state, $cordovaGeolocation, $q) {
 
   angular.extend($scope, OneMap);
   OneMap.initialize();
@@ -38,6 +38,9 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
       $q(function(resolve, reject) {
         angular.element('.centerMarker').remove();
         angular.element('#pac-input').slideUp();
+        $('.btn-red').toggle().siblings('.create-toggle').toggle();
+
+        resolve();
       }).then(function() {
         // $scope.cancelCreateEvent();
         $cookieStore.put('eventLoc', map.getCenter());
@@ -55,7 +58,6 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
     OneMap.onKeyEnteredRegistration();
     angular.element('.centerMarker').remove();
     angular.element('#pac-input').slideUp();
-
   };
 
   $scope.$on('$ionicView.enter', function() {

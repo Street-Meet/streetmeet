@@ -15,6 +15,7 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
   var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
   var id = ref.child("/users/");
 
+<<<<<<< HEAD
   $scope.refreshData = function() {
     $q(function(resolve, reject) {
       console.log('refresh data')
@@ -28,6 +29,11 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
       window.location.reload(true);
     })
   }
+=======
+  // $scope.eventId = $state.params.id;
+  // console.log($scope.eventId);
+
+>>>>>>> working leave event when owner, it seems
 
   $scope.update = function() {
     var attendeeObj = $firebase(refAttendees).$asObject();
@@ -95,8 +101,20 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
     $cookieStore.put('eventStatus', $state.params.id);
   }
 
+  var transitionToMap = function() {
+    $state.transitionTo('map', {
+      reload: true,
+      inherit: false,
+      notify: false
+    });
+  }
   // user leaves an event
   $scope.leaveEvent =function() {
+<<<<<<< HEAD
+=======
+    console.log('leaving event')
+    // event owner
+>>>>>>> working leave event when owner, it seems
     var ownerRef = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+$state.params.id +"/owner");
     var ownerSync = $firebase(ownerRef);
     ownerObj = ownerSync.$asObject();
@@ -104,11 +122,17 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
       $q(function(resolve, reject) {
         var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+$state.params.id+"/attendees/"+$cookieStore.get('currentUser'));
         var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+$cookieStore.get('currentUser'));
+        // marks user as left in attendee list
         ref.set(false, function(error) {
           if (error) {
             alert("Data could not be saved." + error);
             reject('rejected');
           } else {
+<<<<<<< HEAD
+=======
+            console.log("Attendee data saved successfully.");
+            // removes user's current event
+>>>>>>> working leave event when owner, it seems
             userRef.child("/currentEvent/").remove();
             // $scope.update();
             resolve('resolved');
@@ -117,11 +141,22 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
       })
       .then(function() {
         angular.forEach(ownerObj, function (value, key) {
+<<<<<<< HEAD
           if (key === $cookieStore.get('currentUser') && value === true) {
+=======
+          console.log('in forEach');
+          console.log(key, value);
+          console.log($cookieStore.get('currentUser'));
+          // if user is event owner
+          if (key === $cookieStore.get('currentUser') && value === true) {
+            console.log('in if')
+            // removes current ownership from user
+>>>>>>> working leave event when owner, it seems
             ownerRef.child(key).set(false, function(error) {
               if (error) {
                 alert("Data could not be saved." + error);
               } else {
+<<<<<<< HEAD
                 $q(function(resolve, reject) {
                   $scope.update();
                   resolve();
@@ -157,9 +192,30 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
             })
             // .then(function() {
             //   window.location.reload(true);
+=======
+                console.log(id.key());
+                console.log('transitioning');
+                transitionToMap();
+                console.log("Owner data saved successfully.");
+                console.log('in promise');
+              }
+            });
+          } else {
+            console.log('transitioning');
+            // $state.transitionTo('map', {
+            //   reload: true,
+            //   inherit: false,
+            //   notify: false
+            // // });
+>>>>>>> working leave event when owner, it seems
             // });
+            transitionToMap();
           }
         });
+<<<<<<< HEAD
+=======
+        console.log('after promise');
+>>>>>>> working leave event when owner, it seems
       });
     });
   }
