@@ -48,8 +48,8 @@
 
    </div>
 
-   <button ui-sref="userProfileSettings({id: 'facebook:' + profile.id})" class="btn icon-btn sticky-bottom">
-     <span class="btn-icon v-center"><i class="fa fa-edit"></i></span>
+   <button ui-sref="userProfileSettings({id: 'facebook:' + profile.id})" class="btn icon-btn sticky-bottom" ng-show="isUser">
+     <span class="btn-icon v-center"><i class="fa fa-edit" ></i></span>
      Edit account info
    </button>
 
