@@ -19,7 +19,7 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
         } else {
           alert("Geocoder failed due to: " + status);
         }
-      })
+      });
     })
   };
 
@@ -38,6 +38,17 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
         $cookieStore.put('eventLoc', map.getCenter());
         $state.transitionTo('createEvent');
       })
+    });
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode({'latLng': map.getCenter()}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        $scope.reverseAddress = results[0].formatted_address;
+        console.log($scope.reverseAddress);
+        $cookieStore.put("addressBox", $scope.reverseAddress)
+        $scope.$apply();
+      } else {
+        alert("Geocoder failed due to: " + status);
+      }
     });
     geocode();
     console.log(OneMap.eventStatus());
