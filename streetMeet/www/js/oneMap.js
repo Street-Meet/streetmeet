@@ -82,38 +82,6 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
     });
   });
 
-  // var ownerRef = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+$cookieStore.get('currentEvent') +"/owner");
-  // console.log($cookieStore.get('currentEvent'));
-  // $scope.initial = true;
-  // $scope.owner = false;
-  // $scope.leaver = false;
-  // $scope.joiner = false;
-  // var ownerSync = $firebase(ownerRef);
-  // ownerObj = ownerSync.$asObject();
-  // ownerObj.$loaded().then(function() {
-  //   console.log('UPDATING3')
-  //   angular.forEach(ownerObj, function (value, key) {
-  //     if (key === $cookieStore.get('currentUser') && value === true) {
-  //       console.log(value);
-  //       $scope.owner = value;
-  //       $scope.initial = false;
-  //     } else {
-  //       var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+$cookieStore.get('currentUser')+"/currentEvent");
-  //       var userSync = $firebase(userRef);
-  //       var userObj = userSync.$asObject();
-  //       userObj.$loaded().then(function() {
-  //         console.log(userObj.$value);
-  //         $scope.leaver = userObj.$value;
-  //         $scope.joiner = !$scope.leaver;
-  //         $scope.initial = false;
-  //         console.log($scope.owner);
-  //         console.log($scope.leaver);
-  //         console.log($scope.joiner);
-  //       });
-  //     }
-  //   });
-  // });
-
 })
 
 .factory('OneMap', function ($q, $location, $window, $rootScope, $cookieStore, $state, $firebase, $cordovaGeolocation) {
@@ -360,27 +328,6 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
     });
   };
 
-  // retrieves the user's current location
-  // var getLocation = function() {
-  //   var app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
-  //   if ( app ) {
-  //       // PhoneGap application
-  //       return $cordovaGeolocation
-  //       .getCurrentPosition(posOptions)
-  //       .then(function (position) {
-  //        geolocationCallbackQuery(position);
-  //       });
-  //   } else {
-  //     // Web page
-  //     if (typeof navigator !== "undefined" && typeof navigator.geolocation !== "undefined") {
-  //       console.log("Asking user to get their location");
-  //       navigator.geolocation.getCurrentPosition(geolocationCallbackQuery, errorHandler, {timeout:10000});
-  //     } else {
-  //       console.log("Your browser does not support the HTML5 Geolocation API");
-  //     }
-  //   }
-  // };
-
   /* Callback method from the geolocation API which receives the current user's location */
   // draws the map on the canvas centered at the user's location
   var drawMap = function(location) {
@@ -520,8 +467,6 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
   return {
     centerMapLocation: centerMapLocation,
     initialize: initialize,
-    // markers: markers,
-    // geocode: geocode,
     getMap: getMap,
     getMarkers: getMarkers,
     clearMarkers: clearMarkers,

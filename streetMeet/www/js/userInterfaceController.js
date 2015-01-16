@@ -127,9 +127,6 @@ angular.module('sm-meetApp.userInterfaceController',  [])
    */
    $scope.toggleItem = function($event, containingEl, target){
      var element = itemControls.getDomItem($event, containingEl);
-     console.log($event);
-     console.log(element);
-     console.log(target);
      $(element).toggle().siblings(target).toggle();
    };
 

@@ -131,17 +131,6 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies', 'ngCordova','ionic
     var latitude = location.coords.latitude;
     var longitude = location.coords.longitude;
     $cookieStore.put('userloc', location);
-    // LOGIC HERE DETERMINING IF IN EVENT OR NOT
-    // var currEventRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+$cookieStore.get('currentUser')+"/currentEvent");
-    // var eventSync = $firebase(currEventRef);
-    // var currEventObj = eventSync.$asObject();
-    // currEventObj.$loaded().then(function() {
-    //   if (currEventObj.$value) {
-    //     vergingDisplay();
-    //   } else {
-    //     onKeyEnteredRegistration();
-    //   }
-    // });
   }
 
   var errorHandler = function(error) {
