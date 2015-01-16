@@ -5,9 +5,7 @@ angular.module('sm-meetApp.editEvent',  ["firebase"])
   var eventSync = $firebase(refEvent);
   var eventObj = eventSync.$asObject();
   eventObj.$loaded().then(function() {
-    console.log(eventObj);
     eventObj.$bindTo($scope, "eventData").then(function() {
-      console.log($scope.eventData);
     });
   }).then(function() {
     $scope.eventTitle = $scope.eventData.title;

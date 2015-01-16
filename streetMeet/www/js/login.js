@@ -3,10 +3,8 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies', 'ngCordova','ionic
 
 .controller('LoginCtrl', ["$scope",  "$firebaseAuth", "$cookieStore", "$state", "$q",
   function($scope, $firebaseAuth, $cookieStore, $state, $q) {
-
     $scope.currentUser =  $cookieStore.get('currentData') || null;
     $scope.currentUserId =  $cookieStore.get('currentUser') || null;
-
     $scope.theEvents;
 
 
@@ -18,7 +16,6 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies', 'ngCordova','ionic
         password: thePass
       }).then(function(authData) {
         $cookieStore.put('currentUser', authData.uid );
-        console.log("Logged in as:", authData.uid);
         $state.transitionTo('mapCurrentEvents');
       }).catch(function(error) {
         console.error("Authentication failed:", error);
@@ -27,16 +24,14 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies', 'ngCordova','ionic
 
     //AngularFire OAuth
     $scope.registerAccount = function(theEmail, thePass) {
-      console.log('Registering account');
       ref.createUser({
           email: theEmail,
           password: thePass
         }, function(error) {
           if(error === null) {
             $scope.simpleLogin(theEmail, thePass);
-            console.log("Stored user!");
           } else {
-            console.log("Error!", error);
+            console.error("Error!", error);
           }
         });
     }
@@ -48,22 +43,18 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies', 'ngCordova','ionic
           var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+authData.uid+"/userInfo");
           ref.set(authData.facebook.cachedUserProfile, function(error) {
             if (error) {
-              console.log('error setting data!');
+              console.error('error setting data!');
             }
           })
           ref.child("display_name").set(authData.facebook.cachedUserProfile.first_name, function(error) {
             if (error) {
-              console.log('error setting display name!');
+              console.error('error setting display name!');
             }
           })
-          console.log('this is the authData: ', authData);
 
           $cookieStore.put('currentUser', authData.uid );
           $cookieStore.put('currentToken', authData.token );
           $cookieStore.put('currentData', authData.facebook.cachedUserProfile );
-
-          console.log("Logged in as:", authData.uid);
-          console.log('all of it', authData);
           $scope.currentUser = authData.facebook.cachedUserProfile;
           $scope.currentUserId = authData;
           $state.go('mapCurrentEvents');
@@ -71,7 +62,6 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies', 'ngCordova','ionic
           console.error("Authentication failed:", error);
         });
     };
-
 
     $scope.getSpecificEvent = function(event_id){
      //location for any given event
@@ -90,13 +80,11 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies', 'ngCordova','ionic
 
     $scope.getMyEvents = function(user_id){
         //events for any given user
-        console.log('the user id passed is :'+ user_id);
       var eventsRef = new Firebase("https://boiling-torch-2747.firebaseio.com/events");
       var userRef =   new Firebase("https://boiling-torch-2747.firebaseio.com/users");
       var userEventsRef = userRef.child(user_id).child("events");
       var result = [];
       userEventsRef.on("child_added", function(snap) {
-        console.log('this is the snap:', snap.val());
         eventsRef.child(snap.key()).on("value", function(data) {
           result.push(data.val());
         })

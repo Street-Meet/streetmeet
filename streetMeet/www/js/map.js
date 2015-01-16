@@ -121,14 +121,13 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
       return;
     }
 
-    // If the place has a geometry, then present it on a map.
     if (place.geometry.viewport) {
       map.fitBounds(place.geometry.viewport);
     } else {
       map.setCenter(place.geometry.location);
-      map.setZoom(17);  // Why 17? Because it looks good.
+      map.setZoom(17);
     }
-    locationBoxMarker.setIcon(/** @type {google.maps.Icon} */({
+    locationBoxMarker.setIcon(({
       url: place.icon,
       size: new google.maps.Size(71, 71),
       origin: new google.maps.Point(0, 0),
@@ -152,21 +151,6 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
     $cookieStore.put('addressBox', address);
   });
 
-
-
-  // var initialize = function() {
-    // var center = new google.maps.LatLng(47.785326, -122.405696);
-    // var globalLatLng;
-
-    // var mapOptions = {
-    //   zoom: 15,
-    //   center: center,
-    //   mapTypeId: google.maps.MapTypeId.ROADMAP
-    // };
-    // var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-    // return map;
-  // }
-
   var initialize = function() {
     var center = new google.maps.LatLng(47.785326, -122.405696);
     var globalLatLng;
@@ -184,30 +168,22 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
   var map = initialize();
   var marker = null;
 
-  // retrieves the user's current location
   var getLocation = function() {
-
 
     var app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
     if ( app ) {
-        // PhoneGap application
         $cordovaGeolocation
         .getCurrentPosition(posOptions)
         .then(function (position) {
          geolocationCallbackQuery(position);
         });
     } else {
-      // Web page
       if (typeof navigator !== "undefined" && typeof navigator.geolocation !== "undefined") {
-        console.log("Asking user to get their location");
         navigator.geolocation.getCurrentPosition(geolocationCallbackQuery, errorHandler, {timeout:10000});
       } else {
-        console.log("Your browser does not support the HTML5 Geolocation API");
+        throw new Error("Your browser does not support geolocation.")
       }
     }
-
-
-
   };
 
   /* Callback method from the geolocation API which receives the current user's location */
@@ -243,8 +219,6 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
             var eventSync = $firebase(refEvent);
             var eventObj = eventSync.$asObject();
             eventObj.$loaded().then(function() {
-              // add marker for an event if it was created in the past 22 minutes
-              // if (false) {
               if (eventObj.createdAt > Date.now() - 1320000) {
                 var pos = new google.maps.LatLng(location[0], location[1]);
                 var marker = new google.maps.Marker({
@@ -272,10 +246,7 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
                 });
               }
             });
-            console.log(key + " entered the query. Hi " + key + " at " + location);
           });
-
-          console.log("Retrieved user's location: [" + latitude + ", " + longitude + "]");
         }();
       } else {
         var vergingDisplay = function() {
@@ -330,16 +301,15 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
     });
   }
 
-  /* Handles any errors from trying to get the user's current location */
   var errorHandler = function(error) {
     if (error.code == 1) {
-      console.log("Error: PERMISSION_DENIED: User denied access to their location");
+      console.error("Error: PERMISSION_DENIED: User denied access to their location");
     } else if (error.code === 2) {
-      console.log("Error: POSITION_UNAVAILABLE: Network is down or positioning satellites cannot be reached");
+      console.error("Error: POSITION_UNAVAILABLE: Network is down or positioning satellites cannot be reached");
     } else if (error.code === 3) {
-      console.log("Error: TIMEOUT: Calculating the user's location too took long");
+      console.error("Error: TIMEOUT: Calculating the user's location too took long");
     } else {
-      console.log("Unexpected error code")
+      console.error("Unexpected error code")
     }
   };
 
@@ -351,9 +321,8 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
     var userData = $cookieStore.get('currentUser');
     //adds user location data to firebase
     userGeoFire.set(userData, [latitude, longitude]).then(function() {
-      console.log("Provided keys have been added to GeoFire");
     }, function(error) {
-      console.log("Error: " + error);
+      console.error("Error: " + error);
     });
 
     //updates marker position by removing the old one and adding the new one
@@ -371,7 +340,6 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
       marker.setMap(null);
     }
     marker.setMap(map);
-    console.log("Latitude : " + latitude + " Longitude: " + longitude);
   }
 
   //Updates user location on movement
@@ -388,17 +356,6 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
   var centerMapLocation = function() {
     map.setCenter(globalLatLng);
   }
-
-    //Update the query's criteria every time the circle is dragged
-    // var updateCriteria = _.debounce(function() {
-    //   var latLng = circle.getCenter();
-    //   geoQuery.updateCriteria({
-    //     center: [latLng.lat(), latLng.lng()],
-    //     radius: radiusInKm
-    //   });
-    // }, 10);
-    // google.maps.event.addListener(circle, "drag", updateCriteria);
-
 
   return {
     getLocation: getLocation,
