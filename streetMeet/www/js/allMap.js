@@ -1,32 +1,8 @@
-angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova'])
+angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
 
 .controller('AllMapCtrl', function($scope, $firebase, AllMap, $cookieStore, $state, $cordovaGeolocation) {
 
   angular.extend($scope, AllMap);
-  var map = AllMap.initialize();
-//   // setAllMap(null);
-//   Map.geolocationUpdate();
-//   var currEventRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+$cookieStore.get('currentUser')+"/currentEvent");
-//   var eventSync = $firebase(currEventRef);
-//   var currEventObj = eventSync.$asObject();
-
-//   // when entering this view
-//   $scope.$on( "$ionicView.enter", function( scopes, states ) {
-//     // google.maps.event.trigger( Map.map, 'resize' );
-//     //mark if user is in an event or not
-//     currEventObj.$loaded().then(function() {
-//       if (currEventObj.$value) {
-//         $scope.inEvent = true;
-//       } else {
-//         $scope.inEvent = false;
-//       }
-//     });
-//     if ($cookieStore.get('userloc')) {
-//       Map.geolocationCallbackQuery($cookieStore.get('userloc'));
-//     } else {
-//       Map.getLocation();
-//     }
-//   });
 
 })
 
@@ -45,6 +21,9 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova'])
 
 
   var markers =[];
+  var reverseAddress;
+  var map;
+  var dragListener;
 
   var clearMarkers = function(array) {
     for (var i = 0; i < markers.length; i++) {
@@ -53,8 +32,9 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova'])
   }
 
   var marker;
+  var globalLatLng;
 
-  var initialize = function(map) {
+  var initialize = function() {
     var app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
     if ( app ) {
         // PhoneGap application
@@ -69,14 +49,141 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova'])
     } else {
       // Web page
       // var center = new google.maps.LatLng(47.785326, -122.405696);
-      var center = getLocation();
+      getLocation();
     }
-    var globalLatLng;
   }
 
   // var map = initialize();
 
+  var geocode = function() {
+    geocoder = new google.maps.Geocoder();
+    console.log(map);
+    dragListener = google.maps.event.addListener(map, 'dragend', function() {
+      geocoder.geocode({'latLng': map.getCenter()}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          console.log('works?')
+          reverseAddress = results[0].formatted_address;
+          console.log(reverseAddress);
+          $cookieStore.put("addressBox", reverseAddress)
+          $rootScope.$apply();
+        } else {
+          alert("Geocoder failed due to: " + status);
+        }
+      })
+    })
+  };
 
+  var createEventMarker = function() {
+    angular.element('#pac-input').slideDown();
+    console.log('throw a marker!')
+
+    $('<div/>').addClass('centerMarker').appendTo($('#map-canvas'))
+    .click(function(){
+      $cookieStore.put('eventLoc', map.getCenter());
+      $state.transitionTo('createEvent');
+    });
+    geocode();
+
+    var input = /** @type {HTMLInputElement} */(
+        document.getElementById('pac-input'));
+
+    // google maps autocomplete
+    var autocomplete = new google.maps.places.Autocomplete(input);
+    // autocomplete.bindTo('bounds', map);
+    var infowindow = new google.maps.InfoWindow();
+    var locationBoxMarker = new google.maps.Marker({
+      map: map,
+      anchorPoint: new google.maps.Point(0, -29)
+    });
+
+    google.maps.event.addListener(autocomplete, 'place_changed', function() {
+      infowindow.close();
+      locationBoxMarker.setVisible(false);
+      var place = autocomplete.getPlace();
+      if (!place.geometry) {
+        return;
+      }
+
+      // If the place has a geometry, then present it on a map.
+      if (place.geometry.viewport) {
+        map.fitBounds(place.geometry.viewport);
+      } else {
+        map.setCenter(place.geometry.location);
+        map.setZoom(17);  // Why 17? Because it looks good.
+      }
+      locationBoxMarker.setIcon(/** @type {google.maps.Icon} */({
+        url: place.icon,
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(35, 35)
+      }));
+      locationBoxMarker.setPosition(place.geometry.location);
+      locationBoxMarker.setVisible(true);
+
+      var address = '';
+      if (place.address_components) {
+        address = [
+          (place.address_components[0] && place.address_components[0].short_name || ''),
+          (place.address_components[1] && place.address_components[1].short_name || ''),
+          (place.address_components[2] && place.address_components[2].short_name || '')
+        ].join(' ');
+      }
+
+      infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+      infowindow.open(map, locationBoxMarker);
+      $cookieStore.put('addressBox', address);
+    });
+  };
+
+  var cancelCreateEvent = function() {
+    angular.element('.centerMarker').remove();
+    angular.element('#pac-input').slideUp();
+    google.maps.event.removeListener(dragListener);
+  };
+
+  var onKeyEnteredRegistration = function() {
+    console.log('on key registration')
+    var refLoc = new Firebase("https://boiling-torch-2747.firebaseio.com/curr/locations");
+    var geoFire = new GeoFire(refLoc);
+    var location = $cookieStore.get('userloc');
+    var latitude = location.coords.latitude;
+    var longitude = location.coords.longitude;
+    var geoQuery = geoFire.query({
+      center: [latitude, longitude],
+      radius: 1.609344
+    });
+    geoQuery.on("key_entered", function(key, location, distance) {
+      var refEvent = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+key);
+      var eventSync = $firebase(refEvent);
+      var eventObj = eventSync.$asObject();
+      eventObj.$loaded().then(function() {
+        // add marker for an event if it was created in the past 22 minutes
+        // if (false) {
+        if (eventObj.createdAt > Date.now() - 1320000) {
+          var pos = new google.maps.LatLng(location[0], location[1]);
+          var marker = new google.maps.Marker({
+            position: pos,
+            map: map,
+            icon: '/img/icon_map_join_blue-16.png',
+            title: key
+          });
+          markers.push(marker);
+          google.maps.event.addListener(marker, 'click', function() {
+            $state.transitionTo('attendEvent', {id: key}, {
+              reload: true,
+              inherit: false,
+              notify: true
+            });
+          })
+        } else {
+          geoFire.remove(key);
+        }
+      });
+      console.log(key + " entered the query. Hi " + key + " at " + location);
+    });
+    console.log("Retrieved user's location: [" + latitude + ", " + longitude + "]");
+  };
 
   // retrieves the user's current location
   var getLocation = function() {
@@ -110,7 +217,8 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova'])
       center: center,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-    var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+    map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+    console.log(map);
     geocoder = new google.maps.Geocoder();
     var center = new google.maps.LatLng(latitude, longitude);
     var geoQuery = geoFire.query({
@@ -203,7 +311,12 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova'])
     centerMapLocation: centerMapLocation,
     initialize: initialize,
     markers: markers,
-    clearMarkers: clearMarkers
+    clearMarkers: clearMarkers,
+    onKeyEnteredRegistration: onKeyEnteredRegistration,
+    createEventMarker: createEventMarker,
+    reverseAddress: reverseAddress,
+    map: map,
+    cancelCreateEvent: cancelCreateEvent
   }
 
 });

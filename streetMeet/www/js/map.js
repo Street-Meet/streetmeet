@@ -127,7 +127,7 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
     google.maps.event.addListener(map, 'dragend', function() {
       geocoder.geocode({'latLng': map.getCenter()}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
-          $scope.reverseAddress = results[0].formatted_address;
+         reverseAddress = results[0].formatted_address;
           $cookieStore.put("addressBox", $scope.reverseAddress)
           $scope.$apply();
         } else {
@@ -136,7 +136,7 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
       })
     })
   };
-  var createEvent = function() {
+  var createEventMarker = function() {
 
     angular.element('#pac-input').slideDown();
 
@@ -411,7 +411,7 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
     initialize: initialize,
     markers: markers,
     clearMarkers: clearMarkers,
-    createEvent: createEvent
+    createEventMarker: createEventMarker
   }
 
 });

@@ -5,15 +5,17 @@ angular.module('sm-meetApp.attendeeMap',  ['firebase', 'ngCordova'])
   angular.extend($scope, AttendeeMap);
   angular.extend($scope, AllMap);
 
+  AllMap.initialize();
+
   // setAllMap(null);
-  Map.geolocationUpdate();
+  AllMap.geolocationUpdate();
   $scope.$on( "$ionicView.enter", function( scopes, states ) {
     // google.maps.event.trigger( Map.map, 'resize' );
 
     if ($cookieStore.get('userloc')) {
-      Map.geolocationCallbackQuery($cookieStore.get('userloc'));
+      AllMap.geolocationCallbackQuery($cookieStore.get('userloc'));
     } else {
-      Map.getLocation();
+      AllMap.getLocation();
     }
   });
 
