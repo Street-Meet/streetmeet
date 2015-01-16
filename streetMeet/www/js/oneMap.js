@@ -141,11 +141,8 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
 
     } else {
       // Web page
-      // var center = new google.maps.LatLng(47.785326, -122.405696);
-      if (firstTime) {
-        drawMap();
-        firstTime = false;
-      }
+      drawMap();
+
     }
   }
 
@@ -240,6 +237,7 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
       var refEvent = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+key);
       var eventSync = $firebase(refEvent);
       var eventObj = eventSync.$asObject();
+      // event data
       eventObj.$loaded().then(function() {
         // add marker for an event if it was created in the past 22 minutes
         // if (false) {
