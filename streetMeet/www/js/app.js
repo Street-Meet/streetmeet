@@ -39,7 +39,6 @@ var meetApp = angular.module('sm-meetApp',
 })
 // set up routing
 .config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
-
   $urlRouterProvider.otherwise('/login');
 
   $stateProvider

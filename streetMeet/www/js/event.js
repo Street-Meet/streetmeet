@@ -55,7 +55,9 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
       });
     });
   }
-  $scope.update();
+  $scope.$on('$ionicView.enter', function() {
+    $scope.update();
+  });
 
   // user joins an event
   $scope.joinEvent =function() {
@@ -82,23 +84,26 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
   }
 
   var transitionToMap = function() {
+    $scope.owner = false;
+    $scope.leaver = false;
+    $scope.joiner = true;
     $state.transitionTo('map', {
       reload: true,
       inherit: false,
-      notify: false
+      notify: true
     });
   }
 
   $scope.leaveEvent =function() {
-      console.log('leaving event')
+      // console.log('leaving event')
       // event owner
       var ownerRef = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+$state.params.id +"/owner");
       var ownerSync = $firebase(ownerRef);
       ownerObj = ownerSync.$asObject();
       ownerObj.$loaded().then(function() {
-        console.log('pre-promise');
+        // console.log('pre-promise');
         $q(function(resolve, reject) {
-          console.log('in promise');
+          // console.log('in promise');
           var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+$state.params.id+"/attendees/"+$cookieStore.get('currentUser'));
           var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+$cookieStore.get('currentUser'));
           // marks user as left in attendee list
@@ -117,30 +122,32 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
         })
         .then(function() {
           angular.forEach(ownerObj, function (value, key) {
-            console.log('in forEach');
-            console.log(key, value);
-            console.log($cookieStore.get('currentUser'));
+            // console.log('in forEach');
+            // console.log(key, value);
+            // console.log($cookieStore.get('currentUser'));
             // if user is event owner
             if (key === $cookieStore.get('currentUser') && value === true) {
-              console.log('in if')
+              // console.log('in if')
               // removes current ownership from user
+              console.log(key);
               ownerRef.child(key).set(false, function(error) {
                 if (error) {
                   console.log('rejection')
                   alert("Data could not be saved." + error);
                 } else {
-                  console.log('transitioning');
-                  transitionToMap();
+                  // console.log('transitioning');
                   console.log("Owner data saved successfully.");
-                  console.log('in promise');
+
+                  transitionToMap();
+                  // console.log('in promise');
                 }
               });
             } else {
-              console.log('transitioning');
+              // console.log('transitioning');
               transitionToMap();
             }
           });
-          console.log('after promise');
+          // console.log('after promise');
         });
       });
     }
@@ -151,3 +158,4 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
   return {
   };
  });
+//
