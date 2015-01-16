@@ -3,16 +3,12 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
 .controller('MapCtrl', function($scope, $firebase, Map, $cookieStore, $state, $cordovaGeolocation) {
 
   angular.extend($scope, Map);
-  // setAllMap(null);
   Map.geolocationUpdate();
   var currEventRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+$cookieStore.get('currentUser')+"/currentEvent");
   var eventSync = $firebase(currEventRef);
   var currEventObj = eventSync.$asObject();
 
-  // when entering this view
   $scope.$on( "$ionicView.enter", function( scopes, states ) {
-    // google.maps.event.trigger( Map.map, 'resize' );
-    //mark if user is in an event or not
     currEventObj.$loaded().then(function() {
       if (currEventObj.$value) {
         $scope.inEvent = true;
@@ -27,27 +23,10 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
     }
   });
 
-
-
-  // puts a marker on the center of the map to capture the location of a new event
-  // $scope.createEvent = function() {
-
-  //   angular.element('#pac-input').slideDown();
-
-  //   $('<div/>').addClass('centerMarker').appendTo(Map.map.getDiv())
-  //   .click(function(){
-  //     $cookieStore.put('eventLoc', Map.map.getCenter());
-  //     $state.transitionTo('createEvent');
-  //   });
-  //   geocode();
-  // };
-
   $scope.cancelCreateEvent = function() {
     angular.element('.centerMarker').remove();
     angular.element('#pac-input').slideUp();
   };
-
-
 })
 
 .factory('Map', function ($q, $location, $window, $rootScope, $cookieStore, $state, $firebase, $cordovaGeolocation) {
@@ -60,11 +39,6 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
   //archived location geofire
   var refArchivedLoc = new Firebase("https://boiling-torch-2747.firebaseio.com/archived/locations");
   var geoFireArchived = new GeoFire(refArchivedLoc);
-
-
-
-
-
   var markers =[];
 
   var clearMarkers = function(array) {
@@ -72,9 +46,6 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
       array[i].setMap(null);
     }
   }
-  // clearMarkers();
-  // var geocoder;
-  // var address;
 
   var app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
   if ( app ) {
@@ -94,17 +65,10 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
   }
 
   var globalLatLng;
-  // var mapOptions = {
-  //   zoom: 15,
-  //   center: center,
-  //   mapTypeId: google.maps.MapTypeId.ROADMAP
-  // };
-  // var globalAddress;
 
   /*Geocoding and address autofill*/
   var input = /** @type {HTMLInputElement} */(
       document.getElementById('pac-input'));
-  // var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
   var initialize = function(map) {
     var center = new google.maps.LatLng(47.785326, -122.405696);
@@ -119,7 +83,6 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
     geocoder = new google.maps.Geocoder();
     return map;
   }
-  // initialize();
   var map = initialize();
 
   var geocode = function() {
@@ -147,9 +110,7 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
     });
     geocode();
   };
-
-  // var marker = null;
-
+  
   var autocomplete = new google.maps.places.Autocomplete(input);
   autocomplete.bindTo('bounds', map);
   var infowindow = new google.maps.InfoWindow();
@@ -235,7 +196,6 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
     var currEventObj = eventSync.$asObject();
     currEventObj.$loaded().then(function() {
       if (!currEventObj.$value) {
-      // if (true) {
         var pos = new google.maps.LatLng(latitude, longitude);
         var marker = new google.maps.Marker({
           position: pos,
@@ -369,7 +329,6 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
 
     //updates marker position by removing the old one and adding the new one
     if (marker == null) {
-      console.log(marker);
         marker = new google.maps.Marker({
         position: myLatlng,
         icon: '/img/icon_user_pos_animated.png',

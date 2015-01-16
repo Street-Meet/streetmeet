@@ -13,11 +13,6 @@ angular.module('sm-meetApp.profileSettings',  ["firebase"])
   });
 
   $scope.save = function(permanent, edit) {
-    // if (permanent === 'name') {
-    //   $scope.userData[permanent] = edit;
-    // } else {
-
-    // }
   }
 
 });
