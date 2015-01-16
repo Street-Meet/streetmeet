@@ -8,5 +8,6 @@ angular.module('sm-meetApp.profile',  ["firebase", 'ngCookies'])
   userObj.$loaded().then(function() {
     $scope.profile = userObj;
   });
+  console.log($cookieStore.get('currentUser'))
   $scope.isUser = $state.params.id === $cookieStore.get('currentUser');
 });
