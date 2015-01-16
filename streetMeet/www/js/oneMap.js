@@ -30,6 +30,7 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
   // puts a marker on the center of the map to capture the location of a new event
   $scope.createEventMarker = function() {
     console.log('creating event')
+    OneMap.clearMarkers();
     angular.element('#pac-input').slideDown();
     map = OneMap.getMap();
     $('<div/>').addClass('centerMarker').appendTo(map.getDiv())
@@ -51,8 +52,10 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
   };
 
   $scope.cancelCreateEvent = function() {
+    OneMap.onKeyEnteredRegistration();
     angular.element('.centerMarker').remove();
     angular.element('#pac-input').slideUp();
+
   };
 
   $scope.$on('$ionicView.enter', function() {
