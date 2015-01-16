@@ -3,7 +3,7 @@
       <button class="header-tab" ui-sref="listCurrentEvents" ng-show="!isEvent">List</button>
       <button class="header-tab create-toggle" ng-click=" toggleItem($event, 'button', '.create-toggle'); createEventMarker();" ng-show="!isEvent">Create Event</button>
       <button class="btn-red header-tab create-toggle toggledOff" ng-click="toggleItem($event, 'button', '.create-toggle'); cancelCreateEvent();" ng-show="!isEvent">Cancel</button>
-      <button class="header-tab-full" ng-show="isEvent" >Attendee Map</button>
+      <button class="header-tab-full" ng-show="isEvent" ui-sref="attendEvent({id: event})">Attendee Map</button>
   </ion-header-bar>
 
 
