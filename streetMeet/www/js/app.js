@@ -82,12 +82,14 @@ var meetApp = angular.module('sm-meetApp',
       url: '/mapCurrentEvents',
       templateUrl: 'views/mapCurrentEvents.html',
       // controller: 'MapCtrl'
-      controller: 'EventsMapCtrl'
+      controller: 'AllMapCtrl'
+      // controller: 'EventsMapCtrl'
     })
     .state('mapAttendees', {
       url: '/mapAttendees',
       templateUrl: 'views/mapAttendees.html',
       // controller: 'MapCtrl'
+      // controller: 'AllMapCtrl'
       controller: 'AttendeeMapCtrl'
     })
     .state('settings', {

@@ -7,8 +7,8 @@ angular.module('sm-meetApp.eventsMap',  ['firebase', 'ngCordova', 'ngCookies'])
 
 
   AllMap.initialize();
-  AllMap.onKeyEnteredRegistration();
-
+  // AllMap.onKeyEnteredRegistration();
+  // $scope.reverseAddress = $cookieStore.put("addressBox");
   // var geocode = function() {
   //   geocoder = new google.maps.Geocoder();
   //   // var map = $cookies.map;
