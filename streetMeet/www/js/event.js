@@ -92,7 +92,6 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
   }
 
   $scope.leaveEvent =function() {
-      // event owner
       var ownerRef = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+$state.params.id +"/owner");
       var ownerSync = $firebase(ownerRef);
       ownerObj = ownerSync.$asObject();
@@ -100,14 +99,11 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
         $q(function(resolve, reject) {
           var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+$state.params.id+"/attendees/"+$cookieStore.get('currentUser'));
           var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+$cookieStore.get('currentUser'));
-          // marks user as left in attendee list
           ref.set(false, function(error) {
             if (error) {
-              alert("Data could not be saved." + error);
+              console.error("Data could not be saved." + error);
               reject('rejected');
             } else {
-              console.log("Attendee data saved successfully.");
-              // removes user's current event
               userRef.child("/currentEvent/").remove();
               resolve('resolved');
             }
@@ -115,14 +111,11 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
         })
         .then(function() {
           angular.forEach(ownerObj, function (value, key) {
-            // if user is event owner
             if (key === $cookieStore.get('currentUser') && value === true) {
-              // removes current ownership from user
               ownerRef.child(key).set(false, function(error) {
                 if (error) {
-                  alert("Data could not be saved." + error);
+                  console.error("Data could not be saved." + error);
                 } else {
-                  console.log("Owner data saved successfully.");
                   transitionToMap();
                 }
               });
