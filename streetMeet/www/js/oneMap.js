@@ -30,8 +30,14 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
     map = OneMap.getMap();
     $('<div/>').addClass('centerMarker').appendTo(map.getDiv())
     .click(function(){
-      $cookieStore.put('eventLoc', map.getCenter());
-      $state.transitionTo('createEvent');
+      $q(function(resolve, reject) {
+        angular.element('.centerMarker').remove();
+        angular.element('#pac-input').slideUp();
+      }).then(function() {
+        // $scope.cancelCreateEvent();
+        $cookieStore.put('eventLoc', map.getCenter());
+        $state.transitionTo('createEvent');
+      })
     });
     geocode();
     console.log(OneMap.eventStatus());
@@ -45,6 +51,7 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
   };
 
   $scope.$on('$ionicView.enter', function() {
+    OneMap.clearMarkers();
     console.log($cookieStore.get('currentUser'))
     var currentUser = $cookieStore.get('currentUser');
     var currEventRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+currentUser+"/currentEvent");
@@ -55,10 +62,13 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
     currEventObj.$loaded().then(function() {
       if (currEventObj.$value) {
         $scope.isEvent =true;
+        OneMap.vergingDisplay();
       } else {
         $scope.isEvent = false;
+        OneMap.onKeyEnteredRegistration();
       }
       console.log($scope.isEvent);
+
     });
   });
 
