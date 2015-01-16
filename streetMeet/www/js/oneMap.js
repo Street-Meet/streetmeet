@@ -34,12 +34,65 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
       $state.transitionTo('createEvent');
     });
     geocode();
+    console.log(OneMap.eventStatus());
+    console.log($cookieStore.get('eventStatus'));
+
   };
 
   $scope.cancelCreateEvent = function() {
     angular.element('.centerMarker').remove();
     angular.element('#pac-input').slideUp();
   };
+
+  $scope.$on('$ionicView.enter', function() {
+    console.log($cookieStore.get('currentUser'))
+    var currentUser = $cookieStore.get('currentUser');
+    var currEventRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+currentUser+"/currentEvent");
+    var eventSync = $firebase(currEventRef);
+    var currEventObj = eventSync.$asObject();
+    // user's current event
+    console.log(currEventObj.$value)
+    currEventObj.$loaded().then(function() {
+      if (currEventObj.$value) {
+        $scope.isEvent =true;
+      } else {
+        $scope.isEvent = false;
+      }
+      console.log($scope.isEvent);
+    });
+  });
+
+  // var ownerRef = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+$cookieStore.get('currentEvent') +"/owner");
+  // console.log($cookieStore.get('currentEvent'));
+  // $scope.initial = true;
+  // $scope.owner = false;
+  // $scope.leaver = false;
+  // $scope.joiner = false;
+  // var ownerSync = $firebase(ownerRef);
+  // ownerObj = ownerSync.$asObject();
+  // ownerObj.$loaded().then(function() {
+  //   console.log('UPDATING3')
+  //   angular.forEach(ownerObj, function (value, key) {
+  //     if (key === $cookieStore.get('currentUser') && value === true) {
+  //       console.log(value);
+  //       $scope.owner = value;
+  //       $scope.initial = false;
+  //     } else {
+  //       var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+$cookieStore.get('currentUser')+"/currentEvent");
+  //       var userSync = $firebase(userRef);
+  //       var userObj = userSync.$asObject();
+  //       userObj.$loaded().then(function() {
+  //         console.log(userObj.$value);
+  //         $scope.leaver = userObj.$value;
+  //         $scope.joiner = !$scope.leaver;
+  //         $scope.initial = false;
+  //         console.log($scope.owner);
+  //         console.log($scope.leaver);
+  //         console.log($scope.joiner);
+  //       });
+  //     }
+  //   });
+  // });
 
 })
 
@@ -111,11 +164,11 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
   // var map = initialize();
 
 
-
+  // puts an event marker in the middle of the screen
   var createEventMarker = function() {
     angular.element('#pac-input').slideDown();
     console.log('throw a marker!')
-
+    // markers locked on the center of the map and on click, go to create event page
     $('<div/>').addClass('centerMarker').appendTo($('#map-canvas'))
     .click(function(){
       $cookieStore.put('eventLoc', map.getCenter());
@@ -123,6 +176,7 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
     });
     geocode();
 
+    // location input bar with autocomplete
     var input = /** @type {HTMLInputElement} */(
         document.getElementById('pac-input'));
 
@@ -175,12 +229,14 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
     });
   };
 
+  // cancels the create event marker
   var cancelCreateEvent = function() {
     angular.element('.centerMarker').remove();
     angular.element('#pac-input').slideUp();
     google.maps.event.removeListener(dragListener);
   };
 
+  // print events out on the map queried from GeoFire
   var onKeyEnteredRegistration = function() {
     console.log('on key registration')
     var refLoc = new Firebase("https://boiling-torch-2747.firebaseio.com/curr/locations");
@@ -226,6 +282,7 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
     console.log("Retrieved user's location: [" + latitude + ", " + longitude + "]");
   };
 
+  // show attendees converging to an event on the screen
   var vergingDisplay = function() {
     var currentUser = $cookieStore.get('currentUser');
     var currEventRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+currentUser+"/currentEvent");
@@ -305,6 +362,7 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
   // };
 
   /* Callback method from the geolocation API which receives the current user's location */
+  // draws the map on the canvas centered at the user's location
   var drawMap = function(location) {
     var userloc = $cookieStore.get('userloc');
     var latitude = userloc.coords.latitude;
@@ -379,6 +437,7 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
     }
   }
 
+  // updates user's location on the map when user moves
   var showLocation = function(position) {
     console.log('showLocation');
     var latitude = position.coords.latitude;
@@ -417,8 +476,24 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
     map.setCenter(globalLatLng);
   }
 
+  // returns the map for use in controllers
   var getMap = function() {
     return map;
+  }
+
+  var getMarkers = function() {
+    return markers;
+  }
+
+  var eventStatus = function() {
+    var currentUser = $cookieStore.get('currentUser');
+    var currEventRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+currentUser+"/currentEvent");
+    var eventSync = $firebase(currEventRef);
+    var currEventObj = eventSync.$asObject();
+    // user's current event
+    return currEventObj.$loaded().then(function() {
+      return currEventObj.$value;
+    });
   }
 
 
@@ -428,6 +503,7 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
     // markers: markers,
     // geocode: geocode,
     getMap: getMap,
+    getMarkers: getMarkers,
     clearMarkers: clearMarkers,
     onKeyEnteredRegistration: onKeyEnteredRegistration,
     createEventMarker: createEventMarker,
@@ -435,7 +511,8 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
     map: map,
     drawMap: drawMap,
     cancelCreateEvent: cancelCreateEvent,
-    vergingDisplay: vergingDisplay
+    vergingDisplay: vergingDisplay,
+    eventStatus: eventStatus
   }
 
 });

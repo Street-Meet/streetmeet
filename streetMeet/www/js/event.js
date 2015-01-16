@@ -17,6 +17,7 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
 
   $scope.refreshData = function() {
     $q(function(resolve, reject) {
+      console.log('refresh data')
       $state.transitionTo('mapCurrentEvents', {
         reload: true,
         inherit: false,
@@ -91,6 +92,7 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
         alert("Data could not be saved." + error);
       }
     });
+    $cookieStore.put('eventStatus', $state.params.id);
   }
 
   // user leaves an event
