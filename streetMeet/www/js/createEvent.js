@@ -36,8 +36,6 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
         id.child("attendees/"+owner).set(true, function(error) {
           if (error) {
             alert("Data could not be saved." + error);
-          } else {
-            console.log("Attendee data saved successfully.");
           }
         });
         // add creator as owner
@@ -45,35 +43,27 @@ angular.module('sm-meetApp.createEvents',  ["firebase", 'ngCookies'])
           if (error) {
             alert("Data could not be saved." + error);
           } else {
-            console.log(id.key());
             $state.go('attendEvent', {id: id.key()});
-            console.log("Owner data saved successfully.");
           }
         });
       }
     });
     currGeoFire.set(id.key(), [$cookieStore.get('eventLoc').k, $cookieStore.get('eventLoc').D]).then(function() {
-        console.log("Provided key has been added to Current GeoFire");
       }, function(error) {
-        console.log("Error: " + error);
+        console.error("Error: " + error);
       });
     archGeoFire.set(id.key(), [$cookieStore.get('eventLoc').k, $cookieStore.get('eventLoc').D]).then(function() {
-        console.log("Provided key has been added to GeoFire");
       }, function(error) {
-        console.log("Error: " + error);
+        console.error("Error: " + error);
       });
     userRef.child("/currentEvent/").set(id.key(), function(error) {
       if (error) {
         alert("Data could not be saved." + error);
-      } else {
-        console.log("Current event added to user!");
       }
     });
     userRef.child("/pastEvents/" + id.key()).set(true, function(error) {
       if (error) {
         alert("Data could not be saved." + error);
-      } else {
-        console.log("Current event added to user!");
       }
     });
     removeCookie();
