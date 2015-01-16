@@ -94,7 +94,6 @@ angular.module('sm-meetApp.userInterfaceController',  [])
     }
 
     $(liItem).css('margin-left', margin).addClass('swiped');
-    //console.log($event);
   }; 
 
 
