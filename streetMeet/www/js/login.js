@@ -1,11 +1,19 @@
 angular.module('sm-meetApp.login',  ['firebase', 'ngCookies', 'ngCordova','ionic.utils'])
 
 
+<<<<<<< HEAD
 .controller('LoginCtrl', ["$scope",  "$firebaseAuth", "$cookieStore", "$state", "$q",
   function($scope, $firebaseAuth, $cookieStore, $state, $q) {
+=======
+.controller('LoginCtrl', ["$scope",  "$firebaseAuth", "$cookieStore", "$state", "$q", "Login",
+  function($scope, $firebaseAuth, $cookieStore, $state, $q, Login) {
+
+>>>>>>> headers changed in map view so ng hides can be put in place
     $scope.currentUser =  $cookieStore.get('currentData') || null;
     $scope.currentUserId =  $cookieStore.get('currentUser') || null;
     $scope.theEvents;
+
+    Login.getLocation();
 
 
     var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
@@ -101,4 +109,59 @@ angular.module('sm-meetApp.login',  ['firebase', 'ngCookies', 'ngCordova','ionic
       $cookieStore.remove('currentUser')
       $cookieStore.remove('currentToken');
     }
-}]);
+}])
+
+.factory('Login', function ($q, $location, $window, $rootScope, $cookieStore, $state, $firebase, $cordovaGeolocation) {
+  var getLocation = function() {
+    var app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
+    if ( app ) {
+        // PhoneGap application
+        return $cordovaGeolocation
+        .getCurrentPosition(posOptions)
+        .then(function (position) {
+         geolocationCallbackQuery(position);
+        });
+    } else {
+      // Web page
+      if (typeof navigator !== "undefined" && typeof navigator.geolocation !== "undefined") {
+        console.log("Asking user to get their location");
+        navigator.geolocation.getCurrentPosition(geolocationCallbackQuery, errorHandler, {timeout:10000});
+      } else {
+        console.log("Your browser does not support the HTML5 Geolocation API");
+      }
+    }
+  };
+
+  var geolocationCallbackQuery = function(location) {
+    var latitude = location.coords.latitude;
+    var longitude = location.coords.longitude;
+    $cookieStore.put('userloc', location);
+    // LOGIC HERE DETERMINING IF IN EVENT OR NOT
+    // var currEventRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+$cookieStore.get('currentUser')+"/currentEvent");
+    // var eventSync = $firebase(currEventRef);
+    // var currEventObj = eventSync.$asObject();
+    // currEventObj.$loaded().then(function() {
+    //   if (currEventObj.$value) {
+    //     vergingDisplay();
+    //   } else {
+    //     onKeyEnteredRegistration();
+    //   }
+    // });
+  }
+
+  var errorHandler = function(error) {
+    if (error.code == 1) {
+      console.log("Error: PERMISSION_DENIED: User denied access to their location");
+    } else if (error.code === 2) {
+      console.log("Error: POSITION_UNAVAILABLE: Network is down or positioning satellites cannot be reached");
+    } else if (error.code === 3) {
+      console.log("Error: TIMEOUT: Calculating the user's location too took long");
+      geolocationCallbackQuery($cookieStore.get('userloc'));
+    } else {
+      console.log("Unexpected error code")
+    }
+  };
+  return {
+    getLocation: getLocation
+  }
+});

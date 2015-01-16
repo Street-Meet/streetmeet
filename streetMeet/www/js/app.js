@@ -89,8 +89,8 @@ var meetApp = angular.module('sm-meetApp',
       url: '/mapAttendees',
       templateUrl: 'views/mapAttendees.html',
       // controller: 'MapCtrl'
-      // controller: 'AllMapCtrl'
-      controller: 'AttendeeMapCtrl'
+      controller: 'AllMapCtrl'
+      // controller: 'AttendeeMapCtrl'
     })
     .state('settings', {
       url: '/settings',
@@ -101,6 +101,11 @@ var meetApp = angular.module('sm-meetApp',
       url: '/userProfile/:id',
       templateUrl: 'views/userProfile.html',
       controller: 'SettingsCtrl'
+    })
+    .state('map', {
+      url: '/map',
+      templateUrl: 'views/map.html',
+      controller: 'OneMapCtrl'
     })
     .state('userProfileSettings', {
       url: '/userProfileSettings/:id',

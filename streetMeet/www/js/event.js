@@ -124,7 +124,12 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
                   $scope.update();
                   resolve();
                 }).then(function() {
+<<<<<<< HEAD
                   $state.transitionTo('mapCurrentEvents', {
+=======
+                  console.log('transitioning');
+                  $state.transitionTo('map', {
+>>>>>>> headers changed in map view so ng hides can be put in place
                     reload: true,
                     inherit: false,
                     notify: false
@@ -137,14 +142,20 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
               $scope.update();
               resolve();
             }).then(function() {
+<<<<<<< HEAD
               $state.transitionTo('mapCurrentEvents', {
+=======
+              console.log('transitioning');
+              $state.transitionTo('map', {
+>>>>>>> headers changed in map view so ng hides can be put in place
                 reload: true,
                 inherit: false,
                 notify: false
               });
-            }).then(function() {
-              window.location.reload(true);
-            });
+            })
+            // .then(function() {
+            //   window.location.reload(true);
+            // });
           }
         });
       });

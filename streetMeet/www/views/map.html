@@ -1,0 +1,41 @@
+<ion-pane id="map" class="map-pane">
+
+ <!--  <ion-header-bar align-title="center" class="main-header" ng-show="">
+    <div class="buttons">
+      <div class="header-back-btn">
+        <a on-tap="$ionicGoBack()"><i class="fa fa-arrow-circle-left"></i></a>
+      </div>
+    </div>
+    <h1 class="title">Attendee Map</h1>
+  </ion-header-bar>
+
+  <ion-header-bar class="hTabs" ng-hide="">
+    <button class="header-tab" ui-sref="listCurrentEvents">List</button>
+    <button class="header-tab create-toggle" ng-click=" toggleItem($event, 'button', '.create-toggle'); createEventMarker();">Create Event</button>
+    <button class="btn-red header-tab create-toggle toggledOff" ng-click="toggleItem($event, 'button', '.create-toggle'); cancelCreateEvent();">Cancel</button>
+  </ion-header-bar>
+ -->
+  <ion-header-bar class="hTabs" >
+      <!-- <div class="buttons">
+        <div class="header-back-btn">
+          <a on-tap="$ionicGoBack()"><i class="fa fa-arrow-circle-left"></i></a>
+        </div>
+      </div>
+      <h1 class="title" >Attendee Map</h1> -->
+      <button class="header-tab" ui-sref="listCurrentEvents" ng-show="true">List</button>
+      <button class="header-tab create-toggle" ng-click=" toggleItem($event, 'button', '.create-toggle'); createEventMarker();" ng-show="true">Create Event</button>
+      <button class="btn-red header-tab create-toggle toggledOff" ng-click="toggleItem($event, 'button', '.create-toggle'); cancelCreateEvent();" ng-show="true">Cancel</button>
+      <button class="header-tab-full" ng-show="false" >Attendee Map</button>
+  </ion-header-bar>
+
+
+  <ion-content scroll="false">
+    <input id="pac-input" class="controls" type="text" placeholder="Enter a location" ng-model="reverseAddress">
+    <div id="map-canvas" data-tap-disabled="true"></div>
+  </ion-content>
+  <div class="settings-btn">
+    <a ui-sref="settings">
+      <i class="fa fa-cog"></i>
+    </a>
+  </div>
+</ion-pane>

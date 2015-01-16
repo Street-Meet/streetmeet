@@ -1,32 +1,48 @@
 angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
 
-.controller('AllMapCtrl', function($scope, $firebase, AllMap, $cookieStore, $state, $cordovaGeolocation) {
+.controller('OneMapCtrl', function($scope, $firebase, OneMap, $cookieStore, $state, $cordovaGeolocation) {
 
-  angular.extend($scope, AllMap);
-  AllMap.initialize();
+  angular.extend($scope, OneMap);
+  OneMap.initialize();
 
+  var geocode = function() {
+    var geocoder = new google.maps.Geocoder();
+    console.log(map);
+    dragListener = google.maps.event.addListener(map, 'dragend', function() {
+      geocoder.geocode({'latLng': map.getCenter()}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          $scope.reverseAddress = results[0].formatted_address;
+          console.log(reverseAddress);
+          $cookieStore.put("addressBox", reverseAddress)
+          $scope.$apply();
+        } else {
+          alert("Geocoder failed due to: " + status);
+        }
+      })
+    })
+  };
 
-    // puts a marker on the center of the map to capture the location of a new event
-    // $scope.createEventMarker = function() {
-    //   console.log('creating event')
-    //   angular.element('#pac-input').slideDown();
+  // puts a marker on the center of the map to capture the location of a new event
+  $scope.createEventMarker = function() {
+    console.log('creating event')
+    angular.element('#pac-input').slideDown();
+    var map = OneMap.getMap();
+    $('<div/>').addClass('centerMarker').appendTo(map.getDiv())
+    .click(function(){
+      $cookieStore.put('eventLoc', map.getCenter());
+      $state.transitionTo('createEvent');
+    });
+    geocode();
+  };
 
-    //   $('<div/>').addClass('centerMarker').appendTo(AllMap.map.getDiv())
-    //   .click(function(){
-    //     $cookieStore.put('eventLoc', AllMap.map.getCenter());
-    //     $state.transitionTo('createEvent');
-    //   });
-    //   geocode();
-    // };
-
-    // $scope.cancelCreateEvent = function() {
-    //   angular.element('.centerMarker').remove();
-    //   angular.element('#pac-input').slideUp();
-    // };
+  $scope.cancelCreateEvent = function() {
+    angular.element('.centerMarker').remove();
+    angular.element('#pac-input').slideUp();
+  };
 
 })
 
-.factory('AllMap', function ($q, $location, $window, $rootScope, $cookieStore, $state, $firebase, $cordovaGeolocation) {
+.factory('OneMap', function ($q, $location, $window, $rootScope, $cookieStore, $state, $firebase, $cordovaGeolocation) {
   // user location geofire
   var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/user_locations");
   var userGeoFire = new GeoFire(userRef);
@@ -93,23 +109,7 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
 
   // var map = initialize();
 
-  var geocode = function() {
-    geocoder = new google.maps.Geocoder();
-    console.log(map);
-    dragListener = google.maps.event.addListener(map, 'dragend', function() {
-      geocoder.geocode({'latLng': map.getCenter()}, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-          console.log('works?')
-          reverseAddress = results[0].formatted_address;
-          console.log(reverseAddress);
-          $cookieStore.put("addressBox", reverseAddress)
-          $rootScope.$apply();
-        } else {
-          alert("Geocoder failed due to: " + status);
-        }
-      })
-    })
-  };
+
 
   var createEventMarker = function() {
     angular.element('#pac-input').slideDown();
@@ -416,11 +416,17 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
     map.setCenter(globalLatLng);
   }
 
+  var getMap = function() {
+    return map;
+  }
+
 
   return {
     centerMapLocation: centerMapLocation,
     initialize: initialize,
     // markers: markers,
+    // geocode: geocode,
+    getMap: getMap,
     clearMarkers: clearMarkers,
     onKeyEnteredRegistration: onKeyEnteredRegistration,
     createEventMarker: createEventMarker,
