@@ -7,9 +7,8 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
 
   var map;
 
-  var geocode = function() {
+  var populateAddress = function() {
     var geocoder = new google.maps.Geocoder();
-    dragListener = google.maps.event.addListener(map, 'dragend', function() {
       geocoder.geocode({'latLng': map.getCenter()}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
           $scope.reverseAddress = results[0].formatted_address;
@@ -20,6 +19,11 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
           alert("Geocoder failed due to: " + status);
         }
       });
+  }
+
+  var geocode = function() {
+    dragListener = google.maps.event.addListener(map, 'dragend', function() {
+      populateAddress();
     })
   };
 
@@ -39,17 +43,7 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
         $state.transitionTo('createEvent');
       })
     });
-    var geocoder = new google.maps.Geocoder();
-    geocoder.geocode({'latLng': map.getCenter()}, function(results, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
-        $scope.reverseAddress = results[0].formatted_address;
-        console.log($scope.reverseAddress);
-        $cookieStore.put("addressBox", $scope.reverseAddress)
-        $scope.$apply();
-      } else {
-        alert("Geocoder failed due to: " + status);
-      }
-    });
+    populateAddress();
     geocode();
     console.log(OneMap.eventStatus());
     console.log($cookieStore.get('eventStatus'));
