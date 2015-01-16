@@ -6,9 +6,6 @@ angular.module('sm-meetApp.attendeeMap',  ['firebase', 'ngCordova'])
   angular.extend($scope, AllMap);
 
   AllMap.initialize();
-
-  // setAllMap(null);
-  // AllMap.geolocationUpdate();
   AllMap.vergingDisplay();
 
 
@@ -20,10 +17,6 @@ angular.module('sm-meetApp.attendeeMap',  ['firebase', 'ngCordova'])
 
 
   return {
-    // map: map,
-    // markers: markers,
-    // clearMarkers: clearMarkers,
-    // vergingDisplay: vergingDisplay
   }
 
 });
