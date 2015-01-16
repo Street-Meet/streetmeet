@@ -9,10 +9,12 @@ angular.module('sm-meetApp.profileSettings',  ["firebase"])
     });
   }).then(function() {
     $scope.name = $scope.userData.display_name;
-    $scope.email = $scope.userData.email;
+    $scope.userEmail = $scope.userData.email;
+    console.log($scope.userEmail);
   });
 
   $scope.save = function(permanent, edit) {
+    $scope.userData[permanent] = edit;
   }
 
 });

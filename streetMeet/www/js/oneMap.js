@@ -45,6 +45,57 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
         $state.transitionTo('createEvent');
       })
     });
+    // location input bar with autocomplete
+    var input = /** @type {HTMLInputElement} */(
+        document.getElementById('pac-input'));
+
+    // google maps autocomplete
+    var autocomplete = new google.maps.places.Autocomplete(input);
+    autocomplete.bindTo('bounds', map);
+    var infowindow = new google.maps.InfoWindow();
+    var locationBoxMarker = new google.maps.Marker({
+      map: map,
+      anchorPoint: new google.maps.Point(0, -29)
+    });
+
+    google.maps.event.addListener(autocomplete, 'place_changed', function() {
+      infowindow.close();
+      locationBoxMarker.setVisible(false);
+      var place = autocomplete.getPlace();
+      if (!place.geometry) {
+        return;
+      }
+
+      // If the place has a geometry, then present it on a map.
+      if (place.geometry.viewport) {
+        map.fitBounds(place.geometry.viewport);
+      } else {
+        map.setCenter(place.geometry.location);
+        map.setZoom(17);  // Why 17? Because it looks good.
+      }
+      locationBoxMarker.setIcon(/** @type {google.maps.Icon} */({
+        url: place.icon,
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(35, 35)
+      }));
+      locationBoxMarker.setPosition(place.geometry.location);
+      locationBoxMarker.setVisible(true);
+
+      var address = '';
+      if (place.address_components) {
+        address = [
+          (place.address_components[0] && place.address_components[0].short_name || ''),
+          (place.address_components[1] && place.address_components[1].short_name || ''),
+          (place.address_components[2] && place.address_components[2].short_name || '')
+        ].join(' ');
+      }
+
+      infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+      infowindow.open(map, locationBoxMarker);
+      $cookieStore.put('addressBox', address);
+    });
     populateAddress();
     geocode();
   };
@@ -138,73 +189,6 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
     }
   }
 
-  // var map = initialize();
-
-
-  // puts an event marker in the middle of the screen
-  var createEventMarker = function() {
-    angular.element('#pac-input').slideDown();
-    // markers locked on the center of the map and on click, go to create event page
-    $('<div/>').addClass('centerMarker').appendTo($('#map-canvas'))
-    .click(function(){
-      $cookieStore.put('eventLoc', map.getCenter());
-      $state.transitionTo('createEvent');
-    });
-    geocode();
-
-    // location input bar with autocomplete
-    var input = /** @type {HTMLInputElement} */(
-        document.getElementById('pac-input'));
-
-    // google maps autocomplete
-    var autocomplete = new google.maps.places.Autocomplete(input);
-    // autocomplete.bindTo('bounds', map);
-    var infowindow = new google.maps.InfoWindow();
-    var locationBoxMarker = new google.maps.Marker({
-      map: map,
-      anchorPoint: new google.maps.Point(0, -29)
-    });
-
-    google.maps.event.addListener(autocomplete, 'place_changed', function() {
-      infowindow.close();
-      locationBoxMarker.setVisible(false);
-      var place = autocomplete.getPlace();
-      if (!place.geometry) {
-        return;
-      }
-
-      // If the place has a geometry, then present it on a map.
-      if (place.geometry.viewport) {
-        map.fitBounds(place.geometry.viewport);
-      } else {
-        map.setCenter(place.geometry.location);
-        map.setZoom(17);  // Why 17? Because it looks good.
-      }
-      locationBoxMarker.setIcon(/** @type {google.maps.Icon} */({
-        url: place.icon,
-        size: new google.maps.Size(71, 71),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(17, 34),
-        scaledSize: new google.maps.Size(35, 35)
-      }));
-      locationBoxMarker.setPosition(place.geometry.location);
-      locationBoxMarker.setVisible(true);
-
-      var address = '';
-      if (place.address_components) {
-        address = [
-          (place.address_components[0] && place.address_components[0].short_name || ''),
-          (place.address_components[1] && place.address_components[1].short_name || ''),
-          (place.address_components[2] && place.address_components[2].short_name || '')
-        ].join(' ');
-      }
-
-      infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
-      infowindow.open(map, locationBoxMarker);
-      $cookieStore.put('addressBox', address);
-    });
-  };
-
   // cancels the create event marker
   var cancelCreateEvent = function() {
     angular.element('.centerMarker').remove();
@@ -261,9 +245,8 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
       map.panToBounds(bounds)
      });
     google.maps.event.addListener(map, 'zoom_changed', function() {
-         if (map.getZoom() < 14) map.setZoom(14);
-       });
-    console.log("Retrieved user's location: [" + latitude + ", " + longitude + "]");
+       if (map.getZoom() < 14) map.setZoom(14);
+     });
   };
 
   // show attendees converging to an event on the screen
@@ -459,7 +442,6 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
     getMarkers: getMarkers,
     clearMarkers: clearMarkers,
     onKeyEnteredRegistration: onKeyEnteredRegistration,
-    createEventMarker: createEventMarker,
     reverseAddress: reverseAddress,
     map: map,
     drawMap: drawMap,
