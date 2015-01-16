@@ -5,25 +5,6 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
   angular.extend($scope, AllMap);
   AllMap.initialize();
 
-
-    // puts a marker on the center of the map to capture the location of a new event
-    // $scope.createEventMarker = function() {
-    //   console.log('creating event')
-    //   angular.element('#pac-input').slideDown();
-
-    //   $('<div/>').addClass('centerMarker').appendTo(AllMap.map.getDiv())
-    //   .click(function(){
-    //     $cookieStore.put('eventLoc', AllMap.map.getCenter());
-    //     $state.transitionTo('createEvent');
-    //   });
-    //   geocode();
-    // };
-
-    // $scope.cancelCreateEvent = function() {
-    //   angular.element('.centerMarker').remove();
-    //   angular.element('#pac-input').slideUp();
-    // };
-
 })
 
 .factory('AllMap', function ($q, $location, $window, $rootScope, $cookieStore, $state, $firebase, $cordovaGeolocation) {
@@ -95,13 +76,10 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
 
   var geocode = function() {
     geocoder = new google.maps.Geocoder();
-    console.log(map);
     dragListener = google.maps.event.addListener(map, 'dragend', function() {
       geocoder.geocode({'latLng': map.getCenter()}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
-          console.log('works?')
           reverseAddress = results[0].formatted_address;
-          console.log(reverseAddress);
           $cookieStore.put("addressBox", reverseAddress)
           $rootScope.$apply();
         } else {
@@ -113,7 +91,6 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
 
   var createEventMarker = function() {
     angular.element('#pac-input').slideDown();
-    console.log('throw a marker!')
 
     $('<div/>').addClass('centerMarker').appendTo($('#map-canvas'))
     .click(function(){
@@ -181,7 +158,6 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
   };
 
   var onKeyEnteredRegistration = function() {
-    console.log('on key registration')
     var refLoc = new Firebase("https://boiling-torch-2747.firebaseio.com/curr/locations");
     var geoFire = new GeoFire(refLoc);
     var location = $cookieStore.get('userloc');
@@ -199,8 +175,6 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
         // add marker for an event if it was created in the past 22 minutes
         // if (false) {
         if (eventObj.createdAt > Date.now() - 1320000) {
-          console.log('current event');
-          console.log(map);
           var pos = new google.maps.LatLng(location[0], location[1]);
           var marker = new google.maps.Marker({
             position: pos,
@@ -220,9 +194,7 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
           geoFire.remove(key);
         }
       });
-      console.log(key + " entered the query. Hi " + key + " at " + location);
     });
-    console.log("Retrieved user's location: [" + latitude + ", " + longitude + "]");
   };
 
   var vergingDisplay = function() {
@@ -282,27 +254,6 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
     });
   };
 
-  // retrieves the user's current location
-  // var getLocation = function() {
-  //   var app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
-  //   if ( app ) {
-  //       // PhoneGap application
-  //       return $cordovaGeolocation
-  //       .getCurrentPosition(posOptions)
-  //       .then(function (position) {
-  //        geolocationCallbackQuery(position);
-  //       });
-  //   } else {
-  //     // Web page
-  //     if (typeof navigator !== "undefined" && typeof navigator.geolocation !== "undefined") {
-  //       console.log("Asking user to get their location");
-  //       navigator.geolocation.getCurrentPosition(geolocationCallbackQuery, errorHandler, {timeout:10000});
-  //     } else {
-  //       console.log("Your browser does not support the HTML5 Geolocation API");
-  //     }
-  //   }
-  // };
-
   /* Callback method from the geolocation API which receives the current user's location */
   var drawMap = function(location) {
     var userloc = $cookieStore.get('userloc');
@@ -315,7 +266,6 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-    console.log(map);
     geocoder = new google.maps.Geocoder();
     var center = new google.maps.LatLng(latitude, longitude);
     var geoQuery = geoFire.query({
@@ -323,7 +273,6 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
       radius: 1.609344
     });
     map.setCenter(center);
-    console.log('creating marker')
     marker = new google.maps.Marker({
       position: center,
       map: map,
@@ -335,7 +284,6 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
     google.maps.event.addListener(marker, 'click', function() {
       $state.transitionTo('userProfile', {id: marker.title});
     });
-    console.log('updating user location')
     geolocationUpdate();
     // LOGIC HERE DETERMINING IF IN EVENT OR NOT
     var currEventRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+$cookieStore.get('currentUser')+"/currentEvent");
@@ -354,23 +302,20 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
   /* Handles any errors from trying to get the user's current location */
   var errorHandler = function(error) {
     if (error.code == 1) {
-      console.log("Error: PERMISSION_DENIED: User denied access to their location");
+      console.error("PERMISSION_DENIED: User denied access to their location");
     } else if (error.code === 2) {
-      console.log("Error: POSITION_UNAVAILABLE: Network is down or positioning satellites cannot be reached");
+      console.error("POSITION_UNAVAILABLE: Network is down or positioning satellites cannot be reached");
     } else if (error.code === 3) {
-      console.log("Error: TIMEOUT: Calculating the user's location too took long");
+      console.error("TIMEOUT: Calculating the user's location too took long");
       geolocationCallbackQuery($cookieStore.get('userloc'));
     } else {
-      console.log("Unexpected error code")
+      console.error("Unexpected error code")
     }
   };
 
   //Updates user location on movement
   var geolocationUpdate = function() {
-    console.log('geolocationUpdate', !!navigator.geolocation)
     if(navigator.geolocation) {
-      //var updateTimeout = {timeout: 1000};
-      console.log('setting up updates on user movement');
       var geoLoc = navigator.geolocation;
       var watchID = geoLoc.watchPosition(showLocation, errorHandler)
     } else {
@@ -379,7 +324,6 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
   }
 
   var showLocation = function(position) {
-    console.log('showLocation');
     var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
     var myLatlng = new google.maps.LatLng(latitude, longitude);
@@ -387,14 +331,12 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
     var userData = $cookieStore.get('currentUser');
     //adds user location data to firebase
     userGeoFire.set(userData, [latitude, longitude]).then(function() {
-      console.log("Provided keys have been added to GeoFire");
     }, function(error) {
-      console.log("Error: " + error);
+      console.error("Error: " + error);
     });
 
     //updates marker position by removing the old one and adding the new one
     if (marker == null) {
-      console.log(marker);
       marker = new google.maps.Marker({
         position: myLatlng,
         icon: '/img/icon_user_pos_animated.png',
@@ -409,7 +351,6 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
       marker.setMap(null);
     }
     marker.setMap(map);
-    console.log("Latitude : " + latitude + " Longitude: " + longitude);
   }
 
   var centerMapLocation = function() {
