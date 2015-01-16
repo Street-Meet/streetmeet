@@ -9,7 +9,7 @@ angular.module('sm-meetApp.userInterfaceController',  [])
   $scope.loginState = 'login';
 
   /**
-   * Control the type of user login 
+   * Control the type of user login
    */
   $scope.loginSectionChange = function(section){
     $scope.loginState = section;
@@ -61,7 +61,7 @@ angular.module('sm-meetApp.userInterfaceController',  [])
         var tMarg = Math.max(hDiff*-1, parseInt(currMarg) + $event.gesture.deltaY);
       }else{
         var tMarg = Math.min(0, parseInt(currMarg) + $event.gesture.deltaY);
-      } 
+      }
 
       $(content).closest('ul').css('margin-top', tMarg);
     };
@@ -94,7 +94,7 @@ angular.module('sm-meetApp.userInterfaceController',  [])
     }
 
     $(liItem).css('margin-left', margin).addClass('swiped');
-  }; 
+  };
 
 
   /**

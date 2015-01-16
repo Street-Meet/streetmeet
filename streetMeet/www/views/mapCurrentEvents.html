@@ -2,8 +2,8 @@
 
 <ion-header-bar class="hTabs">
   <button class="header-tab" ui-sref="listCurrentEvents">List</button>
-  <button class="header-tab create-toggle" ng-click="createEvent(); toggleItem($event, 'button', '.create-toggle');">Create Event</button>
-  <button class="btn-red header-tab create-toggle toggledOff" ng-click="cancelCreateEvent(); toggleItem($event, 'button', '.create-toggle');">Cancel</button>
+  <button class="header-tab create-toggle" ng-click=" toggleItem($event, 'button', '.create-toggle'); createEventMarker();">Create Event</button>
+  <button class="btn-red header-tab create-toggle toggledOff" ng-click="toggleItem($event, 'button', '.create-toggle'); cancelCreateEvent();">Cancel</button>
 </ion-header-bar>
 
   <ion-content scroll="false">
