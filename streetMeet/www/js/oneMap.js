@@ -5,15 +5,16 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
   angular.extend($scope, OneMap);
   OneMap.initialize();
 
+  var map;
+
   var geocode = function() {
     var geocoder = new google.maps.Geocoder();
-    console.log(map);
     dragListener = google.maps.event.addListener(map, 'dragend', function() {
       geocoder.geocode({'latLng': map.getCenter()}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
           $scope.reverseAddress = results[0].formatted_address;
-          console.log(reverseAddress);
-          $cookieStore.put("addressBox", reverseAddress)
+          console.log($scope.reverseAddress);
+          $cookieStore.put("addressBox", $scope.reverseAddress)
           $scope.$apply();
         } else {
           alert("Geocoder failed due to: " + status);
@@ -26,7 +27,7 @@ angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
   $scope.createEventMarker = function() {
     console.log('creating event')
     angular.element('#pac-input').slideDown();
-    var map = OneMap.getMap();
+    map = OneMap.getMap();
     $('<div/>').addClass('centerMarker').appendTo(map.getDiv())
     .click(function(){
       $cookieStore.put('eventLoc', map.getCenter());
