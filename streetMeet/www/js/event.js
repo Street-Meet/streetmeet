@@ -98,7 +98,6 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
       ownerObj = ownerSync.$asObject();
       ownerObj.$loaded().then(function() {
         $q(function(resolve, reject) {
-          // console.log('in promise');
           var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+$state.params.id+"/attendees/"+$cookieStore.get('currentUser'));
           var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+$cookieStore.get('currentUser'));
           // marks user as left in attendee list
