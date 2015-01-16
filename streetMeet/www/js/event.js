@@ -110,11 +110,6 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
   }
   // user leaves an event
   $scope.leaveEvent =function() {
-<<<<<<< HEAD
-=======
-    console.log('leaving event')
-    // event owner
->>>>>>> working leave event when owner, it seems
     var ownerRef = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+$state.params.id +"/owner");
     var ownerSync = $firebase(ownerRef);
     ownerObj = ownerSync.$asObject();
@@ -128,11 +123,6 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
             alert("Data could not be saved." + error);
             reject('rejected');
           } else {
-<<<<<<< HEAD
-=======
-            console.log("Attendee data saved successfully.");
-            // removes user's current event
->>>>>>> working leave event when owner, it seems
             userRef.child("/currentEvent/").remove();
             // $scope.update();
             resolve('resolved');
@@ -141,32 +131,16 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
       })
       .then(function() {
         angular.forEach(ownerObj, function (value, key) {
-<<<<<<< HEAD
           if (key === $cookieStore.get('currentUser') && value === true) {
-=======
-          console.log('in forEach');
-          console.log(key, value);
-          console.log($cookieStore.get('currentUser'));
-          // if user is event owner
-          if (key === $cookieStore.get('currentUser') && value === true) {
-            console.log('in if')
-            // removes current ownership from user
->>>>>>> working leave event when owner, it seems
             ownerRef.child(key).set(false, function(error) {
               if (error) {
                 alert("Data could not be saved." + error);
               } else {
-<<<<<<< HEAD
                 $q(function(resolve, reject) {
                   $scope.update();
                   resolve();
                 }).then(function() {
-<<<<<<< HEAD
-                  $state.transitionTo('mapCurrentEvents', {
-=======
-                  console.log('transitioning');
                   $state.transitionTo('map', {
->>>>>>> headers changed in map view so ng hides can be put in place
                     reload: true,
                     inherit: false,
                     notify: false
@@ -179,43 +153,21 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
               $scope.update();
               resolve();
             }).then(function() {
-<<<<<<< HEAD
-              $state.transitionTo('mapCurrentEvents', {
-=======
-              console.log('transitioning');
+
               $state.transitionTo('map', {
->>>>>>> headers changed in map view so ng hides can be put in place
                 reload: true,
                 inherit: false,
                 notify: false
               });
             })
-            // .then(function() {
-            //   window.location.reload(true);
-=======
-                console.log(id.key());
-                console.log('transitioning');
-                transitionToMap();
-                console.log("Owner data saved successfully.");
-                console.log('in promise');
-              }
+              console.log('transitioning');
+              transitionToMap();
+              console.log("Owner data saved successfully.");
+              console.log('in promise');
+            }
             });
-          } else {
-            console.log('transitioning');
-            // $state.transitionTo('map', {
-            //   reload: true,
-            //   inherit: false,
-            //   notify: false
-            // // });
->>>>>>> working leave event when owner, it seems
-            // });
-            transitionToMap();
           }
         });
-<<<<<<< HEAD
-=======
-        console.log('after promise');
->>>>>>> working leave event when owner, it seems
       });
     });
   }
