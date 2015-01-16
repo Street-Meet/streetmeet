@@ -84,9 +84,6 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
   }
 
   var transitionToMap = function() {
-    $scope.owner = false;
-    $scope.leaver = false;
-    $scope.joiner = true;
     $state.transitionTo('map', {
       reload: true,
       inherit: false,
@@ -95,13 +92,11 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
   }
 
   $scope.leaveEvent =function() {
-      // console.log('leaving event')
       // event owner
       var ownerRef = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+$state.params.id +"/owner");
       var ownerSync = $firebase(ownerRef);
       ownerObj = ownerSync.$asObject();
       ownerObj.$loaded().then(function() {
-        // console.log('pre-promise');
         $q(function(resolve, reject) {
           // console.log('in promise');
           var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+$state.params.id+"/attendees/"+$cookieStore.get('currentUser'));
@@ -115,39 +110,27 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
               console.log("Attendee data saved successfully.");
               // removes user's current event
               userRef.child("/currentEvent/").remove();
-              // $scope.update();
               resolve('resolved');
             }
           });
         })
         .then(function() {
           angular.forEach(ownerObj, function (value, key) {
-            // console.log('in forEach');
-            // console.log(key, value);
-            // console.log($cookieStore.get('currentUser'));
             // if user is event owner
             if (key === $cookieStore.get('currentUser') && value === true) {
-              // console.log('in if')
               // removes current ownership from user
-              console.log(key);
               ownerRef.child(key).set(false, function(error) {
                 if (error) {
-                  console.log('rejection')
                   alert("Data could not be saved." + error);
                 } else {
-                  // console.log('transitioning');
                   console.log("Owner data saved successfully.");
-
                   transitionToMap();
-                  // console.log('in promise');
                 }
               });
             } else {
-              // console.log('transitioning');
               transitionToMap();
             }
           });
-          // console.log('after promise');
         });
       });
     }
