@@ -1,14 +1,9 @@
 angular.module('sm-meetApp.login',  ['firebase', 'ngCookies', 'ngCordova','ionic.utils'])
 
 
-<<<<<<< HEAD
-.controller('LoginCtrl', ["$scope",  "$firebaseAuth", "$cookieStore", "$state", "$q",
-  function($scope, $firebaseAuth, $cookieStore, $state, $q) {
-=======
+
 .controller('LoginCtrl', ["$scope",  "$firebaseAuth", "$cookieStore", "$state", "$q", "Login",
   function($scope, $firebaseAuth, $cookieStore, $state, $q, Login) {
-
->>>>>>> headers changed in map view so ng hides can be put in place
     $scope.currentUser =  $cookieStore.get('currentData') || null;
     $scope.currentUserId =  $cookieStore.get('currentUser') || null;
     $scope.theEvents;

@@ -15,26 +15,6 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
   var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/");
   var id = ref.child("/users/");
 
-<<<<<<< HEAD
-  $scope.refreshData = function() {
-    $q(function(resolve, reject) {
-      console.log('refresh data')
-      $state.transitionTo('mapCurrentEvents', {
-        reload: true,
-        inherit: false,
-        notify: true
-      });
-      resolve();
-    }).then(function() {
-      window.location.reload(true);
-    })
-  }
-=======
-  // $scope.eventId = $state.params.id;
-  // console.log($scope.eventId);
-
->>>>>>> working leave event when owner, it seems
-
   $scope.update = function() {
     var attendeeObj = $firebase(refAttendees).$asObject();
     attendeeObj.$loaded().then(function() {
@@ -108,70 +88,129 @@ angular.module('sm-meetApp.event',  ["firebase", 'ngCookies'])
       notify: false
     });
   }
-  // user leaves an event
-  $scope.leaveEvent =function() {
-    var ownerRef = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+$state.params.id +"/owner");
-    var ownerSync = $firebase(ownerRef);
-    ownerObj = ownerSync.$asObject();
-    ownerObj.$loaded().then(function() {
-      $q(function(resolve, reject) {
-        var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+$state.params.id+"/attendees/"+$cookieStore.get('currentUser'));
-        var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+$cookieStore.get('currentUser'));
-        // marks user as left in attendee list
-        ref.set(false, function(error) {
-          if (error) {
-            alert("Data could not be saved." + error);
-            reject('rejected');
-          } else {
-            userRef.child("/currentEvent/").remove();
-            // $scope.update();
-            resolve('resolved');
-          }
-        });
-      })
-      .then(function() {
-        angular.forEach(ownerObj, function (value, key) {
-          if (key === $cookieStore.get('currentUser') && value === true) {
-            ownerRef.child(key).set(false, function(error) {
-              if (error) {
-                alert("Data could not be saved." + error);
-              } else {
-                $q(function(resolve, reject) {
-                  $scope.update();
-                  resolve();
-                }).then(function() {
-                  $state.transitionTo('map', {
-                    reload: true,
-                    inherit: false,
-                    notify: false
-                  });
-                })
-              }
-            });
-          } else {
-            $q(function(resolve, reject) {
-              $scope.update();
-              resolve();
-            }).then(function() {
 
-              $state.transitionTo('map', {
-                reload: true,
-                inherit: false,
-                notify: false
+  $scope.leaveEvent =function() {
+      console.log('leaving event')
+      // event owner
+      var ownerRef = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+$state.params.id +"/owner");
+      var ownerSync = $firebase(ownerRef);
+      ownerObj = ownerSync.$asObject();
+      ownerObj.$loaded().then(function() {
+        console.log('pre-promise');
+        $q(function(resolve, reject) {
+          console.log('in promise');
+          var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+$state.params.id+"/attendees/"+$cookieStore.get('currentUser'));
+          var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+$cookieStore.get('currentUser'));
+          // marks user as left in attendee list
+          ref.set(false, function(error) {
+            if (error) {
+              alert("Data could not be saved." + error);
+              reject('rejected');
+            } else {
+              console.log("Attendee data saved successfully.");
+              // removes user's current event
+              userRef.child("/currentEvent/").remove();
+              // $scope.update();
+              resolve('resolved');
+            }
+          });
+        })
+        .then(function() {
+          angular.forEach(ownerObj, function (value, key) {
+            console.log('in forEach');
+            console.log(key, value);
+            console.log($cookieStore.get('currentUser'));
+            // if user is event owner
+            if (key === $cookieStore.get('currentUser') && value === true) {
+              console.log('in if')
+              // removes current ownership from user
+              ownerRef.child(key).set(false, function(error) {
+                if (error) {
+                  console.log('rejection')
+                  alert("Data could not be saved." + error);
+                } else {
+                  console.log('transitioning');
+                  transitionToMap();
+                  console.log("Owner data saved successfully.");
+                  console.log('in promise');
+                }
               });
-            })
+            } else {
               console.log('transitioning');
               transitionToMap();
-              console.log("Owner data saved successfully.");
-              console.log('in promise');
             }
-            });
-          }
+          });
+          console.log('after promise');
         });
       });
-    });
-  }
-})
+    }
+
+  // // user leaves an event
+  // $scope.leaveEvent =function() {
+  //   var ownerRef = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+$state.params.id +"/owner");
+  //   var ownerSync = $firebase(ownerRef);
+  //   ownerObj = ownerSync.$asObject();
+  //   ownerObj.$loaded().then(function() {
+  //     $q(function(resolve, reject) {
+  //       var ref = new Firebase("https://boiling-torch-2747.firebaseio.com/events/"+$state.params.id+"/attendees/"+$cookieStore.get('currentUser'));
+  //       var userRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+$cookieStore.get('currentUser'));
+  //       // marks user as left in attendee list
+  //       ref.set(false, function(error) {
+  //         if (error) {
+  //           alert("Data could not be saved." + error);
+  //           reject('rejected');
+  //         } else {
+  //           userRef.child("/currentEvent/").remove();
+  //           // $scope.update();
+  //           resolve('resolved');
+  //         }
+  //       });
+  //     })
+  //     .then(function() {
+  //       angular.forEach(ownerObj, function (value, key) {
+  //         if (key === $cookieStore.get('currentUser') && value === true) {
+  //           ownerRef.child(key).set(false, function(error) {
+  //             if (error) {
+  //               alert("Data could not be saved." + error);
+  //             } else {
+  //               $q(function(resolve, reject) {
+  //                 $scope.update();
+  //                 resolve();
+  //               }).then(function() {
+  //                 $state.transitionTo('map', {
+  //                   reload: true,
+  //                   inherit: false,
+  //                   notify: false
+  //                 });
+  //               })
+  //             }
+  //           });
+  //         } else {
+  //           $q(function(resolve, reject) {
+  //             $scope.update();
+  //             resolve();
+  //           }).then(function() {
+
+  //             $state.transitionTo('map', {
+  //               reload: true,
+  //               inherit: false,
+  //               notify: false
+  //             });
+  //           })
+  //             console.log('transitioning');
+  //             transitionToMap();
+  //             console.log("Owner data saved successfully.");
+  //             console.log('in promise');
+  //           }
+  //           });
+  //         });
+  //       });
+  //     });
+
+
+    })
+//   }
+// })
 
 .factory('Event', function ($q, $cookieStore, $state, $firebase) {
   return {
