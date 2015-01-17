@@ -15,16 +15,12 @@ var meetApp = angular.module('sm-meetApp',
     'sm-meetApp.createEvents',
     'sm-meetApp.joinEvent',
     'sm-meetApp.userInterfaceController',
-    'sm-meetApp.map',
     'sm-meetApp.currentUser',
     'sm-meetApp.event',
     'sm-meetApp.profile',
     'sm-meetApp.editEvent',
     'sm-meetApp.profileSettings',
-    'sm-meetApp.allMap',
-    'sm-meetApp.attendeeMap',
-    'sm-meetApp.eventsMap'
-
+    'sm-meetApp.oneMap'
   ])
 // run in ionic
 .run(function($ionicPlatform) {
@@ -57,25 +53,10 @@ var meetApp = angular.module('sm-meetApp',
       templateUrl: 'views/listCurrentEvents.html',
       controller: 'JoinEventCtrl'
     })
-    .state('viewSingleEvent', {
-      url: '/viewEvent/:id',
-      templateUrl: 'views/singleEvent.html',
-      controller: 'EventCtrl'
-    })
     .state('attendEvent', {
       url: '/event/:id',
       templateUrl: 'views/attendEvent.html',
       controller: 'EventCtrl'
-    })
-    .state('mapCurrentEvents', {
-      url: '/mapCurrentEvents',
-      templateUrl: 'views/mapCurrentEvents.html',
-      controller: 'AllMapCtrl'
-    })
-    .state('mapAttendees', {
-      url: '/mapAttendees',
-      templateUrl: 'views/mapAttendees.html',
-      controller: 'AllMapCtrl'
     })
     .state('settings', {
       url: '/settings',
