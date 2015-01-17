@@ -101,13 +101,13 @@ angular.module('sm-meetApp.oneMap',  ['firebase', 'ngCordova', 'ngCookies'])
   };
 
   $scope.cancelCreateEvent = function() {
-    OneMap.onKeyEnteredRegistration();
+    OneMap.showMarkers();
     angular.element('.centerMarker').remove();
     angular.element('#pac-input').slideUp();
   };
 
   $scope.$on('$ionicView.enter', function() {
-    OneMap.clearMarkers();
+    OneMap.deleteMarkers();
     var currentUser = $cookieStore.get('currentUser');
     var currEventRef = new Firebase("https://boiling-torch-2747.firebaseio.com/users/"+currentUser+"/currentEvent");
     var eventSync = $firebase(currEventRef);
@@ -447,7 +447,9 @@ angular.module('sm-meetApp.oneMap',  ['firebase', 'ngCordova', 'ngCookies'])
     drawMap: drawMap,
     cancelCreateEvent: cancelCreateEvent,
     vergingDisplay: vergingDisplay,
-    eventStatus: eventStatus
+    eventStatus: eventStatus,
+    showMarkers: showMarkers,
+    deleteMarkers: deleteMarkers
   }
 
 });
