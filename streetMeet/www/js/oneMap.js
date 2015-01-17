@@ -123,6 +123,8 @@ angular.module('sm-meetApp.oneMap',  ['firebase', 'ngCordova', 'ngCookies'])
         OneMap.onKeyEnteredRegistration();
       }
     });
+    angular.element('.cancel-btn').hide().siblings().show();
+    $scope.cancelCreateEvent();
   });
 
 })
