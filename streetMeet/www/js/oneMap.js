@@ -9,15 +9,15 @@ angular.module('sm-meetApp.oneMap',  ['firebase', 'ngCordova', 'ngCookies'])
 
   var populateAddress = function() {
     var geocoder = new google.maps.Geocoder();
-      geocoder.geocode({'latLng': map.getCenter()}, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-          $scope.reverseAddress = results[0].formatted_address;
-          $cookieStore.put("addressBox", $scope.reverseAddress)
-          $scope.$apply();
-        } else {
-          alert("Geocoder failed due to: " + status);
-        }
-      });
+    geocoder.geocode({'latLng': map.getCenter()}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        $scope.reverseAddress = results[0].formatted_address;
+        $cookieStore.put("addressBox", $scope.reverseAddress)
+        $scope.$apply();
+      } else {
+        alert("Geocoder failed due to: " + status);
+      }
+    });
   }
 
   var geocode = function() {
@@ -231,7 +231,7 @@ angular.module('sm-meetApp.oneMap',  ['firebase', 'ngCordova', 'ngCookies'])
       });
     });
 
-    google.maps.event.addListener(map, 'dragend', function() {
+    google.maps.event.addListener(map, 'bounds_changed', function() {
       if (bounds.contains(map.getCenter())) return;
       // We're out of bounds - Move the map back within the bounds
       map.panToBounds(bounds)
@@ -312,7 +312,6 @@ angular.module('sm-meetApp.oneMap',  ['firebase', 'ngCordova', 'ngCookies'])
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-    geocoder = new google.maps.Geocoder();
     var center = new google.maps.LatLng(latitude, longitude);
     var geoQuery = geoFire.query({
       center: [latitude, longitude],
