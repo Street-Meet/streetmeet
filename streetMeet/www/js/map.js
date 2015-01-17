@@ -10,12 +10,7 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
 
   $scope.$on( "$ionicView.enter", function( scopes, states ) {
     currEventObj.$loaded().then(function() {
-      if (currEventObj.$value) {
-        $scope.inEvent = true;
-        $scope.event = currEventObj.$value;
-      } else {
-        $scope.inEvent = false;
-      }
+      $scope.inEvent = currEventObj.$value;
     });
     if ($cookieStore.get('userloc')) {
       Map.geolocationCallbackQuery($cookieStore.get('userloc'));
@@ -111,7 +106,7 @@ angular.module('sm-meetApp.map',  ['firebase', 'ngCordova'])
     });
     geocode();
   };
-  
+
   var autocomplete = new google.maps.places.Autocomplete(input);
   autocomplete.bindTo('bounds', map);
   var infowindow = new google.maps.InfoWindow();
