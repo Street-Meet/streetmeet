@@ -14,7 +14,6 @@ angular.module('sm-meetApp.oneMap',  ['firebase', 'ngCordova', 'ngCookies'])
           $scope.reverseAddress = results[0].formatted_address;
           $cookieStore.put("addressBox", $scope.reverseAddress)
           $scope.$apply();
-          console.log('goecoding');
         } else {
           alert("Geocoder failed due to: " + status);
         }
@@ -186,16 +185,8 @@ angular.module('sm-meetApp.oneMap',  ['firebase', 'ngCordova', 'ngCookies'])
     } else {
       // Web page
       drawMap();
-
     }
   }
-
-  // cancels the create event marker
-  // var cancelCreateEvent = function() {
-  //   angular.element('.centerMarker').remove();
-  //   angular.element('#pac-input').slideUp();
-
-  // };
 
   // print events out on the map queried from GeoFire
   var onKeyEnteredRegistration = function() {
