@@ -26,10 +26,6 @@ angular.module('sm-meetApp.oneMap',  ['firebase', 'ngCordova', 'ngCookies'])
     });
   };
 
-  var completeAuto = function() {
-
-  }
-
   // puts a marker on the center of the map to capture the location of a new event
   $scope.createEventMarker = function() {
     OneMap.clearMarkers();
@@ -80,7 +76,7 @@ angular.module('sm-meetApp.oneMap',  ['firebase', 'ngCordova', 'ngCookies'])
         url: place.icon,
         size: new google.maps.Size(71, 71),
         origin: new google.maps.Point(0, 0),
-        anchor: new   google.maps.Point(17, 34),
+        anchor: new google.maps.Point(17, 34),
         scaledSize: new google.maps.Size(35, 35)
       }));
       locationBoxMarker.setPosition(place.geometry.location);
