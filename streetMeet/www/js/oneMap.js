@@ -23,7 +23,7 @@ angular.module('sm-meetApp.oneMap',  ['firebase', 'ngCordova', 'ngCookies'])
   var geocode = function() {
     dragListener = google.maps.event.addListener(map, 'dragend', function() {
       populateAddress();
-    })
+    });
   };
 
   // puts a marker on the center of the map to capture the location of a new event
@@ -40,7 +40,6 @@ angular.module('sm-meetApp.oneMap',  ['firebase', 'ngCordova', 'ngCookies'])
 
         resolve();
       }).then(function() {
-        // $scope.cancelCreateEvent();
         $cookieStore.put('eventLoc', map.getCenter());
         $state.transitionTo('createEvent');
       })
@@ -104,6 +103,7 @@ angular.module('sm-meetApp.oneMap',  ['firebase', 'ngCordova', 'ngCookies'])
     OneMap.showMarkers();
     angular.element('.centerMarker').remove();
     angular.element('#pac-input').slideUp();
+    google.maps.event.removeListener(dragListener);
   };
 
   $scope.$on('$ionicView.enter', function() {
@@ -185,16 +185,8 @@ angular.module('sm-meetApp.oneMap',  ['firebase', 'ngCordova', 'ngCookies'])
     } else {
       // Web page
       drawMap();
-
     }
   }
-
-  // cancels the create event marker
-  var cancelCreateEvent = function() {
-    angular.element('.centerMarker').remove();
-    angular.element('#pac-input').slideUp();
-    google.maps.event.removeListener(dragListener);
-  };
 
   // print events out on the map queried from GeoFire
   var onKeyEnteredRegistration = function() {
@@ -445,7 +437,6 @@ angular.module('sm-meetApp.oneMap',  ['firebase', 'ngCordova', 'ngCookies'])
     reverseAddress: reverseAddress,
     map: map,
     drawMap: drawMap,
-    cancelCreateEvent: cancelCreateEvent,
     vergingDisplay: vergingDisplay,
     eventStatus: eventStatus,
     showMarkers: showMarkers,
