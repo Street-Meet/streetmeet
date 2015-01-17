@@ -1,4 +1,4 @@
-angular.module('sm-meetApp.allMap',  ['firebase', 'ngCordova', 'ngCookies'])
+angular.module('sm-meetApp.oneMap',  ['firebase', 'ngCordova', 'ngCookies'])
 
 .controller('OneMapCtrl', function($scope, $firebase, OneMap, $cookieStore, $state, $cordovaGeolocation, $q) {
 
