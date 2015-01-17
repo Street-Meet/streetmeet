@@ -101,7 +101,6 @@ angular.module('sm-meetApp.oneMap',  ['firebase', 'ngCordova', 'ngCookies'])
   };
 
   $scope.cancelCreateEvent = function() {
-    // OneMap.onKeyEnteredRegistration();
     OneMap.showMarkers();
     angular.element('.centerMarker').remove();
     angular.element('#pac-input').slideUp();
