@@ -46,7 +46,7 @@ Once the project moves into development, the press release can be used as a touc
 
 ## Customer Quote ##
   
-  Verge22 really bridges the gap between social media and real life. The instant gratifation I receive from the internet has no found its way into reality.
+  Verge22 really bridges the gap between social media and real life. The instant gratifation I receive from the internet has now found its way into reality.
 
 ## Closing and Call to Action ##
 
