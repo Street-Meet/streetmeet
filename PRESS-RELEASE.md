@@ -17,17 +17,14 @@ Once the project moves into development, the press release can be used as a touc
  -->
 
 ## Heading ##
-  > Name the product in a way the reader (i.e. your target customers) will understand.
 
-  Street Meet
+  Verge22
 
 ## Sub-Heading ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
 
-  A mobile app for quickly finding fun activities in your area
+  A mobile app for quickly finding fun activities in your area. 
 
 ## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
 
   Initiate and find events at the swipe of a finger. Join people in spontaneous fun near you!
 
