@@ -29,31 +29,25 @@ Once the project moves into development, the press release can be used as a touc
   Initiate and find events at the swipe of a finger. Join people in spontaneous fun near you!
 
 ## Problem ##
-  > Describe the problem your product solves.
 
   A shortage of knowing nearby people who would be interested in the same activity you immediately want to do.
 
 ## Solution ##
-  > Describe how your product elegantly solves the problem.
 
-  Easily and instantly connects you with nearby people into the same stupid shit you are
+  Easily and instantly connects you with nearby people with like interests
 
 ## Quote from You ##
-  > A quote from a spokesperson in your company.
 
-  StreetMeet is the future of social meetups, integrating real-time needs with real-good fun!
+  Verge22 is the future of social meetups, integrating real-time needs with real-good fun!
 
 ## How to Get Started ##
-  > Describe how easy it is to get started.
 
-  It's so easy, someone with no friends can use it
+  Instantly be supplied with events in your area as soon as you open the app!
 
 ## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
-
-  I used to be so bored and depressed not having any friends and whatnot. Streetmeet changed that for me. You really can't beat this meet.
+  
+  Verge22 really bridges the gap between social media and real life. The instant gratifation I receive from the internet has no found its way into reality.
 
 ## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.
 
-  Where are you?! It doesn't matter, go meet someone. Streetmeet.com
+  Where are you?! It doesn't matter, go meet someone. Verge22.com
